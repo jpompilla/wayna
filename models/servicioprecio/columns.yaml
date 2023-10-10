@@ -1,0 +1,12 @@
+columns:    
+    id:
+        label: id
+        type: number
+    servicio[codigo]:
+        label: nombre
+        type: text
+    categoria:
+        label: Tipo de Servicio
+        type: text
+        select: nombre
+    

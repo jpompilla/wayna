@@ -1,0 +1,117 @@
+fields:
+    nombre:
+        label: Nombre
+        span: auto
+        type: text
+    tipo:
+        label: 'Tipo de Servicio'
+        span: auto
+        type: relation
+        nameFrom: nombre        
+        select: 'concat(''['',id,''] '',nombre)'  
+        default: 22
+        readOnly: true
+    lugar_inicio:
+        label: 'Lugar de Inicio'
+        span: auto
+        type: relation
+        nameFrom: nombre        
+        select: 'concat(''['',id,''] '',nombre)'  
+        default: 23
+    lugar_fin:
+        label: 'Lugar de Fin'
+        span: auto
+        type: relation
+        nameFrom: nombre        
+        select: 'concat(''['',id,''] '',nombre)'          
+        default: 23
+tabs:
+    fields:
+        capacidad:
+            label: Capacidad
+            span: left
+            default: '1'
+            context:
+                - create
+            type: number
+            tab: Precios
+        costo:
+            label: Costo
+            span: right
+            context:
+                - create
+            type: number
+            tab: Precios
+        confidencial:
+            label: Precio
+            span: right
+            context:
+                - create
+            type: number
+            tab: Precios
+        publicado:
+            label: Precio Web
+            span: right
+            context:
+                - create
+            type: number
+            tab: Precios
+        comision:
+            label: Comision
+            span: right
+            context:
+                - create
+            type: number
+            tab: Precios
+        precios:
+            type: datatable
+            adding: true
+            btnAddRowBelowLabel: 'Add Row Below'
+            btnDeleteRowLabel: 'Delete Row'
+            columns:
+                nro_pax:
+                    type: string
+                    title: 'Nro Paxs'
+                    readOnly: true
+                costo:
+                    type: string
+                    title: Costo (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                costo_unitario:
+                    type: string
+                    title: CU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                confidencial_unitario:
+                    type: string
+                    title: PU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'                
+                reserva_unitario:
+                    type: string
+                    title: Reserva Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                comision_unitario:
+                    type: string
+                    title: Comision Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                publicado_unitario:
+                    type: string
+                    title: Web Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+            deleting: true
+            dynamicHeight: true
+            height: false
+            context:
+                - update
+            tab: Precios

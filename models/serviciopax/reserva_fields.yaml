@@ -1,0 +1,65 @@
+fields:
+    dia:
+        label: Dia
+        span: auto
+        type: number
+    fecha:
+        label: Fecha
+        span: auto
+        type: datepicker
+    actividad_id:
+        label: 'Actividad id'
+        span: auto
+        type: number
+    actividad_nombre:
+        label: 'Actividad nombre'
+        span: auto
+        type: text
+    incluye_id:
+        label: 'Incluye id'
+        span: auto
+        type: number
+    incluye_nombre:
+        label: 'Incluye nombre'
+        span: auto
+        type: text
+    servicio_precio_id:
+        label: 'Servicio precio id'
+        span: auto
+        type: number
+    servicio_precio_nombre:
+        label: 'Servicio precio nombre'
+        span: auto
+        type: text
+    nro_paxs:
+        label: 'Nro paxs'
+        span: auto
+        type: number
+    costo:
+        label: Costo
+        span: auto
+        type: number
+    confidencial:
+        label: Confidencial
+        span: auto
+        type: number
+    publicado:
+        label: Publicado
+        span: auto
+        type: number
+    comision:
+        label: Comision
+        span: auto
+        type: number
+    estado_id:
+        label: 'Estado id'
+        span: auto
+        type: number
+    proveedor_id:
+        label: 'Proveedor id'
+        span: auto
+        type: number
+    proveedor_nombre:
+        label: 'Proveedor nombre'
+        span: auto
+        type: text

@@ -1,0 +1,225 @@
+fields:
+    nombre:
+        label: Nombre
+        span: auto
+        type: text
+    tipo:
+        label: 'Tipo de Servicio'
+        span: auto
+        type: relation
+        nameFrom: nombre
+        select: 'concat(''['',id,''] '',nombre)'
+        default: 21
+        readOnly: true
+tabs:
+    fields:
+        slug:
+            label: Slug
+            preset:
+                field: nombre
+                type: slug
+            span: left
+            type: text
+            tab: General
+        description:
+            label: Descripción
+            size: ''
+            span: right
+            type: richeditor
+            tab: General        
+        lugar_inicio:
+            label: 'Lugar de Inicio'
+            span: left
+            type: relation
+            nameFrom: nombre
+            select: 'concat(''['',id,''] '',nombre)'
+            default: 23
+            tab: General
+        lugar_fin:
+            label: 'Lugar de Fin'
+            span: left
+            type: relation
+            nameFrom: nombre
+            select: 'concat(''['',id,''] '',nombre)'
+            default: 23
+            tab: General
+        incluye:
+            label: Incluye
+            prompt: 'Add new item'
+            span: left
+            type: repeater
+            form:
+                fields:
+                    item:
+                        label: 'Item Incluye'
+                        span: full
+                        type: text
+            tab: General
+        no_incluye:
+            label: 'No incluye'
+            prompt: 'Add new item'
+            span: right
+            type: repeater
+            form:
+                fields:
+                    item:
+                        label: 'Item No Incluye'
+                        span: full
+                        type: text
+            tab: General
+        itinerario:
+            label: 'Itinerario'
+            prompt: 'Add new item'
+            span: full
+            type: repeater
+            form:
+                fields:
+                    titulo:
+                        label: Titulo
+                        span: left
+                        type: text
+                    descripcion:
+                        label: Descripcion
+                        span: right
+                        type: richeditor
+                    duracion:
+                        label: Duración
+                        span: left
+                        type: text
+                    hora:
+                        label: 'Hora de inicio'
+                        span: left
+                        type: text
+            tab: General
+        poster:
+            label: Poster
+            mode: image
+            imageWidth: '300'
+            imageHeight: '200'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: left
+            type: fileupload
+            commentAbove: 'Recomendado: 1440x960px'
+            tab: Multimedia
+        gallery:
+            label: Gallery
+            mode: image
+            imageWidth: '100'
+            imageHeight: '100'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: right
+            type: fileupload
+            tab: Multimedia
+        servicio_items:
+            span: full
+            context:
+                - update
+            type: partial
+            tab: Itinerario
+        servicio_precio[mantener_precios]:
+            label: '📌 Fijar precios'
+            span: auto
+            type: switch
+            context:
+                - update
+            tab: Precios
+        confidencial:
+            label: PU (US$)
+            span: left
+            context:
+                - update
+            trigger:
+                action: show
+                field: servicio_precio[mantener_precios]
+                condition: unchecked
+            type: number
+            tab: Precios
+        reserva:
+            label: Reserva Uni (US$)
+            span: right
+            context:
+                - update
+            trigger:
+                action: show
+                field: servicio_precio[mantener_precios]
+                condition: unchecked
+            type: number
+            tab: Precios
+        comision:
+            label: Comision Uni (US$)
+            span: left
+            context:
+                - update
+            trigger:
+                action: show
+                field: servicio_precio[mantener_precios]
+                condition: unchecked
+            type: number
+            tab: Precios
+        publicado:
+            label: Web Uni (US$)
+            span: right
+            context:
+                - update
+            trigger:
+                action: show
+                field: servicio_precio[mantener_precios]
+                condition: unchecked
+            type: number
+            tab: Precios
+        precios:
+            type: datatable
+            adding: false
+            deleting: false
+            columns:
+                nro_pax:
+                    type: string
+                    title: 'Nro Paxs'
+                    readOnly: true
+                costo:
+                    type: string
+                    title: Costo (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                costo_unitario:
+                    type: string
+                    title: CU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                confidencial_unitario:
+                    type: string
+                    title: PU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                reserva_unitario:
+                    type: string
+                    title: Reserva Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                comision_unitario:
+                    type: string
+                    title: Comision Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                publicado_unitario:
+                    type: string
+                    title: Web Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+            dynamicHeight: true
+            height: false
+            context:
+                - update
+            tab: Precios

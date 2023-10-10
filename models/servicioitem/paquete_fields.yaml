@@ -1,0 +1,35 @@
+fields:
+    nombre:
+        label: 'Nombre (Incluye)'
+        span: full
+        type: text    
+tabs:
+    fields:
+        categorias:
+            label: Categoria
+            nameFrom: nombre
+            span: left
+            type: relation    
+            tab: General
+        dia:
+            label: Dia
+            span: right
+            default: 1
+            type: number    
+            tab: General    
+        item:
+            label: 'Tours y Servicios de Proveedor'
+            title: 'Tours y Servicios de Proveedor'
+            nameFrom: name
+            span: right
+            type: recordfinder
+            list: $/soroche/wayna/models/servicioprecio/paquete_columns.yaml
+            scope: actividades
+            tab: General
+        items:            
+            span: full
+            context:
+                - update
+            type: partial
+            tab: Servicios
+        

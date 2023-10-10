@@ -1,0 +1,74 @@
+plugin:
+    name: 'soroche.wayna::lang.plugin.name'
+    description: 'soroche.wayna::lang.plugin.description'
+    author: soroche
+    icon: oc-icon-angle-double-up
+    homepage: ''
+navigation:
+    menu-ventas:
+        label: Ventas
+        url: soroche/wayna/reservas
+        icon: icon-dollar
+        permissions:
+            - manage_ventas
+        sideMenu:
+            menu-reservas:
+                label: Reservas
+                url: soroche/wayna/reservas
+                icon: icon-shopping-cart
+    menu-marketing:
+        label: Marketing
+        url: soroche/wayna/paquetes
+        icon: icon-dropbox
+        sideMenu:
+            menu-embajadores:
+                label: Embajadores
+                url: soroche/wayna/embajadores
+                icon: icon-male
+            menu-tours:
+                label: 'Tour y Actividades'
+                url: soroche/wayna/actividades
+                icon: icon-cube
+            menu-paquetes:
+                label: Paquetes
+                url: soroche/wayna/paquetes
+                icon: icon-cubes
+    menu-operaciones:
+        label: Operaciones
+        url: soroche/wayna/salidas
+        icon: icon-ticket
+        sideMenu:
+            menu-provedores:
+                label: Proveedores
+                url: soroche/wayna/proveedores
+                icon: icon-building-o
+            menu-salidas:
+                label: Salidas
+                url: soroche/wayna/salidas
+                icon: icon-calendar
+    menu-finanzas:
+        label: Finanzas
+        url: soroche/wayna/pagos
+        icon: icon-bank
+        sideMenu:
+            menu-cuentas:
+                label: 'Caja y Bancos'
+                url: soroche/wayna/cuentasbancarias
+                icon: icon-bank
+            menu-pagos:
+                label: Pagos
+                url: soroche/wayna/pagos
+                icon: icon-money
+    menu-configuracion:
+        label: Configuracion
+        url: soroche/wayna/tipos
+        icon: icon-cogs
+        sideMenu:
+            menu-tipos:
+                label: Tipos
+                url: soroche/wayna/tipos
+                icon: icon-list
+permissions:
+    manage_ventas:
+        tab: Ventas
+        label: 'Administrar Ventas'

@@ -1,0 +1,37 @@
+columns:
+    id:
+        label: id
+        type: number
+    dia:
+        label: dia
+        type: number
+    nombre:
+        label: nombre
+        type: text
+    item_id:
+        label: item_id
+        type: number
+    hotel1_id:
+        label: hotel1_id
+        type: number
+    hotel2_id:
+        label: hotel2_id
+        type: number
+    hotel3_id:
+        label: hotel3_id
+        type: number
+    hotel4_id:
+        label: hotel4_id
+        type: number
+    hotel5_id:
+        label: hotel5_id
+        type: number
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime
+    deleted_at:
+        label: deleted_at
+        type: datetime

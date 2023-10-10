@@ -1,0 +1,21 @@
+columns:
+    id:
+        label: ID
+        type: number
+    name:
+        label: Codigo
+        type: text
+        searchable: true
+    fecha:
+        label: 'Fecha Salida'
+        type: date
+        format: Y-m-d
+        ignoreTimezone: true
+tabs:
+    fields:
+        servicio_paxs:
+            span: full
+            context:
+                - update
+            type: partial
+            tab: Servicios

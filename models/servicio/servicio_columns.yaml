@@ -1,0 +1,22 @@
+columns:    
+    name:
+        label: nombre
+        type: text
+    tipo:
+        label: Tipo de Servicio
+        type: text
+        select: nombre
+        relation: tipo
+    lugar_inicio:
+        label: Lugar de Inicio
+        type: text
+        select: nombre
+        relation: lugar_inicio
+    lugar_fin:
+        label: Lugar de Fin
+        type: text
+        select: nombre
+        relation: lugar_fin
+    id:
+        label: id
+        type: number

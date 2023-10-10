@@ -1,0 +1,24 @@
+pagos:
+    label: Pagos
+    manage:
+        form: $/soroche/wayna/models/pago/embajador_fields.yaml
+    view:
+        list: $/soroche/wayna/models/pago/embajador_columns.yaml
+        toolbarButtons: create|delete
+        recordsPerPage: 10
+movimientos:
+    label: Movimientos
+    manage:
+        form: $/soroche/wayna/models/pagoitem/fields.yaml
+    view:
+        list: $/soroche/wayna/models/pagoitem/embajador_columns.yaml
+        toolbarButtons: false
+        recordsPerPage: 10
+reservas:
+    label: Reservas
+    manage:
+        form: $/soroche/wayna/models/reserva/fields.yaml
+    view:
+        list: $/soroche/wayna/models/reserva/embajador_columns.yaml
+        toolbarButtons: false
+        recordsPerPage: 10

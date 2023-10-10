@@ -1,0 +1,33 @@
+<?php namespace soroche\Wayna\Controllers;
+
+use Backend\Classes\Controller;
+use BackendMenu;
+
+class Paquetes extends Controller
+{
+    public $implement = [
+        'Backend\Behaviors\ListController',
+        'Backend\Behaviors\FormController',
+        'Backend\Behaviors\ReorderController',
+        'Backend\Behaviors\RelationController'
+    ];
+    
+    public $listConfig = 'config_list.yaml';
+    public $formConfig = 'config_form.yaml';
+    public $reorderConfig = 'config_reorder.yaml';
+    public $relationConfig = 'config_relation.yaml';
+
+    public function __construct()
+    {
+        parent::__construct();
+        BackendMenu::setContext('soroche.Wayna', 'menu-marketing', 'menu-paquetes');
+    }
+    
+    public function listExtendQuery($query)
+    {
+        //$user = BackendAuth::getUser();
+        $query
+            //->where('proveedor_id',$user->proveedor_id)
+            ->where('tipo_id',20);
+    }
+}

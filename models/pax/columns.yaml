@@ -1,0 +1,25 @@
+columns:
+    id:
+        label: id
+        type: number
+    nombres:
+        label: nombres
+        type: text
+    apellidos:
+        label: apellidos
+        type: text
+    tipo_documento_id:
+        label: tipo_documento_id
+        type: number
+    nro_documento:
+        label: nro_documento
+        type: text
+    reserva_id:
+        label: reserva_id
+        type: number
+    salida_id:
+        label: salida_id
+        type: number
+    created_at:
+        label: created_at
+        type: datetime

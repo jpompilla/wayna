@@ -1,0 +1,30 @@
+columns:
+    id:
+        label: id
+        type: number
+    nombre:
+        label: nombre
+        type: text
+        searchable: true
+    tipo:
+        label: Tipo de Servicio
+        type: text
+        select: nombre
+        relation: tipo
+    lugar_inicio:
+        label: Lugar de Inicio
+        type: text
+        select: nombre
+        relation: lugar_inicio
+        searchable: true
+    lugar_fin:
+        label: Lugar de Fin
+        type: text
+        select: nombre
+        relation: lugar_fin
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime

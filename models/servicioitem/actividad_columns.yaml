@@ -1,0 +1,18 @@
+columns:    
+    dia:
+        label: dia
+        type: number
+    nombre:
+        label: nombre
+        type: text
+    item:
+        label: Servicio de proveedor
+        type: text
+        select: name
+        relation: item
+    updated_at:
+        label: updated_at
+        type: datetime
+    id:
+        label: id
+        type: number

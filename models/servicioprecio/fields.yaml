@@ -1,0 +1,11 @@
+fields:
+    categoria:
+        label: 'Categoria'
+        span: auto
+        select: nombre
+        nameFrom: nombre
+        type: relation
+    nombre:
+        label: Nombre
+        span: auto
+        type: text

@@ -1,0 +1,25 @@
+fields:
+    fecha:
+        label: Fecha
+        mode: date
+        format: d-M-Y
+        span: auto
+        type: datepicker
+    servicio_precio:
+        label: 'Paquetes y Tours'
+        title: 'Paquetes y Tours'
+        nameFrom: name
+        span: right
+        type: recordfinder
+        list: $/soroche/wayna/models/servicioprecio/paquete_columns.yaml
+        scope: paquetes
+tabs:
+    fields:        
+        servicio_paxs:
+            span: full
+            context:
+                - update
+            type: partial
+            tab: Servicios
+        
+        

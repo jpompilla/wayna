@@ -1,0 +1,25 @@
+columns:
+    id:
+        label: id
+        type: number
+    tipo:
+        label: tipo
+        type: text
+    nombre:
+        label: nombre
+        type: text
+    cuenta:
+        label: Cuenta (USD)
+        type: text
+        format: %.2f
+        align: right
+        width: 100px
+    valor:
+        label: valor
+        type: text
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime

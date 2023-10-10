@@ -1,0 +1,8 @@
+items:
+    label: Movimientos
+    manage:
+        form: $/soroche/wayna/models/pagoitem/fields.yaml
+    view:
+        list: $/soroche/wayna/models/pagoitem/pago_columns.yaml
+        toolbarButtons: create|delete
+        recordsPerPage: 10

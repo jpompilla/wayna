@@ -1,0 +1,40 @@
+fields:
+    nombres:
+        label: Nombres
+        span: auto
+        type: text
+    apellidos:
+        label: Apellidos
+        span: auto
+        type: text
+tabs:
+    fields:
+        celular:
+            label: Celular
+            span: auto
+            type: text
+            tab: General
+        email:
+            label: Email
+            span: auto
+            type: text
+            tab: General
+        publicidad:
+            label: Publicidad
+            span: auto
+            type: text
+            tab: General
+        pagos:
+            span: fill
+            path: field_pagos
+            type: partial
+            tab: Pagos
+        movimientos:
+            span: fill
+            path: field_movimientos
+            type: partial
+            tab: 'Publicidad'
+        reservas:
+            span: fill
+            type: partial
+            tab: 'Reservas'

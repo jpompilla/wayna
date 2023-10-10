@@ -1,0 +1,20 @@
+fields:
+    nombre:
+        label: Nombre
+        span: full
+        type: text
+    tipo:
+        label: Tipo
+        span: auto
+        type: text
+    cuenta:
+        label: Cuenta
+        span: auto
+        type: text
+tabs:
+    fields:
+        movimientos:
+            span: fill
+            path: field_movimientos
+            type: partial
+            tab: "Movimientos"

@@ -1,0 +1,21 @@
+fields:
+    nombre:
+        label: 'Nombre (Incluye)'
+        span: full
+        type: text
+    categorias:
+        label: Categoria
+        nameFrom: nombre
+        span: left
+        type: relation    
+    dia:
+        label: Dia
+        span: right
+        default: 1
+        type: number    
+    item:
+        label: 'Servicio de Proveedor'
+        nameFrom: servicio[name]
+        span: right
+        type: recordfinder
+        list: $/soroche/wayna/models/servicioprecio/columns.yaml

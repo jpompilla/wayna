@@ -1,0 +1,4 @@
+title: Embajadores
+modelClass: soroche\Wayna\Models\Embajador
+toolbar:
+    buttons: reorder_toolbar

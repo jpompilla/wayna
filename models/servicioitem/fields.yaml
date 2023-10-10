@@ -1,0 +1,33 @@
+fields:
+    dia:
+        label: Dia
+        span: auto
+        type: number
+    nombre:
+        label: Nombre
+        span: auto
+        type: text
+    item_id:
+        label: 'Item id'
+        span: auto
+        type: recordfinder
+    hotel1_id:
+        label: 'Hotel1 id'
+        span: auto
+        type: recordfinder
+    hotel2_id:
+        label: 'Hotel2 id'
+        span: auto
+        type: recordfinder
+    hotel3_id:
+        label: 'Hotel3 id'
+        span: auto
+        type: recordfinder
+    hotel4_id:
+        label: 'Hotel4 id'
+        span: auto
+        type: recordfinder
+    hotel5_id:
+        label: 'Hotel5 id'
+        span: auto
+        type: recordfinder

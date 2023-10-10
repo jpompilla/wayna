@@ -1,0 +1,29 @@
+columns:
+    id:
+        label: id
+        type: number
+    nombre:
+        label: Nombre
+        type: text
+    tipo:
+        label: Tipo de Pago
+        type: text
+        select: nombre
+        relation: tipo
+    cuenta:
+        label: Cuenta Bancaria
+        type: text
+        select: nombre
+        relation: cuenta
+    monto:
+        label: Monto
+        type: text
+        format: $%.2f
+        align: right
+    fecha:
+        label: fecha
+        type: date
+        format: d-m-Y
+    nota:
+        label: nota
+        type: text

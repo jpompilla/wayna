@@ -1,0 +1,10 @@
+name: CuentasBancarias
+form: $/soroche/wayna/models/tipo/cuentasbancarias_fields.yaml
+modelClass: soroche\Wayna\Models\Tipo
+defaultRedirect: soroche/wayna/cuentasbancarias
+create:
+    redirect: 'soroche/wayna/cuentasbancarias/update/:id'
+    redirectClose: soroche/wayna/cuentasbancarias
+update:
+    redirect: soroche/wayna/cuentasbancarias
+    redirectClose: soroche/wayna/cuentasbancarias

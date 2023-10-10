@@ -1,0 +1,10 @@
+name: Salidas
+form: $/soroche/wayna/models/salida/fields.yaml
+modelClass: soroche\Wayna\Models\Salida
+defaultRedirect: soroche/wayna/salidas
+create:
+    redirect: 'soroche/wayna/salidas/update/:id'
+    redirectClose: soroche/wayna/salidas
+update:
+    redirect: soroche/wayna/salidas
+    redirectClose: soroche/wayna/salidas

@@ -1,0 +1,75 @@
+fields:
+    salida:
+        label: 'Grupos Programados'
+        title: 'Grupos Programados'
+        nameFrom: name
+        span: auto
+        type: recordfinder
+        list: $/soroche/wayna/models/salida/reserva_columns.yaml
+    nro_paxs:
+        label: Nro Pasajeros
+        span: auto
+        default: 1
+        type: number
+tabs:
+    fields:
+        codigo:
+            label: Codigo
+            span: auto
+            readOnly: true
+            type: text
+            tab: General
+        total:
+            label: Total
+            span: right
+            context:
+                - update
+            type: number
+            tab: General
+        estado:
+            label: 'Estado'
+            span: left
+            nameFrom: nombre
+            type: relation
+            tab: General
+        adelanto:
+            label: Reserva con
+            span: right
+            context:
+                - update
+            type: number
+            tab: General
+        saldo:
+            label: Saldo
+            span: right
+            context:
+                - update
+            type: number
+            readOnly: true
+            tab: General
+        comision:
+            label: Comision
+            span: right
+            context:
+                - update
+            type: number
+            readOnly: true
+            tab: General            
+        servicio_paxs:
+            span: full
+            context:
+                - update
+            type: partial
+            tab: Servicios
+        paxs:
+            span: full
+            context:
+                - update
+            type: partial
+            tab: Viajeros
+        pagos:
+            span: full
+            context:
+                - update
+            type: partial
+            tab: Pagos

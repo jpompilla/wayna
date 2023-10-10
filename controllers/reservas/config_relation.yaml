@@ -1,0 +1,21 @@
+paxs:
+    label: Viajeros
+    manage:
+        form: $/soroche/wayna/models/pax/reserva_fields.yaml
+    view:
+        list: $/soroche/wayna/models/pax/reserva_columns.yaml
+        toolbarButtons: create|add|delete
+servicio_paxs:
+    label: Servicios
+    manage:
+        form: $/soroche/wayna/models/serviciopax/reserva_fields.yaml
+    view:
+        list: $/soroche/wayna/models/serviciopax/reserva_columns.yaml
+        toolbarButtons: create|delete
+pagos:
+    label: Pagos
+    manage:
+        form: $/soroche/wayna/models/pago/reserva_fields.yaml
+    view:
+        list: $/soroche/wayna/models/pago/reserva_columns.yaml
+        toolbarButtons: create|delete

@@ -1,0 +1,9 @@
+<?php if($value < 0): ?>
+<span class="btn btn-default btn-xs" style="background-color:red;">
+<?php elseif ($value <= 20): ?>
+<span class="btn btn-default btn-xs" style="background-color:#ff9600;">
+<?php else: ?>
+<span style="font-weight:bold;">
+<?php endif ?>
+<?= money_format('%.2n', $value); ?>
+</span>

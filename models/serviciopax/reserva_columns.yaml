@@ -1,0 +1,35 @@
+columns:    
+    dia:
+        label: dia
+        type: number
+    fecha:
+        label: fecha
+        type: text
+    actividad_nombre:
+        label: actividad_nombre
+        type: text
+    incluye_nombre:
+        label: incluye_nombre
+        type: text
+    servicio_precio_nombre:
+        label: servicio_precio_nombre
+        type: text
+    nro_paxs:
+        label: nro_paxs
+        type: number
+    costo_unitario:
+        label: Costo Unit
+        type: number
+        format: $ %.2f
+    costo:
+        label: Subtotal
+        type: number
+        format: $ %.2f
+    estado:
+        label: Estado
+        type: text
+        relation: estado
+        select: nombre
+    id:
+        label: id
+        type: number

@@ -1,0 +1,32 @@
+<div id="preciosList">    
+    <?php if (count($model->items)): ?>
+        <div class="list-preview list-flush">
+            <div class="control-list">
+                <table class="table data" data-control="rowlink">
+                    <thead>
+                        <tr>
+                            <th><span>ID</span></th>
+                            <th><span>Nombre</span></th>
+                            <th><span>Proveedor - Servicio</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($model->items as $item): ?>
+                            <tr>
+                                <td>
+                                    <?= e($item->id) ?>
+                                </td>
+                                <td>
+                                    <?= e($item->nombre) ?>
+                                </td>
+                                <td>
+                                    <?= e($item->item->name) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php endif ?>
+</div>

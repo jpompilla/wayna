@@ -1,0 +1,4 @@
+title: Paquetes
+modelClass: soroche\Wayna\Models\Servicio
+toolbar:
+    buttons: reorder_toolbar

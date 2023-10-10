@@ -1,0 +1,65 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'CREATE table soroche_wayna_tipos'
+    - builder_table_create_soroche_wayna_tipos.php
+1.0.3:
+    - 'CREATE table soroche_wayna_embajadores'
+    - builder_table_create_soroche_wayna_embajadores.php
+1.0.4:
+    - 'CREATE table soroche_wayna_pagos'
+    - builder_table_create_soroche_wayna_pagos.php
+1.0.5:
+    - 'CREATE table soroche_wayna_pagoitems'
+    - builder_table_create_soroche_wayna_pagoitems.php
+1.0.6:
+    - 'CREATE table soroche_wayna_proveedores'
+    - builder_table_create_soroche_wayna_proveedores.php
+1.0.7:
+    - 'Created table soroche_wayna_servicio'
+    - builder_table_create_soroche_wayna_servicio.php
+1.0.8:
+    - 'Created table soroche_wayna_servicioitems'
+    - builder_table_create_soroche_wayna_servicioitems.php
+1.0.9:
+    - 'Updated table soroche_wayna_proveedores'
+    - builder_table_update_soroche_wayna_proveedores.php
+1.0.10:
+    - 'MIGRAR Embajadores'
+    - seeder_1010.php
+1.0.11:
+    - 'LLENAR Tipos'
+    - seeder_1011.php
+1.0.12:
+    - 'MIGRAR pagos'
+    - seeder_1012.php
+1.0.13:
+    - 'Created table soroche_wayna_servicioprecios'
+    - builder_table_create_soroche_wayna_servicioprecios.php
+1.0.14:
+    - 'Created table soroche_wayna_servicioprecioitems'
+    - builder_table_create_soroche_wayna_servicioprecioitems.php
+1.0.15:
+    - 'LLENAR Proveedor'
+    - seeder_1015.php
+1.0.16:
+    - 'LLENAR Tours y Paquetes'
+    - seeder_1016.php
+1.0.17:
+    - 'CREATE table soroche_wayna_salidas'
+    - builder_table_create_soroche_wayna_salidas.php
+1.0.18:
+    - 'Created table soroche_wayna_reservas'
+    - builder_table_create_soroche_wayna_reservas.php
+1.0.19:
+    - 'Created table soroche_wayna_paxs'
+    - builder_table_create_soroche_wayna_paxs.php
+1.0.20:
+    - 'LLENAR Salidas'
+    - seeder_1020.php
+1.0.21:
+    - 'Created table soroche_wayna_serviciopaxs'
+    - builder_table_create_soroche_wayna_serviciopaxs.php
+1.0.22:
+    - 'LLENAR Tipos de Pago y Bancos para Reservas'
+    - seeder_1022.php

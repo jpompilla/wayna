@@ -1,0 +1,44 @@
+fields:
+    imagen_comprobante:
+        label: 'Imagen Comprobante'
+        mode: image
+        imageWidth: '300'
+        imageHeight: '400'
+        useCaption: true
+        thumbOptions:
+            mode: auto
+            extension: auto
+        span: left
+        type: fileupload
+    tipo:
+        label: 'Tipo de pago'
+        nameFrom: nombre
+        descriptionFrom: description
+        select: 'concat(''['',id,''] '',nombre)'
+        span: right
+        type: relation
+        default: 5
+    cuenta:
+        label: 'Cuenta Bancaria'
+        nameFrom: nombre
+        descriptionFrom: description
+        select: 'concat(''['',id,''] '',nombre)'
+        span: right
+        type: relation
+tabs:
+    fields:
+        fecha:
+            label: Fecha
+            span: auto
+            type: datepicker
+            tab: General
+        nota:
+            label: Nota
+            span: auto
+            type: textarea
+            tab: General
+        monto:
+            label: Monto
+            span: auto
+            type: number
+            tab: General

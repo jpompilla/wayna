@@ -1,0 +1,59 @@
+fields:
+    imagen_comprobante:
+        label: Imagen Comprobante
+        mode: image        
+        useCaption: true
+        span: left
+        type: fileupload
+    pagable_type:
+        label: 'Tipo de Pagador'
+        span: right
+        type: dropdown
+        placeholder: '-- Seleccione un tipo --'
+        options:
+            soroche\Wayna\Models\Embajador: Embajador
+            soroche\Wayna\Models\Reserva: Reserva
+    pagable_id:
+        label: Pagador
+        span: right
+        dependsOn: pagable_type
+        type: dropdown
+    tipo:
+        label: 'Tipo de pago'
+        nameFrom: nombre
+        descriptionFrom: description
+        select: 'concat(''['',id,''] '',nombre)'
+        span: right
+        type: relation
+        default: 5
+    cuenta:
+        label: 'Cuenta Bancaria'
+        nameFrom: nombre
+        descriptionFrom: description
+        select: 'concat(''['',id,''] '',nombre)'
+        span: right
+        type: relation
+tabs:
+    fields:
+        fecha:
+            label: Fecha
+            span: auto
+            type: datepicker
+            tab: Detalle
+        nota:
+            label: Nota
+            span: auto
+            type: textarea
+            tab: Detalle
+        monto:
+            label: Monto
+            span: auto
+            type: number
+            tab: Detalle
+        items:
+            span: fill
+            path: field_items
+            type: partial
+            context:
+                - update
+            tab: "Movimientos"

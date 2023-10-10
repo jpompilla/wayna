@@ -1,0 +1,65 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('soroche/wayna/paquetes') ?>">Paquetes</a></li>
+        <li><strong><?= $formModel->name ?></strong></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+<?php foreach ($formModel->servicio_precios as $sp): ?>
+    
+    <div class="list-preview list-flush">
+        <div class="control-list">            
+            <table class="table data" data-control="rowlink">
+                <thead>
+                    <tr>
+                        <th colspan="2" style="text-align:center;"><span>Servicio</span></th>
+                        <?php for ($i = 1; $i <= 10; $i++): ?>
+                        <th style="text-align:center;<?= $i==2 ? 'background-color:#ffc07687;' : '' ?>"><span>P<?= $i ?></span></th>
+                        <?php endfor ?>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>                        
+                        <td colspan="2"><strong><?= $sp->codigo ?></strong></td>
+                        <?php for ($i = 1; $i <= 10; $i++): ?>
+                        <td style="text-align:right; <?= $i==2 ? 'background-color:#ffc07687;' : '' ?>"> 
+                            <strong>$<?= number_format($sp->precios[$i-1]['confidencial_unitario']) ?></strong>/<small><?= number_format($sp->precios[$i-1]['publicado_unitario']) ?></small><br>
+                            <small><?= number_format($sp->precios[$i-1]['comision_unitario']) ?></small>+<small><?= number_format($sp->precios[$i-1]['costo_unitario']) ?></small>
+                        </td>
+                        <?php endfor ?>
+                    </tr>
+                    
+                    <?php foreach ($formModel->servicio_items as $si): ?>
+                    <?php if ($si->categorias->contains($sp->categoria_id)): ?>
+                    <tr>
+                        <td width="70px">Dia <?= $si->dia ?></td>
+                        <td><?= $si->nombre ?></td>
+                        <?php for ($i = 1; $i <= 10; $i++): ?>
+                        <td style="text-align:right; <?= $i==2 ? 'background-color:#ffc07687;' : '' ?>"> 
+                            <span>$<?= number_format($si->item->precios[$i-1]['confidencial_unitario']) ?></span>/<small><?= number_format($si->item->precios[$i-1]['publicado_unitario']) ?></small><br>
+                            <small><?= number_format($si->item->precios[$i-1]['comision_unitario']) ?></small>+<small><?= number_format($si->item->precios[$i-1]['costo_unitario']) ?></small>
+                        </td>
+                        <?php endfor ?>
+                    </tr>
+                    <?php endif ?>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+    </div>  
+<?php endforeach ?>
+
+<?php else: ?>
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+<?php endif ?>
+
+<p>
+    <a href="<?= Backend::url('soroche/wayna/paquetes') ?>" class="btn btn-default oc-icon-chevron-left">
+        <?= e(trans('backend::lang.form.return_to_list')) ?>
+    </a>
+    <a href="<?= Backend::url('soroche/wayna/paquetes/update/'.$formModel->id) ?>" class="btn btn-primary oc-icon-pencil">
+        Editar
+    </a>
+</p>

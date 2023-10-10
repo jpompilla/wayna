@@ -1,0 +1,27 @@
+fields:    
+    destinable_type:
+        label: 'Tipo de destino'
+        span: auto
+        type: dropdown
+        placeholder: '-- Seleccione un tipo --'
+        options:
+            soroche\Wayna\Models\Embajador: Embajador
+            soroche\Wayna\Models\Reserva: Reserva
+            soroche\Wayna\Models\Tipo: Cuenta Bancaria
+    destinable_id:
+        label: 'Destino'
+        span: auto
+        dependsOn: destinable_type
+        type: dropdown
+    centro:
+        label: 'Centro de Costo'
+        span: auto
+        nameFrom: nombre
+        descriptionFrom: description
+        type: relation
+    monto:
+        label: Monto
+        span: auto
+        type: number
+    
+    

@@ -1,0 +1,21 @@
+columns:
+    id:
+        label: ID
+        type: number
+    name:
+        label: Codigo
+        type: text
+        searchable: true
+    fecha:
+        label: 'Fecha Salida'
+        type: date
+        format: Y-m-d
+        ignoreTimezone: true
+    servicio_precio:
+        label: Paquete
+        type: text
+        select: name
+        relation: servicio_precio
+    created_at:
+        label: created_at
+        type: datetime

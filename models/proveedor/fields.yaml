@@ -1,0 +1,28 @@
+fields:
+    nombre:
+        label: Nombre
+        span: auto
+        type: text
+    tipo:
+        label: 'Tipo de Proveedor'
+        span: auto
+        type: relation
+        nameFrom: nombre        
+        select: 'concat(''['',id,''] '',nombre)'  
+        placeholder: '-- Seleccione un tipo --'
+    lugar:
+        label: 'Ubicación principal'
+        span: auto
+        type: relation
+        nameFrom: nombre
+        select: 'concat(''['',id,''] '',nombre)'  
+        default: 23
+tabs:
+    fields:
+        servicios:
+            span: full
+            context:
+                - update
+                - preview
+            type: partial
+            tab: Servicios

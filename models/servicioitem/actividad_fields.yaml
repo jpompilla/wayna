@@ -1,0 +1,20 @@
+fields:
+    nombre:
+        label: 'Nombre (Incluye)'
+        span: full
+        type: text
+    dia:
+        label: Dia
+        span: left
+        default: 1
+        type: number
+        readOnly: true
+    item:
+        label: 'Servicio de Proveedor'
+        title: Seleccionar Servicio de Proveedor        
+        nameFrom: name
+        span: right
+        type: recordfinder
+        list: $/soroche/wayna/models/servicioprecio/actividad_columns.yaml
+        scope: servicioProveedor
+        

@@ -1,0 +1,32 @@
+columns:
+    id:
+        label: id
+        type: number
+    nombre:
+        label: nombre
+        type: text
+    capacidad:
+        label: Capacidad
+        type: number
+    confidencial:
+        label: Precio confidencial
+        type: number
+        format: $ %.2f
+    tipo:
+        label: Tipo de Servicio
+        type: text
+        select: nombre
+        relation: tipo
+    lugar_inicio:
+        label: Lugar de Inicio
+        type: text
+        select: nombre
+        relation: lugar_inicio
+    lugar_fin:
+        label: Lugar de Fin
+        type: text
+        select: nombre
+        relation: lugar_fin
+    updated_at:
+        label: updated_at
+        type: datetime

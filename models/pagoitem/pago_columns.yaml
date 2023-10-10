@@ -1,0 +1,28 @@
+columns:
+    id:
+        label: ID
+        type: number
+    pago[fecha]:
+        label: Fecha
+        type: date
+        format: d/m/yy H:i
+    name:
+        label: Destino
+        type: text
+    centro:
+        label: Centro
+        type: text
+        select: nombre
+        relation: centro
+    pago[monto]:
+        label: Pago
+        type: text
+        format: $%.2f
+    monto:
+        label: Monto
+        type: text
+        format: $%.2f
+    acumulado:
+        label: Acumulado
+        type: text
+        format: $%.2f

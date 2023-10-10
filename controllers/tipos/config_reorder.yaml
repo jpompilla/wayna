@@ -1,0 +1,4 @@
+title: Tipos
+modelClass: soroche\Wayna\Models\Tipo
+toolbar:
+    buttons: reorder_toolbar

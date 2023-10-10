@@ -1,0 +1,29 @@
+columns:
+    id:
+        label: ID
+        type: number
+    name:
+        label: Reserva
+        type: text
+    salida:
+        label: Grupo programado
+        type: text
+        relation: salida
+        select: name
+    nro_paxs:
+        label: Nro Paxs
+        type: number
+    total:
+        label: total
+        type: text
+    saldo:
+        label: saldo
+        type: text
+    comision:
+        label: comision
+        type: text
+    estado:
+        label: Estado
+        type: text
+        relation: estado
+        select: nombre

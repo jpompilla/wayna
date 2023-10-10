@@ -1,0 +1,587 @@
+fields:
+    nombre:
+        label: Nombre
+        span: auto
+        type: text
+    tipo:
+        label: 'Tipo de Servicio'
+        span: auto
+        type: relation
+        nameFrom: nombre
+        select: 'concat(''['',id,''] '',nombre)'
+        default: 20
+        readOnly: true
+tabs:
+    fields:
+        slug:
+            label: Slug
+            preset:
+                field: nombre
+                type: slug
+            span: left
+            type: text
+            tab: General        
+        categorias:
+            label: 'Categorias'
+            nameFrom: nombre
+            span: right
+            type: relation
+            tab: General
+        lugar_inicio:
+            label: 'Lugar de Inicio'
+            span: left
+            type: relation
+            nameFrom: nombre
+            select: 'concat(''['',id,''] '',nombre)'
+            default: 23
+            tab: General
+        lugar_fin:
+            label: 'Lugar de Fin'
+            span: left
+            type: relation
+            nameFrom: nombre
+            select: 'concat(''['',id,''] '',nombre)'
+            default: 23
+            tab: General
+        description:
+            label: Descripción
+            size: ''
+            span: left
+            type: richeditor
+            tab: General
+        poster:
+            label: Poster
+            mode: image
+            imageWidth: '300'
+            imageHeight: '200'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: left
+            type: fileupload
+            commentAbove: 'Recomendado: 1440x960px'
+            tab: Multimedia
+        gallery:
+            label: Gallery
+            mode: image
+            imageWidth: '100'
+            imageHeight: '100'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: right
+            type: fileupload
+            tab: Multimedia
+        servicio_items:
+            span: full
+            context:
+                - update
+            type: partial
+            tab: Itinerario
+        mantener_precios:
+            label: '📌 Fijar precios'
+            span: auto
+            type: switch
+            context:
+                - update
+            tab: Precios
+        confidencial:
+            label: PU (US$)
+            span: left
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios
+                condition: unchecked
+            type: number
+            tab: Precios
+        reserva:
+            label: Reserva Uni (US$)
+            span: right
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios
+                condition: unchecked
+            type: number
+            tab: Precios
+        comision:
+            label: Comision Uni (US$)
+            span: left
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios
+                condition: unchecked
+            type: number
+            tab: Precios
+        publicado:
+            label: Web Uni (US$)
+            span: right
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios
+                condition: unchecked
+            type: number
+            tab: Precios
+        precios:
+            type: datatable
+            adding: false
+            deleting: false
+            columns:
+                nro_pax:
+                    type: string
+                    title: 'Nro Paxs'
+                    readOnly: true
+                costo:
+                    type: string
+                    title: Costo (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                costo_unitario:
+                    type: string
+                    title: CU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                confidencial_unitario:
+                    type: string
+                    title: PU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                reserva_unitario:
+                    type: string
+                    title: Reserva Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                comision_unitario:
+                    type: string
+                    title: Comision Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                publicado_unitario:
+                    type: string
+                    title: Web Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+            dynamicHeight: true
+            height: false
+            context:
+                - update
+            tab: Precios
+        mantener_precios2:
+            label: '📌 Fijar precios'
+            span: auto
+            type: switch
+            context:
+                - update
+            tab: '2 Estrellas'
+        confidencial2:
+            label: PU (US$)
+            span: left
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios2
+                condition: unchecked
+            type: number
+            tab: '2 Estrellas'
+        reserva2:
+            label: Reserva Uni (US$)
+            span: right
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios2
+                condition: unchecked
+            type: number
+            tab: '2 Estrellas'
+        comision2:
+            label: Comision Uni (US$)
+            span: left
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios2
+                condition: unchecked
+            type: number
+            tab: '2 Estrellas'
+        publicado2:
+            label: Web Uni (US$)
+            span: right
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios2
+                condition: unchecked
+            type: number
+            tab: '2 Estrellas'
+        precios2:
+            type: datatable
+            adding: false
+            deleting: false
+            columns:
+                nro_pax:
+                    type: string
+                    title: 'Nro Paxs'
+                    readOnly: true
+                costo:
+                    type: string
+                    title: Costo (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                costo_unitario:
+                    type: string
+                    title: CU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                confidencial_unitario:
+                    type: string
+                    title: PU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                reserva_unitario:
+                    type: string
+                    title: Reserva Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                comision_unitario:
+                    type: string
+                    title: Comision Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                publicado_unitario:
+                    type: string
+                    title: Web Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+            dynamicHeight: true
+            height: false
+            context:
+                - update
+            tab: '2 Estrellas'
+        mantener_precios3:
+            label: '📌 Fijar precios'
+            span: auto
+            type: switch
+            context:
+                - update
+            tab: '3 Estrellas'
+        confidencial3:
+            label: PU (US$)
+            span: left
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios3
+                condition: unchecked
+            type: number
+            tab: '3 Estrellas'
+        reserva3:
+            label: Reserva Uni (US$)
+            span: right
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios3
+                condition: unchecked
+            type: number
+            tab: '3 Estrellas'
+        comision3:
+            label: Comision Uni (US$)
+            span: left
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios3
+                condition: unchecked
+            type: number
+            tab: '3 Estrellas'
+        publicado3:
+            label: Web Uni (US$)
+            span: right
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios3
+                condition: unchecked
+            type: number
+            tab: '3 Estrellas'
+        precios3:
+            type: datatable
+            adding: false
+            deleting: false
+            columns:
+                nro_pax:
+                    type: string
+                    title: 'Nro Paxs'
+                    readOnly: true
+                costo:
+                    type: string
+                    title: Costo (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                costo_unitario:
+                    type: string
+                    title: CU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                confidencial_unitario:
+                    type: string
+                    title: PU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                reserva_unitario:
+                    type: string
+                    title: Reserva Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                comision_unitario:
+                    type: string
+                    title: Comision Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                publicado_unitario:
+                    type: string
+                    title: Web Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+            dynamicHeight: true
+            height: false
+            context:
+                - update
+            tab: '3 Estrellas'
+        mantener_precios4:
+            label: '📌 Fijar precios'
+            span: auto
+            type: switch
+            context:
+                - update
+            tab: '4 Estrellas'
+        confidencial4:
+            label: PU (US$)
+            span: left
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios4
+                condition: unchecked
+            type: number
+            tab: '4 Estrellas'
+        reserva4:
+            label: Reserva Uni (US$)
+            span: right
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios4
+                condition: unchecked
+            type: number
+            tab: '4 Estrellas'
+        comision4:
+            label: Comision Uni (US$)
+            span: left
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios4
+                condition: unchecked
+            type: number
+            tab: '4 Estrellas'
+        publicado4:
+            label: Web Uni (US$)
+            span: right
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios4
+                condition: unchecked
+            type: number
+            tab: '4 Estrellas'
+        precios4:
+            type: datatable
+            adding: false
+            deleting: false
+            columns:
+                nro_pax:
+                    type: string
+                    title: 'Nro Paxs'
+                    readOnly: true
+                costo:
+                    type: string
+                    title: Costo (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                costo_unitario:
+                    type: string
+                    title: CU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                confidencial_unitario:
+                    type: string
+                    title: PU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                reserva_unitario:
+                    type: string
+                    title: Reserva Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                comision_unitario:
+                    type: string
+                    title: Comision Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                publicado_unitario:
+                    type: string
+                    title: Web Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+            dynamicHeight: true
+            height: false
+            context:
+                - update
+            tab: '4 Estrellas'
+        mantener_precios5:
+            label: '📌 Fijar precios'
+            span: auto
+            type: switch
+            context:
+                - update
+            tab: '5 Estrellas'
+        confidencial5:
+            label: PU (US$)
+            span: left
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios5
+                condition: unchecked
+            type: number
+            tab: '5 Estrellas'
+        reserva5:
+            label: Reserva Uni (US$)
+            span: right
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios5
+                condition: unchecked
+            type: number
+            tab: '5 Estrellas'
+        comision5:
+            label: Comision Uni (US$)
+            span: left
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios5
+                condition: unchecked
+            type: number
+            tab: '5 Estrellas'
+        publicado5:
+            label: Web Uni (US$)
+            span: right
+            context:
+                - update
+            trigger:
+                action: show
+                field: mantener_precios5
+                condition: unchecked
+            type: number
+            tab: '5 Estrellas'
+        precios5:
+            type: datatable
+            adding: false
+            deleting: false
+            columns:
+                nro_pax:
+                    type: string
+                    title: 'Nro Paxs'
+                    readOnly: true
+                costo:
+                    type: string
+                    title: Costo (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                costo_unitario:
+                    type: string
+                    title: CU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                confidencial_unitario:
+                    type: string
+                    title: PU (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                reserva_unitario:
+                    type: string
+                    title: Reserva Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                comision_unitario:
+                    type: string
+                    title: Comision Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                publicado_unitario:
+                    type: string
+                    title: Web Uni (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+            dynamicHeight: true
+            height: false
+            context:
+                - update
+            tab: '5 Estrellas'

@@ -1,0 +1,61 @@
+columns:
+    id:
+        label: id
+        type: number
+    dia:
+        label: dia
+        type: number
+    fecha:
+        label: fecha
+        type: text
+    actividad_id:
+        label: actividad_id
+        type: number
+    actividad_nombre:
+        label: actividad_nombre
+        type: text
+    incluye_id:
+        label: incluye_id
+        type: number
+    incluye_nombre:
+        label: incluye_nombre
+        type: text
+    servicio_precio_id:
+        label: servicio_precio_id
+        type: number
+    servicio_precio_nombre:
+        label: servicio_precio_nombre
+        type: text
+    nro_paxs:
+        label: nro_paxs
+        type: number
+    costo:
+        label: costo
+        type: text
+    confidencial:
+        label: confidencial
+        type: text
+    publicado:
+        label: publicado
+        type: text
+    comision:
+        label: comision
+        type: text
+    estado_id:
+        label: estado_id
+        type: number
+    proveedor_id:
+        label: proveedor_id
+        type: number
+    proveedor_nombre:
+        label: proveedor_nombre
+        type: text
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime
+    deleted_at:
+        label: deleted_at
+        type: datetime

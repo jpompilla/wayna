@@ -1,0 +1,37 @@
+columns:
+    id:
+        label: ID
+        type: number
+    name:
+        label: Codigo Reserva
+        type: text
+    salida:
+        label: Grupo programado
+        type: text
+        relation: salida
+        select: name
+    embajador:
+        label: Embajador
+        type: text
+        relation: embajador
+        select: codigo
+    nro_paxs:
+        label: Nro Paxs
+        type: number
+    total:
+        label: total
+        type: text
+    saldo:
+        label: saldo
+        type: text
+    comision:
+        label: comision
+        type: text
+    estado:
+        label: Estado
+        type: text
+        relation: estado
+        select: nombre
+    created_at:
+        label: created_at
+        type: datetime

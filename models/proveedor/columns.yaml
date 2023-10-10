@@ -1,0 +1,24 @@
+columns:
+    id:
+        label: id
+        type: number
+    nombre:
+        label: nombre
+        type: text
+        searchable: true
+    tipo:
+        label: Tipo de proveedor
+        type: text
+        select: nombre
+        relation: tipo
+    lugar:
+        label: Lugar Principal
+        type: text
+        select: nombre
+        relation: lugar
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime

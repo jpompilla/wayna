@@ -1,0 +1,7 @@
+servicio_items:
+    label: Item
+    manage:
+        form: $/soroche/wayna/models/servicioitem/servicio_fields.yaml
+    view:
+        list: $/soroche/wayna/models/servicioitem/servicio_columns.yaml
+        toolbarButtons: create|delete

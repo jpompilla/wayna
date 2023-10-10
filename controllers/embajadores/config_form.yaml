@@ -1,0 +1,10 @@
+name: Embajadores
+form: $/soroche/wayna/models/embajador/fields.yaml
+modelClass: soroche\Wayna\Models\Embajador
+defaultRedirect: soroche/wayna/embajadores
+create:
+    redirect: 'soroche/wayna/embajadores/update/:id'
+    redirectClose: soroche/wayna/embajadores
+update:
+    redirect: soroche/wayna/embajadores
+    redirectClose: soroche/wayna/embajadores

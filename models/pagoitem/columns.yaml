@@ -1,0 +1,31 @@
+columns:
+    id:
+        label: id
+        type: number
+    centro_id:
+        label: centro_id
+        type: number
+    monto:
+        label: monto
+        type: text
+    acumulado:
+        label: acumulado
+        type: text
+    destinable_id:
+        label: destinable_id
+        type: number
+    destinable_type:
+        label: destinable_type
+        type: text
+    pago_id:
+        label: pago_id
+        type: number
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime
+    deleted_at:
+        label: deleted_at
+        type: datetime

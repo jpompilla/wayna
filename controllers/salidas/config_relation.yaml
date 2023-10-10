@@ -1,0 +1,14 @@
+paxs:
+    label: Viajeros
+    manage:
+        form: $/soroche/wayna/models/pax/salida_fields.yaml
+    view:
+        list: $/soroche/wayna/models/pax/salida_columns.yaml
+        toolbarButtons: create|delete
+servicio_paxs:
+    label: Servicios
+    manage:
+        form: $/soroche/wayna/models/serviciopax/salida_fields.yaml
+    view:
+        list: $/soroche/wayna/models/serviciopax/salida_columns.yaml
+        toolbarButtons: create|delete

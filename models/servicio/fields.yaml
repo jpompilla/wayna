@@ -1,0 +1,76 @@
+fields:
+    nombre:
+        label: Nombre
+        span: auto
+        type: text
+    tipo:
+        label: 'Tipo de Servicio'
+        span: auto
+        type: relation
+        nameFrom: nombre        
+        select: 'concat(''['',id,''] '',nombre)'  
+        default: 21
+    lugar_inicio:
+        label: 'Lugar de Inicio'
+        span: auto
+        type: relation
+        nameFrom: nombre        
+        select: 'concat(''['',id,''] '',nombre)'  
+        default: 23
+    lugar_fin:
+        label: 'Lugar de Fin'
+        span: auto
+        type: relation
+        nameFrom: nombre        
+        select: 'concat(''['',id,''] '',nombre)'          
+        default: 23    
+tabs:
+    fields:
+        categorias:
+            nameFrom: nombre
+            type: relation
+            tab: Categorias
+        servicio_items:
+            span: full
+            context:
+                - update
+            type: partial
+            tab: Itinerario
+        estandar_precios:
+            type: datatable
+            adding: false
+            deleting: false
+            columns:
+                nro_pax:
+                    type: string
+                    title: 'Nro Paxs'
+                    readOnly: true;
+                costo:
+                    type: string
+                    title: Costo (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                confidencial:
+                    type: string
+                    title: Confidencial (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                publicado:
+                    type: string
+                    title: Publico (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+                comision:
+                    type: string
+                    title: Comision (US$)
+                    validation:
+                        float:
+                            message: 'Please enter a number'
+            dynamicHeight: true
+            height: false
+            context:
+                - update
+            tab: Precios (Estandar)

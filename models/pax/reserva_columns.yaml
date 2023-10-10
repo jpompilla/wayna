@@ -1,0 +1,15 @@
+columns:
+    id:
+        label: ID
+        type: number
+    name:
+        label: Nombre Completo
+        type: text
+    tipo_documento:
+        label: Tipo Documento
+        type: text
+        relation: tipo_documento
+        select: nombre
+    nro_documento:
+        label: Nro Documento
+        type: text

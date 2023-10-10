@@ -1,0 +1,26 @@
+columns:
+    id:
+        label: id
+        type: number
+        width: 50px
+    codigo:
+        label: Nombre
+        type: text
+        searchable: true
+    publicidad:
+        label: Ads (USD)
+        type: partial        
+        align: right
+        width: 80px
+    celular:
+        label: celular
+        type: text
+    email:
+        label: email
+        type: text
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime

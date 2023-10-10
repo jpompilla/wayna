@@ -1,0 +1,24 @@
+fields:
+    imagen_documento:
+        label: Imagen documento
+        mode: image
+        useCaption: true
+        span: left
+        type: fileupload
+    nombres:
+        label: Nombres
+        span: right
+        type: text
+    apellidos:
+        label: Apellidos
+        span: right
+        type: text
+    tipo_documento:
+        label: 'Tipo documento'
+        nameFrom: nombre
+        span: right
+        type: relation        
+    nro_documento:
+        label: 'Nro documento'
+        span: right
+        type: text

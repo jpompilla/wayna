@@ -1,0 +1,25 @@
+fields:
+    nombres:
+        label: Nombres
+        span: auto
+        type: text
+    apellidos:
+        label: Apellidos
+        span: auto
+        type: text
+    tipo_documento_id:
+        label: 'Tipo documento id'
+        span: auto
+        type: relation
+    nro_documento:
+        label: 'Nro documento'
+        span: auto
+        type: text
+    reserva_id:
+        label: 'Reserva id'
+        span: auto
+        type: relation
+    salida_id:
+        label: 'Salida id'
+        span: auto
+        type: relation

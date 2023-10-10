@@ -1,0 +1,17 @@
+columns:    
+    id:
+        label: ID
+        type: number
+    name:
+        label: Servicio de Proveedor
+        type: text
+        searchable: true
+    servicio[capacidad]:
+        label: Capacidad
+        type: number
+    servicio[init_confidencial]:
+        label: Precio confidencial
+        type: number
+        format: $ %.2f
+        
+    
