@@ -1,0 +1,119 @@
+fields:
+    nombre:
+        label: Nombre
+        span: full
+        required: 1
+        type: text
+    tipo:
+        label: 'Tipo de Servicio'
+        span: left
+        type: dropdown
+        required: 1
+        default: Tour
+        readOnly: true
+        options:
+            Alojamiento: Alojamiento
+            Alimentacion: Alimentación
+            Traslado: Traslado
+            Guiado: Guiado
+            Entradas: Entradas
+            Tour: 'Tour o Actividad'
+            Paquete: Paquete
+    lugar:
+        label: Lugar
+        nameFrom: nombre
+        descriptionFrom: description
+        span: right
+        type: relation
+tabs:
+    fields:
+        items:
+            prompt: 'Añadir servicio'
+            style: collapsed
+            span: full
+            type: repeater
+            tab: Servicios
+            form:
+                fields:
+                    servicio:
+                        label: Servicio
+                        nameFrom: name
+                        descriptionFrom: description
+                        placeholder: '-- Seleccion un servicio --'
+                        showSearch: true
+                        span: left
+                        type: relation
+                    incluye:
+                        label: Incluye
+                        prompt: 'Añadir incluye'
+                        style: default
+                        span: right
+                        type: repeater
+                        form:
+                            fields:
+                                nombre:
+                                    label: Texto
+                                    span: auto
+                                    type: text
+                                dia:
+                                    label: Dia
+                                    span: auto
+                                    showSearch: false
+                                    default: 0
+                                    type: dropdown
+                                    options:
+                                        0: 'Mismo dia'
+                                        1: 'Un dia despues'
+                                        -1: 'Un dia antes'
+                    incluido:
+                        label: 'Incluido/No Incluido'
+                        span: left
+                        default: 1
+                        on: si
+                        off: no
+                        type: switch
+        params:
+            label: Parametros
+            type: datatable
+            span: left
+            adding: false
+            deleting: false
+            columns:
+                adelanto:
+                    type: string
+                    title: 'Adelanto'
+                comision:
+                    type: string
+                    title: 'Comision'
+            dynamicHeight: true
+            #context:
+            #    - update
+            height: false
+            tab: 'Precios (USD)'
+        precios:
+            type: datatable
+            adding: false
+            deleting: false
+            columns:
+                0:
+                    type: string
+                    title: 'PRECIOS'
+                    readOnly: true
+                    width: 180px
+                1:
+                    type: string
+                    title: P1
+                2:
+                    type: string
+                    title: P2
+                3:
+                    type: string
+                    title: P3
+                4:
+                    type: string
+                    title: P4
+            dynamicHeight: true
+            #context:
+            #    - update
+            height: false
+            tab: 'Precios (USD)'

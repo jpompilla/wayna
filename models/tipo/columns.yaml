@@ -1,0 +1,22 @@
+columns:
+    id:
+        label: id
+        type: number
+    tipo:
+        label: tipo
+        type: text
+        searchable: true
+        sortable: true
+    nombre:
+        label: nombre
+        type: text
+        searchable: true
+        sortable: true
+    valor:
+        label: valor
+        type: text
+        searchable: true
+        sortable: true
+    updated_at:
+        label: updated_at
+        type: datetime

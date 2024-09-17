@@ -1,0 +1,10 @@
+name: Cursos
+form: $/soroche/wayna/models/curso/fields.yaml
+modelClass: Soroche\Wayna\Models\Curso
+defaultRedirect: soroche/wayna/cursos
+create:
+    redirect: 'soroche/wayna/cursos/update/:id'
+    redirectClose: soroche/wayna/cursos
+update:
+    redirect: soroche/wayna/cursos
+    redirectClose: soroche/wayna/cursos

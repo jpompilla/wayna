@@ -1,0 +1,151 @@
+fields:
+    nombre:
+        label: Nombre
+        span: auto
+        type: text
+    tipo:
+        label: Tipo
+        nameFrom: nombre
+        descriptionFrom: description
+        span: auto
+        type: relation
+tabs:
+    fields:
+        razon_social:
+            label: 'Razon social'
+            span: auto
+            type: text
+            tab: General
+        ruc:
+            label: RUC
+            span: auto
+            type: text
+            tab: General
+        direccion:
+            label: Direccion
+            span: auto
+            type: text
+            tab: General
+        categoria:
+            label: 'Categoria'
+            span: auto
+            type: dropdown
+            default: No categorizado
+            options:
+                No categorizado: No categorizado
+                1 Estrella: 1 Estrella
+                2 Estrellas: 2 Estrellas
+                3 Estrellas: 3 Estrellas
+                4 Estrellas: 4 Estrellas
+                5 Estrellas: 5 Estrellas
+            tab: General
+        condicion:
+            label: Condicion
+            nameFrom: nombre
+            descriptionFrom: description
+            span: auto
+            type: relation
+            tab: General
+        contactos:
+            label: Contactos
+            prompt: 'Añadir nuevo item'
+            style: collapsed
+            span: full
+            type: repeater
+            tab: Contacto
+            form:
+                fields:
+                    valor:
+                        label: Contacto
+                        span: auto
+                        type: text
+                    tipo:
+                        label: 'Tipo de Contacto'
+                        options:
+                            telefono: Telefono
+                            whatsapp: Whatsapp
+                            email: 'Correo Electronico'
+                        showSearch: true
+                        span: auto
+                        type: dropdown
+                    cargo:
+                        label: 'Cargo del Contacto'
+                        span: auto
+                        type: text
+                    nombre:
+                        label: 'Nombre del contacto'
+                        span: auto
+                        type: text
+        users:
+            label: Colaboradores
+            span: full
+            context:
+                - update
+                - preview
+            type: partial
+            tab: Equipo
+        cuentasbancarias:
+            label: Cuentas Bancarias
+            span: full
+            context:
+                - update
+                - preview
+            type: partial
+            tab: Cuentas Bancarias
+        cursos:
+            label: Entrenamientos
+            span: full
+            context:
+                - update
+                - preview
+            type: partial
+            tab: Entrenamientos
+        cuentas:
+            label: Cuentas
+            span: full
+            context:
+                - update
+                - preview
+            type: partial
+            path: $/soroche/wayna/controllers/negocios/_cuentas.htm
+            tab: Cuentas
+        asientos:
+            label: Asientos
+            span: full
+            context:
+                - update
+                - preview
+            type: partial
+            path: $/soroche/wayna/controllers/negocios/_asientos.htm
+            tab: Asientos
+        params:
+            label: Parametros iniciales
+            type: datatable
+            span: left
+            adding: false
+            deleting: false
+            columns:
+                adelanto:
+                    type: string
+                    title: 'Adelanto'
+                pasarela:
+                    type: string
+                    title: '% Pasarela'
+                igv:
+                    type: string
+                    title: 'IGV'
+                ir:
+                    type: string
+                    title: 'Imp. Renta'
+                facturable:
+                    type: string
+                    title: 'Facturable'
+                
+                comision:
+                    type: string
+                    title: 'Comision'
+            dynamicHeight: true
+            #context:
+            #    - update
+            height: false
+            tab: 'Parametros Precio'

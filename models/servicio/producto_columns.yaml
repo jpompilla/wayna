@@ -1,0 +1,37 @@
+columns:
+    id:
+        label: id
+        type: number
+    negocio:
+        label: Proveedor
+        type: text
+        select: nombre
+        relation: negocio
+        searchable: true
+    nombre:
+        label: nombre
+        type: text
+    tipo:
+        label: tipo
+        type: text
+    precios[0][1]:
+        label: P1
+        type: dolares
+    precios[0][2]:
+        label: P2
+        type: dolares
+    precios[0][3]:
+        label: P3
+        type: dolares
+    precios[0][4]:
+        label: P4
+        type: dolares
+    params[0][adelanto]:
+        label: Adelanto
+        type: dolares
+    params[0][comision]:
+        label: Comision
+        type: dolares
+    updated_at:
+        label: updated_at
+        type: datetime

@@ -1,0 +1,28 @@
+<div id="movimientosList">    
+    <?php if (count($model->movs())): ?>
+        <div class="list-preview list-flush">
+            <div class="control-list">
+                <table class="table data" data-control="rowlink">
+                    <thead>
+                        <tr>
+                            <th><span>Cuenta</span></th>
+                            <th><span>Monto</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($model->movs() as $mov): ?>
+                            <tr>
+                                <td>
+                                    <?= e($mov->cuenta_codigo) ?>
+                                </td>
+                                <td>
+                                    <?= e($mov->monto) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php endif ?>
+</div>

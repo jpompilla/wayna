@@ -1,0 +1,30 @@
+columns:
+    id:
+        label: id
+        type: number
+    negocio:
+        label: Proveedor
+        type: text
+        select: nombre
+        relation: negocio
+        searchable: true
+    nombre:
+        label: nombre
+        type: text
+    lugar:
+        label: lugar
+        type: text
+        select: nombre
+        relation: lugar
+    tipo:
+        label: tipo
+        type: text
+    capacidad:
+        label: capacidad
+        type: number
+    costo:
+        label: costo
+        type: number
+    updated_at:
+        label: updated_at
+        type: datetime

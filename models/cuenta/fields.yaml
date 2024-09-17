@@ -1,0 +1,18 @@
+fields:
+    codigo:
+        label: Codigo
+        span: auto
+        type: text
+    nombre:
+        label: Nombre
+        span: auto
+        type: text
+tabs:
+    fields:        
+        movimientos:            
+            span: full
+            context:
+                - update
+            type: partial
+            path: $/soroche/wayna/controllers/negocios/_movimientos.htm
+            tab: Movimientos

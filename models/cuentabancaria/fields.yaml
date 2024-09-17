@@ -1,0 +1,25 @@
+fields:
+    nombre:
+        label: Nombre
+        span: auto
+        type: text
+    banco:
+        label: Banco
+        nameFrom: nombre
+        descriptionFrom: description
+        span: auto
+        type: relation
+    moneda:
+        label: Moneda
+        span: auto
+        nameFrom: nombre
+        descriptionFrom: description
+        type: relation
+    nro_cuenta:
+        label: 'Nro cuenta'
+        span: auto
+        type: text
+    cci:
+        label: CCI
+        span: auto
+        type: text

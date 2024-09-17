@@ -1,0 +1,12 @@
+list: $/soroche/wayna/models/proveedor/columns.yaml
+modelClass: Soroche\Wayna\Models\Proveedor
+title: Proveedores
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'soroche/wayna/proveedores/update/:id'

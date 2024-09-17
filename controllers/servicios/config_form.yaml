@@ -1,0 +1,10 @@
+name: Servicios
+form: $/soroche/wayna/models/servicio/fields.yaml
+modelClass: Soroche\Wayna\Models\Servicio
+defaultRedirect: soroche/wayna/servicios
+create:
+    redirect: 'soroche/wayna/servicios/update/:id'
+    redirectClose: soroche/wayna/servicios
+update:
+    redirect: soroche/wayna/servicios
+    redirectClose: soroche/wayna/servicios

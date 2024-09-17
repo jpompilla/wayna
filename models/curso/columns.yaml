@@ -1,0 +1,13 @@
+columns:
+    id:
+        label: id
+        type: number
+    nombre:
+        label: nombre
+        type: text
+    resumen:
+        label: resumen
+        type: text
+    updated_at:
+        label: updated_at
+        type: datetime

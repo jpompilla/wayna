@@ -1,0 +1,12 @@
+list: $/soroche/wayna/models/tipo/columns.yaml
+modelClass: Soroche\Wayna\Models\Tipo
+title: Tipos
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'soroche/wayna/tipos/update/:id'

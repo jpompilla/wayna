@@ -1,0 +1,10 @@
+name: Negocios
+form: $/soroche/wayna/models/negocio/fields.yaml
+modelClass: Soroche\Wayna\Models\Negocio
+defaultRedirect: soroche/wayna/negocios
+create:
+    redirect: 'soroche/wayna/negocios/update/:id'
+    redirectClose: soroche/wayna/negocios
+update:
+    redirect: soroche/wayna/negocios
+    redirectClose: soroche/wayna/negocios

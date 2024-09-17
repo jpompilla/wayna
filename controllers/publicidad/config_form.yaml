@@ -1,0 +1,10 @@
+name: Publicidad
+form: $/soroche/wayna/models/pagopublicidad/fields.yaml
+modelClass: Soroche\Wayna\Models\PagoPublicidad
+defaultRedirect: soroche/wayna/publicidad
+create:
+    redirect: 'soroche/wayna/publicidad/update/:id'
+    redirectClose: soroche/wayna/publicidad
+update:
+    redirect: soroche/wayna/publicidad
+    redirectClose: soroche/wayna/publicidad

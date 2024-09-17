@@ -1,0 +1,28 @@
+<div id="margenList">    
+    <?php if (isset($model->margen)): ?>
+        <div class="list-preview list-flush">
+            <div class="control-list">
+                <table class="table data" data-control="rowlink">
+                    <thead>
+                        <tr>
+                            <th><span>MARGEN</span></th>
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <th><span>P<?= $i ?></span></th>
+                            <?php endfor ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($model->margen as $margen): ?>
+                        <tr>
+                            <td><span><?= $margen[0] ?></span></td>
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <td><span><?= number_format($margen[$i],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                    <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php endif ?>
+</div>

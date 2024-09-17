@@ -1,0 +1,92 @@
+fields:
+    pagable_type:
+        label: 'Tipo de Pagador'
+        options:
+            soroche\Wayna\Models\Negocio: Negocio
+            Backend\Models\User: Asesor
+            soroche\Wayna\Models\Reserva: Reserva
+        showSearch: true
+        span: left
+        placeholder: '-- Seleccione un tipo --'
+        readOnly: 1
+        required: 1
+        type: dropdown
+    pagable_id:
+        label: Pagador
+        span: right
+        required: 1
+        readOnly: 1
+        dependsOn: pagable_type
+        type: dropdown
+    asiento_id:
+        label: Tipo
+        span: left
+        required: 1
+        dependsOn: pagable_type
+        type: dropdown
+    monto:
+        label: 'Monto (USD)'
+        span: auto
+        required: 1
+        type: number
+tabs:
+    fields:
+        operacion_file:
+            label: Captura
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: left
+            type: fileupload
+            tab: Operacion
+        cuenta_bancaria:
+            label: 'Cuenta bancaria'
+            span: right
+            nameFrom: nombre
+            descriptionFrom: description
+            type: relation
+            tab: Operacion
+        operacion_fecha:
+            label: 'Fecha y hora'
+            span: right
+            mode: datetime
+            required: 1
+            type: datepicker
+            tab: Operacion
+        operacion_codigo:
+            label: 'Codigo de la operacion'
+            span: right
+            type: text
+            tab: Operacion
+        nota:
+            label: Observaciones
+            span: right
+            type: textarea
+            tab: Operacion
+        comprobante_files:
+            label: Captura
+            mode: file
+            fileTypes: pdf
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: left
+            type: fileupload
+            tab: Comprobante
+        comprobante_codigo:
+            label: 'Codigo del comprobante'
+            span: right
+            type: text
+            tab: Comprobante
+        movimientos:
+            label: Movimientos
+            span: full
+            context:
+                - update
+                - preview
+            type: partial
+            path: $/soroche/wayna/controllers/pagos/_movimientos.htm
+            tab: Movimientos

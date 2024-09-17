@@ -1,0 +1,6 @@
+fields:
+    contenido:
+        label: ""
+        span: full
+        type: partial
+        form: {  }

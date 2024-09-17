@@ -1,0 +1,10 @@
+name: Tipos
+form: $/soroche/wayna/models/tipo/fields.yaml
+modelClass: Soroche\Wayna\Models\Tipo
+defaultRedirect: soroche/wayna/tipos
+create:
+    redirect: 'soroche/wayna/tipos/update/:id'
+    redirectClose: soroche/wayna/tipos
+update:
+    redirect: soroche/wayna/tipos
+    redirectClose: soroche/wayna/tipos

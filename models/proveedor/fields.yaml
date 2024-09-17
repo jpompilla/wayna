@@ -1,0 +1,99 @@
+fields:
+    nombre:
+        label: Nombre
+        span: auto
+        type: text
+    tipo:
+        label: Tipo
+        nameFrom: nombre
+        descriptionFrom: description
+        span: auto
+        type: relation
+tabs:
+    fields:
+        razon_social:
+            label: 'Razon social'
+            span: auto
+            type: text
+            tab: General
+        ruc:
+            label: RUC
+            span: auto
+            type: text
+            tab: General
+        direccion:
+            label: Direccion
+            span: auto
+            type: text
+            tab: General
+        categoria:
+            label: 'Categoria'
+            span: auto
+            default: No categorizado
+            type: dropdown
+            placeholder: '-- Seleccione una categoria --'
+            options:
+                No categorizado: No categorizado
+                1 Estrella: 1 Estrella
+                2 Estrellas: 2 Estrellas
+                3 Estrellas: 3 Estrellas
+                4 Estrellas: 4 Estrellas
+                5 Estrellas: 5 Estrellas
+            tab: General
+        condicion:
+            label: Condicion
+            nameFrom: nombre
+            descriptionFrom: description
+            span: auto
+            type: relation
+            default: 2
+            readOnly: 1
+            tab: General
+        contactos:
+            label: Contactos
+            prompt: 'Añadir nuevo item'
+            style: collapsed
+            span: full
+            type: repeater
+            tab: Contacto
+            form:
+                fields:
+                    valor:
+                        label: Contacto
+                        span: auto
+                        type: text
+                    tipo:
+                        label: 'Tipo de Contacto'
+                        options:
+                            telefono: Telefono
+                            whatsapp: Whatsapp
+                            email: 'Correo Electronico'
+                        showSearch: true
+                        span: auto
+                        type: dropdown
+                    cargo:
+                        label: 'Cargo del Contacto'
+                        span: auto
+                        type: text
+                    nombre:
+                        label: 'Nombre del contacto'
+                        span: auto
+                        type: text
+        cuentasbancarias:
+            label: Cuentas Bancarias
+            span: full
+            context:
+                - update
+                - preview
+            type: partial
+            path: $/soroche/wayna/controllers/negocios/_cuentasbancarias.htm
+            tab: Cuentas Bancarias
+        servicios:
+            label: Servicio
+            span: full
+            context:
+                - update
+                - preview
+            type: partial
+            path: $/soroche/wayna/controllers/proveedores/_servicios.htm
+            tab: Servicios

@@ -1,0 +1,11 @@
+name: Paquetes
+form: $/soroche/wayna/models/servicio/paquete_fields.yaml
+modelClass: Soroche\Wayna\Models\Servicio
+defaultRedirect: soroche/wayna/paquetes
+create:
+    redirect: 'soroche/wayna/paquetes/update/:id'
+    redirectClose: soroche/wayna/paquetes
+update:
+    #redirect: soroche/wayna/paquetes
+    redirect: 'soroche/wayna/paquetes/update/:id'
+    redirectClose: soroche/wayna/paquetes

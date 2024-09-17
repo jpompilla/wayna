@@ -1,0 +1,13 @@
+columns:
+    id:
+        label: id
+        type: number
+    cuenta_codigo:
+        label: cuenta_codigo
+        type: text
+    monto:
+        label: monto
+        type: text
+    updated_at:
+        label: updated_at
+        type: datetime

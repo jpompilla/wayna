@@ -1,0 +1,10 @@
+name: Productos
+form: $/soroche/wayna/models/servicio/producto_fields.yaml
+modelClass: Soroche\Wayna\Models\Servicio
+defaultRedirect: soroche/wayna/productos
+create:
+    redirect: 'soroche/wayna/productos/update/:id'
+    redirectClose: soroche/wayna/productos
+update:
+    redirect: soroche/wayna/productos
+    redirectClose: soroche/wayna/productos

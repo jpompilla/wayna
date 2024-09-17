@@ -1,0 +1,51 @@
+columns:
+    id:
+        label: id
+        type: number
+        searchable: true
+    negocio:
+        label: Proveedor
+        type: text
+        select: nombre
+        relation: negocio
+        searchable: true
+    nombre:
+        label: Servicio
+        type: text
+        searchable: true
+    capacidad:
+        label: Capacidad
+        type: number
+    costo:
+        label: costo
+        type: number
+    costos[0][1]:
+        label: P1
+        type: text
+    costos[0][2]:
+        label: P2
+        type: text
+    costos[0][3]:
+        label: P3
+        type: text
+    costos[0][4]:
+        label: P4
+        type: text
+    costos[0][5]:
+        label: P5
+        type: text
+    costos[0][6]:
+        label: P6
+        type: text
+    costos[0][7]:
+        label: P7
+        type: text
+    costos[0][8]:
+        label: P8
+        type: text
+    costos[0][9]:
+        label: P9
+        type: text
+    costos[0][10]:
+        label: P10
+        type: text

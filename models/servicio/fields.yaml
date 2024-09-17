@@ -1,0 +1,94 @@
+fields:
+    #negocio:
+    #    label: Proveedor
+    #    span: left
+    #    required: 1
+    #    type: relation
+    #    nameFrom: nombre
+    negocio:
+        label: Proveedor
+        span: left
+        required: 1
+        type: dropdown
+    nombre:
+        label: Nombre
+        span: right
+        required: 1
+        type: text
+    tipo:
+        label: 'Tipo de Servicio'
+        span: left
+        type: dropdown
+        required: 1
+        placeholder: '-- Seleccione un tipo --'
+        options:
+            Alojamiento: Alojamiento
+            Alimentacion: Alimentación
+            Traslado: Traslado
+            Guiado: Guiado
+            Entradas: Entradas
+            Endoce: Tour Endoce
+    lugar:
+        label: Lugar
+        nameFrom: nombre
+        descriptionFrom: description
+        span: right
+        type: relation
+tabs:
+    fields:
+        costo:
+            label: Costo (USD)
+            span: auto
+            type: number
+            tab: Precios (USD)
+        capacidad:
+            label: Capacidad
+            span: auto
+            type: number
+            tab: Precios (USD)  
+        costos:
+            type: datatable
+            adding: false
+            deleting: false
+            columns:
+                0:
+                    type: string
+                    title: 'Costos'
+                    readOnly: true
+                    width: 180px
+                1:
+                    type: string
+                    title: 'P1'
+                2:
+                    type: string
+                    title: 'P2'
+                3:
+                    type: string
+                    title: 'P3'
+                4:
+                    type: string
+                    title: 'P4'
+                5:
+                    type: string
+                    title: 'P5'
+                6:
+                    type: string
+                    title: 'P6'
+                7:
+                    type: string
+                    title: 'P7'
+                8:
+                    type: string
+                    title: 'P8'
+                9:
+                    type: string
+                    title: 'P9'
+                10:
+                    type: string
+                    title: 'P10'
+            dynamicHeight: true
+            context:
+                - update
+            height: false
+            tab: Precios (USD)
+

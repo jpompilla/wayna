@@ -1,0 +1,67 @@
+<!--?= dd($model->costos) ?-->
+<div id="costosList">    
+    <?php if (isset($model->costos)): ?>
+        <div class="list-preview list-flush">
+            <div class="control-list">
+                <table class="table data" data-control="rowlink">
+                    <thead>
+                        <tr>
+                            <th><span>COSTOS</span></th>
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <th><span>P<?= $i ?></span></th>
+                            <?php endfor ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong><?= $model->costos['total'][0] ?></strong></td>
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <td><strong><?= number_format($model->costos['total'][$i],2) ?></strong></td>
+                            <?php endfor ?>
+                        </tr>
+                        <tr>
+                            <td><span><?= $model->costos['operativo'][0] ?></span></td>
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <td><span><?= number_format($model->costos['operativo'][$i],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                        
+                        <?php foreach ($model->costos['operativo']['servicios'] as $costos): ?>
+                        <tr class="service">
+                            <td><span><?= $costos[0] ?></span></td>
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <td><span><?= number_format($costos[$i],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                        <?php endforeach ?>
+                        
+                        <tr>
+                            <td><span><?= $model->costos['pasarela'][0] ?></span></td>
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <td><span><?= number_format($model->costos['pasarela'][$i],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                        <tr>
+                            <td><span><?= $model->costos['igv'][0] ?></span></td>
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <td><span><?= number_format($model->costos['igv'][$i],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                        <tr>
+                            <td><span><?= $model->costos['ir'][0] ?></span></td>
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <td><span><?= number_format($model->costos['ir'][$i],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                        <tr>
+                            <td><span><?= $model->costos['comision'][0] ?></span></td>
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <td><span><?= number_format($model->costos['comision'][$i],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php endif ?>
+</div>

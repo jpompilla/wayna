@@ -1,0 +1,134 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('soroche/wayna/entrenamientos') ?>">Entrenamientos</a></li>
+        <li><strong><?= $formModel->curso->nombre ?></strong></li>
+    </ul>    
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+    <div class="row">
+    <div class="col-md-8 actividad">
+        
+        <div class="responsive-iframe-container">
+          <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<?= $formModel->contenido[($unidad?$unidad:0)]['actividades'][($actividad?$actividad:0)]['video'] ?>?si=OSMUT90TaqUVtUQN&amp;controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <small><?= $formModel->contenido[($unidad?$unidad:0)]['unidad'] ?></small>
+        <h1><?= $formModel->contenido[($unidad?$unidad:0)]['actividades'][($actividad?$actividad:0)]['titulo'] ?></h1>
+        
+    </div>
+    <div class="col-md-4 sitebar">
+        
+        <ul class="nav nav-sidebar">
+        <?php foreach($formModel->contenido as $u=>$unit): ?>
+        <!-- Menú Nivel 1 - Item 1 -->
+        <li>
+          <a href="#" class="toggle-menu">
+            <?= $unit['unidad']?> <span class="caret icon-caret"></span>
+          </a>
+          <ul class="nav sub-menu">
+          <?php foreach($unit['actividades'] as $i=>$actividad): ?>
+            <li><a class="<?= ($codigo?'':($u==0 && $i==0?'active':''))?> <?= ($codigo==($u+1).'.'.($i+1)?'active':'')?>" href="<?= Backend::url('soroche/wayna/entrenamientos') ?>/preview/<?= $formModel->id ?>/<?= ($u+1).'.'.($i+1)?>"><?= $actividad['titulo']?></a></li>
+            <?php endforeach ?>
+          </ul>
+        </li>
+        <?php endforeach ?>
+        </ul>
+        
+    </div>
+    </div>
+
+<?php else: ?>
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+<?php endif ?>
+
+<p>
+    <a href="<?= Backend::url('soroche/wayna/entrenamientos') ?>" class="btn btn-default wn-icon-chevron-left">
+        <?= e(trans('backend::lang.form.return_to_list')) ?>
+    </a>
+</p>
+
+<style>
+    .control-breadcrumb {
+        margin-bottom: 0px;
+    }
+    .responsive-iframe-container {
+      position: relative;
+      overflow: hidden;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    }    
+    .responsive-iframe-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .actividad {
+        & small{
+            background-color:#333;
+            color: #fff;
+            font-weight: bold;
+            padding:5px 10px;
+            line-height:50px;
+            border-radius: 5px;
+        }
+        & h1{
+            margin-top:5px;
+            margin-bottom:20px;
+        }
+    }
+    
+    .sitebar{
+        height:600px;
+    }
+    .nav-sidebar > li > a {
+      padding: 10px 15px;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #666;
+      color: #fff;
+    }
+    .nav-sidebar > li > a:hover {
+      background-color: #dc573b;
+    }
+    .nav-sidebar .sub-menu {
+      /*padding-left: 20px;*/
+      background-color: #fff;
+    }
+    .nav-sidebar .sub-menu a{
+      color: #333;
+    }
+    .nav-sidebar .sub-menu a:hover, .nav-sidebar .sub-menu a.active{
+        background-color: #dc573b;
+        color: #fff;
+    }
+    .icon-caret {
+      transition: transform 0.3s ease;
+    }
+    .icon-caret.rotate {
+      transform: rotate(90deg); /* Rotar el caret 90 grados cuando el menú esté abierto */
+    }
+</style>
+<script>
+    $(document).ready(function(){
+      $('.toggle-menu').click(function(e){
+        e.preventDefault();
+        
+        var subMenu = $(this).next('.sub-menu');
+        var caret = $(this).find('.icon-caret');
+        
+        // Cierra otros submenús abiertos y resetea sus carets
+        $('.sub-menu').not(subMenu).slideUp();
+        $('.icon-caret').not(caret).removeClass('rotate');
+        
+        // Alterna el submenú y rota el ícono
+        subMenu.slideToggle();
+        caret.toggleClass('rotate');
+      });
+    });
+    </script>
+</script>

@@ -1,0 +1,11 @@
+name: Tours
+form: $/soroche/wayna/models/servicio/tour_fields.yaml
+modelClass: Soroche\Wayna\Models\Servicio
+defaultRedirect: soroche/wayna/tours
+create:
+    redirect: 'soroche/wayna/tours/update/:id'
+    redirectClose: soroche/wayna/tours
+update:
+    #redirect: soroche/wayna/tours
+    redirect: 'soroche/wayna/tours/update/:id'
+    redirectClose: soroche/wayna/tours

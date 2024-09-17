@@ -1,0 +1,38 @@
+users:
+    label: Colaboradores
+    manage:
+        form: $/soroche/wayna/models/negocio/users_fields.yaml
+    view:
+        list: $/soroche/wayna/models/negocio/users_columns.yaml
+        toolbarButtons: create|add|remove
+        
+cuentasbancarias:
+    label: Cuentas Bancarias
+    manage:
+        form: $/soroche/wayna/models/cuentabancaria/fields.yaml
+    view:
+        list: $/soroche/wayna/models/cuentabancaria/columns.yaml
+        toolbarButtons: create|delete
+
+cursos:
+    label: Cursos
+    manage:
+        form: $/soroche/wayna/models/curso/fields.yaml
+    view:
+        list: $/soroche/wayna/models/curso/columns.yaml
+        toolbarButtons: create|delete
+        
+cuentas:
+    label: Cuentas
+    manage:
+        form: $/soroche/wayna/models/cuenta/fields.yaml
+    view:
+        list: $/soroche/wayna/models/cuenta/columns.yaml
+        toolbarButtons: create|delete
+asientos:
+    label: Asientos
+    manage:
+        form: $/soroche/wayna/models/asiento/fields.yaml
+    view:
+        list: $/soroche/wayna/models/asiento/columns.yaml
+        toolbarButtons: create|delete

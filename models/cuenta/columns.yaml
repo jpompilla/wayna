@@ -1,0 +1,10 @@
+columns:
+    codigo:
+        label: codigo
+        type: text
+    nombre:
+        label: nombre
+        type: text
+    updated_at:
+        label: updated_at
+        type: datetime

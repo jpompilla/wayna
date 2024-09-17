@@ -1,0 +1,9 @@
+fields:
+    cuenta_codigo:
+        label: 'Cuenta codigo'
+        span: auto
+        type: text
+    monto:
+        label: Monto
+        span: auto
+        type: number

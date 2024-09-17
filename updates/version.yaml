@@ -1,0 +1,29 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table soroche_wayna_tipos'
+    - builder_table_create_soroche_wayna_tipos.php
+1.0.3:
+    - 'Created table soroche_wayna_negocios'
+    - builder_table_create_soroche_wayna_negocios.php
+1.0.4:
+    - 'Add negocio to backend user'
+    - migration104.php
+1.0.5:
+    - 'Created table soroche_wayna_cuentasbancarias'
+    - builder_table_create_soroche_wayna_cuentasbancarias.php
+1.0.6:
+    - 'Created table soroche_wayna_cursos'
+    - builder_table_create_soroche_wayna_cursos.php
+1.0.7:
+    - 'Created table soroche_wayna_pagos'
+    - builder_table_create_soroche_wayna_pagos.php
+1.0.8:
+    - 'Created table soroche_wayna_proveedores'
+    - builder_table_create_soroche_wayna_proveedores.php
+1.0.9:
+    - 'Created table soroche_wayna_servicios'
+    - builder_table_create_soroche_wayna_servicios.php
+1.0.10:
+    - 'Data Servicios, Tours y Paquetes'
+    - seeder1010.php

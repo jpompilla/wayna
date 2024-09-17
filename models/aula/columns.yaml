@@ -1,0 +1,13 @@
+columns:
+    id:
+        label: id
+        type: number
+    curso[nombre]:
+        label: Curso
+        type: text
+    curso[resumen]:
+        label: Resumen
+        type: text
+    updated_at:
+        label: updated_at
+        type: datetime

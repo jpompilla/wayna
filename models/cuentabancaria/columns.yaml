@@ -1,0 +1,26 @@
+columns:
+    id:
+        label: id
+        type: number
+    nombre:
+        label: Nombre
+        type: text
+    banco_id:
+        label: Banco
+        type: text
+        select: nombre
+        relation: banco
+    moneda_id:
+        label: Moneda
+        type: text
+        select: nombre
+        relation: moneda
+    nro_cuenta:
+        label: 'Nro Cuenta'
+        type: text
+    cci:
+        label: CCI
+        type: text
+    updated_at:
+        label: updated_at
+        type: datetime

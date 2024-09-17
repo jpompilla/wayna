@@ -1,0 +1,7 @@
+movimientos:
+    label: Movimientos
+    manage:
+        form: $/soroche/wayna/models/movimiento/fields.yaml
+    view:
+        list: $/soroche/wayna/models/movimiento/columns.yaml
+        toolbarButtons: []

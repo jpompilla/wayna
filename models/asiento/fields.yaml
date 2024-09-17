@@ -1,0 +1,37 @@
+fields:
+    nombre:
+        label: Nombre
+        span: left
+        type: text
+    tipo:
+        label: Para
+        showSearch: true
+        span: right
+        type: dropdown
+        required: 1
+        placeholder: '-- Seleccione un tipo --'
+        options:
+            soroche\Wayna\Models\Negocio: Negocio
+            Backend\Models\User: Asesor
+            soroche\Wayna\Models\Reserva: Reserva
+    movimientos:
+        label: Movimientos
+        prompt: 'Añadir nuevo movimiento'
+        style: default
+        span: left
+        type: repeater
+        form:
+            fields:
+                formato:
+                    label: 'Formato de cuenta'
+                    span: auto
+                    type: text
+                constante:
+                    label: 'Constante del monto (%)'
+                    span: auto
+                    type: number
+    descripcion:
+        label: Descripcion
+        span: right
+        size: ''
+        type: textarea

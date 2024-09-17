@@ -1,0 +1,10 @@
+name: Entrenamientos
+form: $/soroche/wayna/models/aula/fields.yaml
+modelClass: Soroche\Wayna\Models\Aula
+defaultRedirect: soroche/wayna/entrenamientos
+create:
+    redirect: 'soroche/wayna/entrenamientos/update/:id'
+    redirectClose: soroche/wayna/entrenamientos
+update:
+    redirect: soroche/wayna/entrenamientos
+    redirectClose: soroche/wayna/entrenamientos

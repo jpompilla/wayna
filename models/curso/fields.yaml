@@ -1,0 +1,44 @@
+fields:
+    nombre:
+        label: Nombre
+        span: left
+        type: text    
+    resumen:
+        label: Resumen
+        size: ''
+        span: right
+        type: textarea
+    users:
+        label: Colaboradores
+        nameFrom: fullname
+        descriptionFrom: description
+        span: left
+        type: relation
+    contenido:
+        label: Contenido
+        prompt: 'Añadir Unidad'
+        style: default
+        span: right
+        type: repeater
+        form:
+            fields:
+                unidad:
+                    label: Unidad
+                    span: full
+                    type: text
+                actividades:
+                    label: Actividades
+                    prompt: 'Añadir Actividad'
+                    style: default
+                    span: full
+                    type: repeater
+                    form:
+                        fields:
+                            titulo:
+                                label: Titulo
+                                span: auto
+                                type: text
+                            video:
+                                label: 'Video URL'
+                                span: auto
+                                type: text

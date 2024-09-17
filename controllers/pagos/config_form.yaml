@@ -1,0 +1,10 @@
+name: Pagos
+form: $/soroche/wayna/models/pago/fields.yaml
+modelClass: Soroche\Wayna\Models\Pago
+defaultRedirect: soroche/wayna/pagos
+create:
+    redirect: 'soroche/wayna/pagos/update/:id'
+    redirectClose: soroche/wayna/pagos
+update:
+    redirect: soroche/wayna/pagos
+    redirectClose: soroche/wayna/pagos

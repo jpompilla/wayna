@@ -1,0 +1,10 @@
+name: Proveedores
+form: $/soroche/wayna/models/proveedor/fields.yaml
+modelClass: Soroche\Wayna\Models\Proveedor
+defaultRedirect: soroche/wayna/proveedores
+create:
+    redirect: 'soroche/wayna/proveedores/update/:id'
+    redirectClose: soroche/wayna/proveedores
+update:
+    redirect: soroche/wayna/proveedores
+    redirectClose: soroche/wayna/proveedores

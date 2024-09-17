@@ -1,0 +1,24 @@
+columns:
+    id:
+        label: id
+        type: number
+    nombre:
+        label: nombre
+        type: text
+    razon_social:
+        label: razon_social
+        type: text
+    ruc:
+        label: RUC
+        type: text
+    direccion:
+        label: direccion
+        type: text
+    tipo:
+        label: Tipo
+        type: text
+        select: nombre
+        relation: tipo
+    updated_at:
+        label: updated_at
+        type: datetime

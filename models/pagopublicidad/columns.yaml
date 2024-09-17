@@ -1,0 +1,29 @@
+columns:
+    id:
+        label: id
+        type: number
+    asiento:
+        label: Operacion
+        type: text
+        select: nombre
+        relation: asiento
+    operacion_fecha:
+        label: Fecha
+        type: date
+    cuenta_bancaria:
+        label: Cuenta Bancaria
+        type: text
+        select: nombre
+        relation: cuenta_bancaria
+    monto:
+        label: monto
+        type: number
+    publicidad[monto]:
+        label: Publicidad
+        type: number
+    nota:
+        label: nota
+        type: text
+    updated_at:
+        label: updated_at
+        type: datetime

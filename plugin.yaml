@@ -1,0 +1,105 @@
+plugin:
+    name: 'soroche.wayna::lang.plugin.name'
+    description: 'soroche.wayna::lang.plugin.description'
+    author: Soroche
+    icon: oc-icon-angle-double-up
+    replaces: {  }
+permissions:
+    manage_tipos:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Administrar Tipos Globales'
+    manage_negocios:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Administrar Todos los Negocios'
+    view_mi_negocio:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Ver Informacion de Mi Negocio'
+    manage_entrenamientos:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Administrar Cursos de Entrenamientos'
+    attend_entrenamientos:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Participar de entrenamientos'
+    manage_pagos:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Admistrar Pagos del Negocio'
+    manage_publicidad_adts:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Administrar Pagos de Publicidad ADT+'
+    manage_proveedores:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Administrar Proveedores'
+    manage_productos:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Administrar Tour y Paquetes'
+    view_productos:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Ver Tour y Paquetes'
+navigation:
+    menu-wayna:
+        label: Wayna
+        url: soroche/wayna/tipos
+        icon: icon-angle-double-up
+        permissions:
+            - manage_tipos
+    menu-negocios:
+        label: Negocios
+        url: soroche/wayna/negocios
+        icon: icon-building-o
+        permissions:
+            - manage_negocios
+    menu-mi-negocio:
+        label: 'Mi negocio'
+        url: soroche/wayna/minegocio
+        icon: icon-home
+        permissions:
+            - view_mi_negocio
+    menu-entrenamiento:
+        label: Entrenamiento
+        url: soroche/wayna/entrenamientos
+        icon: icon-graduation-cap
+        permissions:
+            - manage_entrenamientos
+            - attend_entrenamientos
+    menu-pagos:
+        label: Pagos
+        url: soroche/wayna/pagos
+        icon: icon-bank
+        permissions:
+            - manage_pagos
+    menu-publicidad:
+        label: Publicidad
+        url: soroche/wayna/publicidad
+        icon: icon-bullhorn
+        permissions:
+            - manage_publicidad_adts
+    menu-proveedores:
+        label: Proveedores
+        url: soroche/wayna/proveedores
+        icon: icon-database
+        permissions:
+            - manage_proveedores
+    menu-servicios:
+        label: Servicios
+        url: soroche/wayna/servicios
+        icon: icon-bed
+        permissions:
+            - manage_proveedores
+    menu-tours:
+        label: Tours
+        url: soroche/wayna/tours
+        icon: icon-cube
+        permissions:
+            - manage_productos
+    menu-paquetes:
+        label: Paquetes
+        url: soroche/wayna/paquetes
+        icon: icon-cubes
+        permissions:
+            - manage_productos
+    menu-productos:
+        label: Productos
+        url: soroche/wayna/productos
+        icon: icon-cubes
+        permissions:
+            - view_productos

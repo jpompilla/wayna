@@ -1,0 +1,14 @@
+cuentasbancarias:
+    label: Cuentas Bancarias
+    manage:
+        form: $/soroche/wayna/models/cuentabancaria/fields.yaml
+    view:
+        list: $/soroche/wayna/models/cuentabancaria/columns.yaml
+        toolbarButtons: create|delete
+servicios:
+    label: Servicios
+    manage:
+        form: $/soroche/wayna/models/servicio/proveedor_fields.yaml
+    view:
+        list: $/soroche/wayna/models/servicio/proveedor_columns.yaml
+        toolbarButtons: create|delete
