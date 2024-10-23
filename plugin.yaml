@@ -35,6 +35,9 @@ permissions:
     view_productos:
         tab: 'soroche.wayna::lang.plugin.name'
         label: 'Ver Tour y Paquetes'
+    enter_reservas:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Ingresar Reservas'
 navigation:
     menu-wayna:
         label: Wayna
@@ -103,3 +106,9 @@ navigation:
         icon: icon-cubes
         permissions:
             - view_productos
+    menu-reservas:
+        label: Reservas
+        url: soroche/wayna/reservas
+        icon: icon-shopping-cart
+        permissions:
+            - enter_reservas

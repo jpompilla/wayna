@@ -1,0 +1,15 @@
+paxs:
+    label: Pasajeros
+    manage:
+        form: $/soroche/wayna/models/pax/reserva_fields.yaml
+    view:
+        list: $/soroche/wayna/models/pax/reserva_columns.yaml
+        toolbarButtons: create|add|remove
+
+pagos:
+    label: Pagos
+    manage:
+        form: $/soroche/wayna/models/pago/reserva_fields.yaml
+    view:
+        list: $/soroche/wayna/models/pago/reserva_columns.yaml
+        toolbarButtons: create|remove

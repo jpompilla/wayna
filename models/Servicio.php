@@ -35,7 +35,8 @@ class Servicio extends Model
         'precios', 
         'costos', 
         'margen',
-        'items'
+        'items',
+        'no_incluye'
     ];
     
     public $belongsTo = [        
@@ -48,7 +49,10 @@ class Servicio extends Model
         'servicio' => [
             'soroche\Wayna\Models\Servicio'
         ],
-        'alojamiento' => [
+        'tour' => [
+            'soroche\Wayna\Models\Servicio'
+        ],
+        'hotel' => [
             'soroche\Wayna\Models\Servicio'
         ],
     ];
@@ -83,10 +87,13 @@ class Servicio extends Model
     public function beforeSave(){        
         if($this->exists){ //UPDATE
             if($this->tipo == 'Paquete'){
+                $this->formatearName();
+                $this->formatearDias();
                 $this->calcularCostosPaquete();
                 $this->calcularMargen();
             }
             elseif($this->tipo == 'Tour'){
+                $this->formatearName();
                 $this->calcularCostosTour();
                 $this->calcularMargen();
             }
@@ -100,10 +107,8 @@ class Servicio extends Model
             if(!$this->negocio_id)
                 $this->negocio_id = $user->negocio_id;
             
-            //-------Name
-            $name = sprintf('%s - %s',$this->negocio->nombre,$this->nombre);
-            $this->name = $name;
-            
+            $this->formatearName();
+            $this->formatearDias();
             $this->calcularCostosPaquete();            
             $this->calcularPrecios();            
             $this->calcularMargen();
@@ -112,9 +117,7 @@ class Servicio extends Model
             if(!$this->negocio_id)
                 $this->negocio_id = $user->negocio_id;
             
-            //-------Name
-            $name = sprintf('%s - %s',$this->negocio->nombre,$this->nombre);
-            $this->name = $name;
+            $this->formatearName();
             
             $this->calcularCostosTour();
             $this->calcularPrecios();            
@@ -123,17 +126,35 @@ class Servicio extends Model
         else{
             //-------Name
             $name = sprintf(
-                '%s %s - %s x%d: USD %.2f',
+                //'%s %s - %s x%d: USD %.2f',
+                '%s %s - %s x%d',
                 $this->negocio->nombre,
                 $this->negocio->categoria=='No categorizado'?'':' ('.$this->negocio->categoria.')',
                 $this->nombre,
-                $this->capacidad,
-                $this->costo
+                $this->capacidad
+                //$this->costo
             );
             $this->name = $name;
             
             $this->calcularCostosServicio();
         }
+    }
+    
+    private function formatearName(){
+        $name = sprintf('%s - %s',$this->negocio->nombre,$this->nombre);
+        $this->name = $name;
+    }
+    
+    private function formatearDias(){        
+        $items = $this->items;
+        for($j=0;$j<count($items);$j++){
+            $tour = Servicio::find($items[$j]['tour']);
+            $hotel = null;
+            if(isset($this->items[$j]['hotel']))
+                $hotel = Servicio::find($items[$j]['hotel']);
+            $items[$j]['nombre'] = 'Dia '.($j+1).' : '.$tour->nombre . (isset($hotel)?' + ' . $hotel->nombre:'');
+        }
+        $this->items = $items;
     }
     
     private function calcularCostosServicio(){
@@ -167,7 +188,7 @@ class Servicio extends Model
         
         $p = [];
         for($j=0; $j < count($this->items); $j++){
-            
+        
             $servicio = Servicio::find($this->items[$j]['servicio']);
             
             $p[0] = ' ↳ '.$servicio->nombre;
@@ -211,17 +232,17 @@ class Servicio extends Model
         $p = [];
         for($j=0; $j < count($this->items); $j++){
             
-            $servicio = Servicio::find($this->items[$j]['servicio']);
+            $servicio = Servicio::find($this->items[$j]['tour']);
             
             $tour = $servicio->costos['operativo'];
             $tour[0] = 'DIA '.($j+1).': '.$servicio->nombre;
             
-            if(isset($this->items[$j]['alojamiento'])){
-                $sp = Servicio::find($this->items[$j]['alojamiento']);
+            if(isset($this->items[$j]['hotel'])){
+                $sp = Servicio::find($this->items[$j]['hotel']);
                 $spc = [];
                 $spc[0] = ' ↳ '.$sp->nombre;
                 for($i=1; $i<=10; $i++){
-                    $spc[$i] = round($sp->costos[0][$i] / $i);
+                    $spc[$i] = round($sp->costos['operativo'][$i]);
                     $tour[$i] += $spc[$i];
                 }
                 $tour['servicios'][] = $spc;
@@ -247,10 +268,13 @@ class Servicio extends Model
     
     private function calcularPrecios(){
         $precios = [];
+        if(isset($this->precios))
+            $precios = $this->precios;
+        else
+            for($i=1; $i<=10; $i++)
+                $precios[0][$i] = round($this->costos['total'][$i] * 1.20, 2);
+        
         $precios[0][0] = 'TOTAL';
-        for($i=1; $i<=10; $i++){
-            $precios[0][$i] = round($this->costos['total'][$i] * 1.20, 2);
-        }
         $this->precios = $precios;    
     }
     private function calcularMargen(){

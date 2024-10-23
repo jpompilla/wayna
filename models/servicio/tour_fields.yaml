@@ -1,12 +1,12 @@
 fields:
     nombre:
         label: Nombre
-        span: full
+        span: auto
         required: 1
         type: text
     tipo:
         label: 'Tipo de Servicio'
-        span: left
+        span: auto
         type: dropdown
         required: 1
         default: Tour
@@ -19,20 +19,17 @@ fields:
             Entradas: Entradas
             Tour: 'Tour o Actividad'
             Paquete: Paquete
-    lugar:
-        label: Lugar
-        nameFrom: nombre
-        descriptionFrom: description
-        span: right
-        type: relation
+        tab: Informacion
 tabs:
     fields:
         items:
-            prompt: 'Añadir servicio'
-            style: collapsed
-            span: full
             type: repeater
             tab: Servicios
+            label: Incluye
+            prompt: 'Añadir servicio'
+            style: collapsed
+            sortable: false
+            span: left
             form:
                 fields:
                     servicio:
@@ -41,37 +38,82 @@ tabs:
                         descriptionFrom: description
                         placeholder: '-- Seleccion un servicio --'
                         showSearch: true
-                        span: left
+                        span: full
                         type: relation
                     incluye:
                         label: Incluye
-                        prompt: 'Añadir incluye'
-                        style: default
-                        span: right
-                        type: repeater
-                        form:
-                            fields:
-                                nombre:
-                                    label: Texto
-                                    span: auto
-                                    type: text
-                                dia:
-                                    label: Dia
-                                    span: auto
-                                    showSearch: false
-                                    default: 0
-                                    type: dropdown
-                                    options:
-                                        0: 'Mismo dia'
-                                        1: 'Un dia despues'
-                                        -1: 'Un dia antes'
-                    incluido:
-                        label: 'Incluido/No Incluido'
-                        span: left
-                        default: 1
-                        on: si
-                        off: no
-                        type: switch
+                        type: datatable
+                        span: full
+                        adding: true
+                        deleting: true
+                        columns:
+                            nombre:
+                                type: string
+                                title: 'Texto'
+                            tipo:
+                                type: dropdown 
+                                title: 'Tipo'
+                                options:
+                                    Traslado: Traslado
+                                    Transporte: Transporte Turistico
+                                    Tren: Tren
+                                    Guia: Guia
+                                    Entradas: Entradas
+                                    Alojamiento: Alojamiento
+                                    Desayuno: Desayuno
+                                    Almuerzo: Almuerzo
+                                    Cena: Cena
+                            dia:
+                                type: dropdown 
+                                title: 'dia'
+                                options:
+                                    0: 'Mismo dia'
+                                    1: 'Un dia despues'
+                                    2: '2 dias despues'
+                                    3: '3 dias despues'
+                                    -1: 'Un dia antes'
+                                    -2: '2 dias antes'
+                                    -3: '3 dia antes'
+                        dynamicHeight: true
+                        height: false
+        no_incluye:
+            label: No incluye
+            type: datatable
+            span: right
+            adding: true
+            deleting: true
+            tab: Servicios
+            columns:
+                nombre:
+                    type: string
+                    title: 'Texto'
+                tipo:
+                    type: dropdown 
+                    title: 'Tipo'
+                    options:
+                        Traslado: Traslado
+                        Transporte: Transporte Turistico
+                        Tren: Tren
+                        Guia: Guia
+                        Entradas: Entradas
+                        Alojamiento: Alojamiento
+                        Desayuno: Desayuno
+                        Almuerzo: Almuerzo
+                        Cena: Cena
+                        Propina: Propina
+                dia:
+                    type: dropdown 
+                    title: 'dia'
+                    options:
+                        0: 'Mismo dia'
+                        1: 'Un dia despues'
+                        2: '2 dias despues'
+                        3: '3 dias despues'
+                        -1: 'Un dia antes'
+                        -2: '2 dias antes'
+                        -3: '3 dia antes'
+            dynamicHeight: true
+            height: false        
         params:
             label: Parametros
             type: datatable
@@ -144,113 +186,31 @@ tabs:
                     type: string
                     title: P10
             dynamicHeight: true
-            #context:
-            #    - update
             height: false
             tab: 'Precios (USD)'
         costos:
             type: partial
             tab: 'Precios (USD)'
-        #costos:
-        #    type: datatable
-        #    adding: false
-        #    deleting: false
-        #    columns:
-        #        0:
-        #            type: string
-        #            title: 'Costos'
-        #            readOnly: true
-        #            width: 180px
-        #        1:
-        #            type: string
-        #            title: P1
-        #        2:
-        #           type: string
-        #            title: P2
-        #        3:
-        #            type: string
-        #            title: P3
-        #        4:
-        #            type: string
-        #            title: P4
-        #        5:
-        #            type: string
-        #            title: P5
-        #        6:
-        #            type: string
-        #            title: P6
-        #        7:
-        #            type: string
-        #            title: P7
-        #        8:
-        #            type: string
-        #            title: P8
-        #        9:
-        #            type: string
-        #            title: P9
-        #        10:
-        #            type: string
-        #            title: P10
-        #    dynamicHeight: true
-        #    context:
-        #        - update
-        #    height: false
-        #    tab: 'Precios (USD)'
+        
         margen:
             type: partial
             tab: 'Precios (USD)'
-        #margen:
-        #    type: datatable
-        #    adding: false
-        #    deleting: false
-        #    columns:
-        #        0:
-        #            type: string
-        #            title: 'MARGEN'
-        #            readOnly: true
-        #            width: 180px
-        #        1:
-        #            type: string
-        #            readOnly: true
-        #            title: P1
-        #        2:
-        #            type: string
-        #            readOnly: true
-        #            title: P2
-        #        3:
-        #            type: string
-        #            readOnly: true
-        #            title: P3
-        #        4:
-        #            type: string
-        #            readOnly: true
-        #            title: P4
-        #        5:
-        #            type: string
-        #            readOnly: true
-        #            title: P5
-        #        6:
-        #            type: string
-        #            readOnly: true
-        #            title: P6
-        #        7:
-        #            type: string
-        #            readOnly: true
-        #            title: P7
-        #        8:
-        #            type: string
-        #            readOnly: true
-        #            title: P8
-        #        9:
-        #            type: string
-        #            readOnly: true
-        #            title: P9
-        #        10:
-        #            type: string
-        #            readOnly: true
-        #            title: P10
-        #    dynamicHeight: true
-        #    #context:
-        #    #    - update
-        #    height: false
-        #    tab: 'Precios (USD)'
+        lugar:
+            label: Lugar
+            nameFrom: nombre
+            descriptionFrom: description
+            span: right
+            type: relation
+            tab: Informacion
+        estado:
+            label: 'Estado'
+            span: left
+            type: dropdown
+            default: Borrador
+            options:
+                Borrador: Borrador
+                Privado: Privado
+                Interno: Interno
+                Publicado: Publicado
+                Deshabilitado: Deshabilitado
+            tab: Informacion

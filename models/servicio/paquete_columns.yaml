@@ -10,6 +10,7 @@ columns:
         searchable: true
     nombre:
         label: nombre
+        searchable: true
         type: text
     lugar:
         label: lugar

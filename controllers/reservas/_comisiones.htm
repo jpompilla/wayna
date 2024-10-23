@@ -1,0 +1,30 @@
+<div id="comsionesList">    
+    <!--?php if (isset($model->margen)): ?-->
+        <div class="list-preview list-flush">
+            <div class="control-list">
+                <table class="table data" data-control="rowlink">
+                    <thead>
+                        <tr>
+                            <th class='center'><span>CONCEPTO</span></th>
+                            <th class='center'><span>NRO PAXS</span></th>
+                            <th class='center'><span>TOTAL</span></th>
+                            <th class='center'><span>PAGOS</span></th>
+                            <th class='center'><span>SALDO</span></th>
+                            <th class='center'><span>COMISION</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span><?= $model->name ?></span></td>
+                            <td class='right'><span><?= $model->nro_paxs ?></span></td>
+                            <td class='right'><span>USD <?= number_format($model->total, 2) ?></span></td>
+                            <td class='right'><span>USD <?= number_format($model->totalpagos, 2) ?></span></td>
+                            <td class='right'><span>USD <?= number_format($model->total - $model->totalpagos, 2) ?></span></td>
+                            <th class='right'><span>USD <?= number_format($model->comision, 2) ?></span></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <!--?php endif ?-->
+</div>

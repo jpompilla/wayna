@@ -1,0 +1,72 @@
+<div id="balanceList">    
+    <?php if (isset($model->items)): ?>
+        <div class="list-preview list-flush">
+            <div class="control-list">
+                <table class="table data" data-control="rowlink">
+                    <thead>
+                        <tr>
+                            <th class='center'><span>CONCEPTO</span></th>
+                            <th class='center'><span>FECHA</span></th>
+                            <th class='center'><span>UNIDAD</span></th>
+                            <th class='center'><span>CANTIDAD</span></th>
+                            <th class='center'><span>MONTO UNITARIO</span></th>
+                            <th class='center'><span>COSTO</span></th>
+                            <th class='center'><span>PAGOS</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                        <?php $paquete = $model->precios['paquete'] ?>
+                        <tr>
+                            <td><span><?= $paquete['nombre'] ?></span></td>
+                            <td class='center'><span><?= isset($model->fecha_inicio)? date('d/m/Y',strtotime($model->fecha_inicio)) : 'Abierto' ?></span></td>
+                            <td><span>Por persona</span></td>
+                            <td class='right'><span><?= $model->nro_paxs ?></span></td>
+                            <td class='right'><span>USD <?= number_format($paquete[$model->nro_paxs], 2) ?></span></td>
+                            <td class='right'><span>USD <?= number_format($paquete[$model->nro_paxs] * $model->nro_paxs, 2) ?></span></td>
+                            <td></td>
+                        </tr>
+                        <!--?= dd($model->precios) ?-->
+                        <?php if(isset($model->precios['adicionales'])): ?>
+                        <?php foreach($model->precios['adicionales'] as $adicional): ?>
+                        <tr>
+                            <td><span><?= $adicional['nombre'] ?></span></td>
+                            <td class='center'><span><?= isset($adicional['fecha'])? date('d/m/Y',strtotime($adicional['fecha'])): 'Abierto' ?></span></td>
+                            <td><span>Por persona</span></td>
+                            <td class='right'><span><?= $model->nro_paxs ?></span></td>
+                            <td class='right'><span>USD <?= number_format($adicional[$model->nro_paxs], 2) ?></span></td>
+                            <td class='right'><span>USD <?= number_format($adicional[$model->nro_paxs] * $model->nro_paxs, 2) ?></span></td>
+                            <td></td>
+                        </tr>
+                        <?php endforeach ?>
+                        <?php endif ?>
+                        
+                        <?php foreach($model->pagos as $pago): ?>
+                        <!--?= dd($pago) ?-->
+                        <tr>
+                            <td><span><?= $pago->asiento->nombre ?></span></td>
+                            <td class='center'><span><?= date('d/m/Y',strtotime($pago->operacion_fecha)) ?></span></td>
+                            <td><span>Pago grupal</span></td>
+                            <td class='right'><span>1</span></td>
+                            <td class='right'><span>USD <?= number_format(-1 * $pago->monto/$model->nro_paxs, 2) ?></span></td>
+                            <td></td>
+                            <td class='right'><span>USD <?= number_format(-1 * $pago->monto, 2) ?></span></td>
+                        </tr>
+                        <?php endforeach ?>
+                        <tr>
+                            <td colspan="4"></td>
+                            <th><span>TOTAL</span></th>
+                            <th class='right'><span>USD <?= number_format($model->total, 2) ?></span></th>
+                            <th class='right'><span>USD <?= number_format(-1 * $model->totalpagos, 2) ?></span></th>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <th><span>SALDO</span></th>
+                            <th class='right'><span>USD <?= number_format($model->total - $model->totalpagos, 2) ?></span></th>
+                            <th></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php endif ?>
+</div>

@@ -2,12 +2,6 @@ columns:
     id:
         label: id
         type: number
-    negocio:
-        label: Proveedor
-        type: text
-        select: nombre
-        relation: negocio
-        searchable: true
     nombre:
         label: nombre
         type: text

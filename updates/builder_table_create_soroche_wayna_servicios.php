@@ -17,14 +17,17 @@ class BuilderTableCreateSorocheWaynaServicios extends Migration
             $table->string('name')->nullable();
             $table->string('nombre');
             $table->integer('lugar_id')->nullable();
+            $table->string('estado')->nullable();
             $table->string('tipo');
             $table->integer('capacidad')->nullable();
             $table->decimal('costo', 10, 2)->nullable();
+            $table->text('items')->nullable();
+            $table->text('no_incluye')->nullable();
             $table->text('params')->nullable();
             $table->text('precios')->nullable();
             $table->text('costos')->nullable();
             $table->text('margen')->nullable();
-            $table->text('items')->nullable();
+            
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('deleted_at')->nullable();

@@ -27,3 +27,9 @@
 1.0.10:
     - 'Data Servicios, Tours y Paquetes'
     - seeder1010.php
+1.0.11:
+    - 'Created table soroche_wayna_reservas'
+    - builder_table_create_soroche_wayna_reservas.php
+1.0.12:
+    - 'Created table soroche_wayna_paxs'
+    - builder_table_create_soroche_wayna_paxs.php

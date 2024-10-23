@@ -1,0 +1,11 @@
+name: Reservas
+form: $/soroche/wayna/models/reserva/fields.yaml
+modelClass: Soroche\Wayna\Models\Reserva
+defaultRedirect: soroche/wayna/reservas
+create:
+    redirect: 'soroche/wayna/reservas/update/:id'
+    redirectClose: soroche/wayna/reservas
+update:
+    #redirect: soroche/wayna/reservas
+    redirect: 'soroche/wayna/reservas/update/:id'
+    redirectClose: soroche/wayna/reservas

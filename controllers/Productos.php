@@ -27,8 +27,8 @@ class Productos extends Controller
         //$rpta = 
             $query
                 ->where('negocio_id', $user->negocio_id)
-                ->where('tipo', 'Paquete')
-                ->orWhere('tipo', 'Tour')
+                ->whereIn('tipo', ['Paquete','Tour'])
+                ->whereIn('estado', ['Interno','Publicado'])
                 ;
                 //->get();
         //dd($rpta);

@@ -75,7 +75,7 @@ class Pago extends Model
             $rpta = $this->pagable->fullname;
             $rpta = "(Asesor) $rpta";
         }
-        if($this->pagable_type == 'soroche\Wayna\Models\Negocio'){
+        if($this->pagable_type == 'Soroche\Wayna\Models\Negocio'){
             $rpta = $this->pagable->nombre;
             $rpta = "(Negocio) $rpta";
         }
@@ -84,14 +84,14 @@ class Pago extends Model
     
     public function getPagableIdOptions(){
         $rpta = [];
-        if($this->pagable_type == 'soroche\Wayna\Models\Negocio'){
+        if($this->pagable_type == 'Soroche\Wayna\Models\Negocio'){
             $negocio = BackendAuth::getUser()->negocio;
             $rpta = [$negocio->id=>$negocio->nombre];
         }
         if($this->pagable_type == 'Backend\Models\User')
             $rpta = User::all()->lists('fullname', 'id');    
-        if($this->pagable_type == 'soroche\Wayna\Models\Reserva')
-            $rpta = [];//Reserva::all()->lists('name', 'id');
+        if($this->pagable_type == 'Soroche\Wayna\Models\Reserva')
+            $rpta = Reserva::all()->lists('codigo', 'id');
         return $rpta;
     }    
     
@@ -104,36 +104,7 @@ class Pago extends Model
         
         return $rpta;
     }
-    /*
-    public function getTipoOptions(){
-    
-        $rpta = [];
-        
-        if($this->pagable_type == 'soroche\Wayna\Models\Negocio'){            
-            $rpta = [
-                "Egreso Caja"=>"Egreso Caja",
-                "Ingreso Caja"=>"Ingreso Caja",
-                "Ingreso por Inscripciones"=>"Ingreso por Inscripciones",
-            ];
-        }
-        if($this->pagable_type == 'Backend\Models\User'){            
-            $rpta = [
-                "Publicidad"=>"Publicidad",
-                "Egreso Publicidad"=>"Egreso Publicidad",
-                "Inscripcion"=>"Inscripcion",
-            ];
-        }
-        if($this->pagable_type == 'soroche\Wayna\Models\Reserva'){            
-            $rpta = [
-                "Reserva"=>"Reserva",
-                "Amortizacion"=>"Amortizacion",
-                "Pago a proveedor"=>"Pago a proveedor",
-            ];
-        }
-        
-        return $rpta;
-    }
-    */
+
     public function beforeCreate()
     {
         $user = BackendAuth::getUser();   
@@ -143,46 +114,37 @@ class Pago extends Model
     public function afterCreate()
     {
         $cuenta = '';
+        $monto = 0;
+        $user = BackendAuth::getUser();
         
         foreach ($this->asiento->movimientos as $mov) {
-            if($this->pagable_type == 'soroche\Wayna\Models\Negocio'){            
-                $cuenta = 'N';
+            if($this->pagable_type == 'Soroche\Wayna\Models\Negocio'){            
+                $cuenta = $mov['formato'];
+                $cuenta = str_replace("[banco]", sprintf('%02d',$this->cuenta_bancaria_id), $cuenta);
+                $cuenta = str_replace("[negocio]", sprintf('R%04d',$this->pagable_id), $cuenta);
+                $monto = $this->monto*intval($mov['porcentaje'])/100;
             }
             if($this->pagable_type == 'Backend\Models\User'){            
-                $cuenta = 'A';
+                $cuenta = $mov['formato'];
+                $cuenta = str_replace("[banco]", sprintf('%02d',$this->cuenta_bancaria_id), $cuenta);
+                $cuenta = str_replace("[adt]", sprintf('R%04d',$this->pagable_id), $cuenta);
+                $monto = $this->monto*intval($mov['porcentaje'])/100;
             }
-            if($this->pagable_type == 'soroche\Wayna\Models\Reserva'){            
-                $cuenta = 'R';
+            if($this->pagable_type == 'Soroche\Wayna\Models\Reserva'){            
+                $cuenta = $mov['formato'];
+                $cuenta = str_replace("[banco]", sprintf('%02d',$this->cuenta_bancaria_id), $cuenta);
+                $cuenta = str_replace("[reserva]", sprintf('R%04d',$this->pagable_id), $cuenta);
+                $cuenta = str_replace("[adt]", sprintf('A%04d',$user->id), $cuenta);
+                if($mov['porcentaje'] == 0)
+                    $monto = str_replace("[comision]", 150, $mov['constante']); //Aqui poner comision de reserva
+                else
+                    $monto = $this->monto*intval($mov['porcentaje'])/100;
             }
             
-            $this->createMovimiento(
-                sprintf($mov['formato'], $this->cuenta_bancaria_id, $cuenta, $this->pagable_id), 
-                $this->monto*intval($mov['constante'])/100
-            );
+            $this->createMovimiento($cuenta, $monto);
         }
-        
-        /*
-        if($this->tipo == "Ingreso por Inscripciones"){
-            $this->createMovimiento('10', $this->monto);
-        }
-        
-        if($this->tipo_id == 5){ //Embajador - Publicidad
-            $this->buildEmbajadorPublicidad();
-        }
-        if($this->tipo_id == 6){ //Embajador - Egreso Publicidad
-            $this->buildEmbajadorEgresoPublicidad();
-        }
-        if($this->tipo_id == 7){ //Plataforma - Egreso General
-            $this->buildPlataformaEgreso();
-        }
-        if($this->tipo_id == 8){ //Plataforma - Ingreso
-            $this->buildPlataformaIngreso();
-        }
-        if($this->tipo_id == 37){ //Reserva - Adelanto
-            $this->buildReservaAdelanto();
-        }
-        */
     }
+    
     private function createMovimiento($cuenta_codigo, $monto){
         Movimiento::create([
             'pago_id' => $this->id,

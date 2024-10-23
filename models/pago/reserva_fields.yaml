@@ -1,25 +1,8 @@
 fields:
-    pagable_type:
-        label: 'Tipo de Pagador'
-        span: left
-        type: dropdown
-        required: 1
-        placeholder: '-- Seleccione un tipo --'
-        options:
-            Soroche\Wayna\Models\Negocio: Negocio
-            Backend\Models\User: Asesor
-            Soroche\Wayna\Models\Reserva: Reserva
-    pagable_id:
-        label: Pagador
-        span: right
-        required: 1
-        dependsOn: pagable_type
-        type: dropdown
     asiento_id:
         label: Tipo
         span: left
         required: 1
-        dependsOn: pagable_type
         type: dropdown
     monto:
         label: 'Monto (USD)'
@@ -78,12 +61,12 @@ tabs:
             span: right
             type: text
             tab: Comprobante
-        movimientos:
-            label: Movimientos
-            span: full
-            context:
-                - update
-                - preview
-            type: partial
-            path: $/soroche/wayna/controllers/pagos/_movimientos.htm
-            tab: Movimientos
+        #movimientos:
+        #    label: Movimientos
+        #    span: full
+        #    context:
+        #        - update
+        #        - preview
+        #    type: partial
+        #    path: $/soroche/wayna/controllers/pagos/_movimientos.htm
+        #    tab: Movimientos

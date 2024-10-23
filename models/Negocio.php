@@ -33,6 +33,10 @@ class Negocio extends Model
         'params'
     ];
     
+    public $attachOne = [
+        'logo' => 'System\Models\File'
+    ];
+    
     public $belongsTo = [        
         'tipo' => [
             'soroche\Wayna\Models\Tipo', 'conditions' => "tipo = 'Negocio'"

@@ -1,0 +1,26 @@
+columns:
+    id:
+        label: id
+        type: number
+    name:
+        label: Titulo
+        searchable: true
+        type: text
+    codigo:
+        label: codigo
+        type: text
+        searchable: true
+    servicio:
+        label: Paquete
+        type: text
+        relation: servicio
+        select: nombre
+    fecha_inicio:
+        label: fecha_inicio
+        type: text
+    nro_paxs:
+        label: nro_paxs
+        type: number
+    updated_at:
+        label: updated_at
+        type: datetime

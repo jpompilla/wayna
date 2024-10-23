@@ -1,0 +1,25 @@
+columns:
+    id:
+        label: id
+        type: number
+    nro_pasaporte:
+        label: nro_pasaporte
+        type: text
+    nombres:
+        label: nombres
+        type: text
+    apellidos:
+        label: apellidos
+        type: text
+    nacionalidad:
+        label: nacionalidad
+        type: text
+    fecha_nacimiento:
+        label: fecha_nacimiento
+        type: text
+    acomodacion:
+        label: acomodacion
+        type: text
+    updated_at:
+        label: updated_at
+        type: datetime

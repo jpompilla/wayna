@@ -1,0 +1,91 @@
+fields:
+    lider:
+        label: 'Lider del grupo'
+        span: full
+        default: 0
+        on: Si
+        off: No
+        type: switch
+tabs:
+    fields:
+        pasaporte_img:
+            label: 'File upload'
+            mode: image
+            useCaption: true
+            span: left
+            thumbOptions:
+                mode: crop
+                extension: auto
+            type: fileupload
+            tab: Datos Personales
+        pasaporte_nro:
+            label: 'Nro pasaporte'
+            type: text
+            span: right
+            tab: Datos Personales
+        nombres:
+            label: Nombres
+            type: text
+            span: right
+            tab: Datos Personales
+        apellidos:
+            label: Apellidos
+            type: text
+            span: right
+            tab: Datos Personales
+        nacionalidad:
+            label: Nacionalidad
+            placeholder: '-- Seleccion nacionalidad --'
+            options:
+                Mexico: Mexico
+                Estados Unidos: Estados Unidos
+                Puerto Rico: Puerto Rico
+            type: dropdown
+            span: right
+            tab: Datos Personales
+        fecha_nacimiento:
+            label: 'Fecha nacimiento'
+            mode: date
+            type: datepicker
+            span: right
+            tab: Datos Personales
+            ignoreTimezone: true
+        acomodacion:
+            label: Acomodacion
+            span: left
+            options:
+                Doble 1: Doble 1
+                Matrimonial 1: Matrimonial 1
+                Triple 1: Triple 1
+                Individual 1: Individual 1
+                Doble 2: Doble 2
+                Doble 3: Doble 3
+                Matrimonial 2: Matrimonial 2
+                Matrimonial 3: Matrimonial 3
+                Triple 2: Triple 2
+                Triple 3: Triple 3
+                Individual 2: Individual 2
+                Individual 3: Individual 3
+            type: dropdown
+            tab: Datos de Servicio
+        contacto:
+            label: Contacto
+            type: datatable
+            span: right
+            adding: true
+            deleting: true
+            columns:
+                tipo:
+                    type: dropdown
+                    title: Tipo
+                    readOnly: 0
+                    options:
+                        Whatsapp: Whatsapp
+                        Telefono: Telefono
+                        Email: Email
+                dato:
+                    type: string
+                    title: Contacto
+            dynamicHeight: true
+            height: 
+            tab: Datos de Servicio

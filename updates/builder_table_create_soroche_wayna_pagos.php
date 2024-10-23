@@ -79,6 +79,8 @@ class BuilderTableCreateSorocheWaynaPagos extends Migration
         Cuenta::create(['negocio_id' => 1, 'codigo' => '10',    'nombre' => 'Caja y Bancos']);
         Cuenta::create(['negocio_id' => 1, 'codigo' => '1010',  'nombre' => 'Caja y Bancos > Machupicchu+']);
         Cuenta::create(['negocio_id' => 1, 'codigo' => '1020',  'nombre' => 'Caja y Bancos > ADTs+']);
+        Cuenta::create(['negocio_id' => 1, 'codigo' => '12',    'nombre' => 'Clientes']);
+        Cuenta::create(['negocio_id' => 1, 'codigo' => '1210',  'nombre' => 'Clientes > Machupicchu+']);
         Cuenta::create(['negocio_id' => 1, 'codigo' => '40',    'nombre' => 'Proveedores']);
         Cuenta::create(['negocio_id' => 1, 'codigo' => '4010',  'nombre' => 'Proveedores > Machupicchu+']);
         Cuenta::create(['negocio_id' => 1, 'codigo' => '4020',  'nombre' => 'Proveedores > Comisiones ADTs+']);
@@ -89,28 +91,29 @@ class BuilderTableCreateSorocheWaynaPagos extends Migration
         Cuenta::create(['negocio_id' => 1, 'codigo' => '9010',  'nombre' => 'Caja Chica > ADTs+']);
         Cuenta::create(['negocio_id' => 1, 'codigo' => '9020',  'nombre' => 'Caja Chica > CRMs']);
         
+            
         Asiento::create(['negocio_id' => 1, 
             'nombre' => 'Ingresos por Inscripcion',
-            'tipo' => 'soroche\wayna\models\negocio',
+            'tipo' => 'Soroche\Wayna\Models\Negocio',
             'movimientos' => [
-                ['formato' => '1020%02d%s%04d','constante' => '100'],
-                ['formato' => '9010%02d%s%04d','constante' => '100']
+                ['formato' => '1020[banco][negocio]','porcentaje' => '100', 'constante' => '0'],
+                ['formato' => '901000[negocio]','porcentaje' => '100', 'constante' => '0']
             ]
         ]);
         Asiento::create(['negocio_id' => 1, 
             'nombre' => 'Egreso de Caja Chica',
-            'tipo' => 'soroche\wayna\models\negocio',
+            'tipo' => 'Soroche\Wayna\Models\Negocio',
             'movimientos' => [
-                ['formato' => '1010%02d%s%04d','constante' => '-100'],
-                ['formato' => '9010%02d%s%04d','constante' => '-100']
+                ['formato' => '1010[banco][negocio]','porcentaje' => '-100','constante' => '0'],
+                ['formato' => '901000[negocio]','porcentaje' => '-100','constante' => '0']
             ]
         ]);
         Asiento::create(['negocio_id' => 1, 
             'nombre' => 'Ingreso Caja Chica',
-            'tipo' => 'soroche\wayna\models\negocio',
+            'tipo' => 'Soroche\Wayna\Models\Negocio',
             'movimientos' => [
-                ['formato' => '1010%02d%s%04d','constante' => '100'],
-                ['formato' => '9010%02d%s%04d','constante' => '100']
+                ['formato' => '1010[banco][negocio]','porcentaje' => '100','constante' => '0'],
+                ['formato' => '901000[negocio]','porcentaje' => '100','constante' => '0']
             ]
         ]);
         
@@ -118,19 +121,34 @@ class BuilderTableCreateSorocheWaynaPagos extends Migration
             'nombre' => 'Pago de Publicidad',
             'tipo' => 'Backend\Models\User',
             'movimientos' => [
-                ['formato' => '1020%02d%s%04d','constante' => '-100'],
-                ['formato' => '4220%02d%s%04d','constante' => '-100']
+                ['formato' => '1020[banco][adt]','porcentaje' => '-100','constante' => '0'],
+                ['formato' => '422000[adt]','porcentaje' => '-100','constante' => '0']
             ]
         ]);
         Asiento::create(['negocio_id' => 1, 
             'nombre' => 'Publicidad',
             'tipo' => 'Backend\Models\User',
             'movimientos' => [
-                ['formato' => '1020%02d%s%04d','constante' => '100'],
-                ['formato' => '4220%02d%s%04d','constante' => '90'],
-                ['formato' => '9020%02d%s%04d','constante' => '10']
+                ['formato' => '1020[banco][adt]','porcentaje' => '100','constante' => '0'],
+                ['formato' => '422000[adt]','porcentaje' => '90','constante' => '0'],
+                ['formato' => '902000[adt]','porcentaje' => '10','constante' => '0']
             ]
         ]);
+        
+        Asiento::create(['negocio_id' => 1, 
+            'nombre' => 'Pago de Reserva (Adelanto)',
+            'tipo' => 'Soroche\Wayna\Models\Reserva',
+            'movimientos' => [
+                ['formato' => '1010[banco][reserva]','porcentaje' => '100','constante' => ''],
+                ['formato' => '121000[reserva]','porcentaje' => '100','constante' => ''],
+                //['formato' => '1010[banco][reserva]','porcentaje' => '-5','constante' => ''],
+                ['formato' => '121000[reserva]','porcentaje' => '-5','constante' => ''],
+                ['formato' => '401000Q0001','porcentaje' => '5','constante' => ''],
+                ['formato' => '121000[reserva]','porcentaje' => '0','constante' => '-[comision]'],
+                ['formato' => '402000[adt]','porcentaje' => '0','constante' => '[comision]'],
+            ]
+        ]);
+        
     }
     
     public function down()

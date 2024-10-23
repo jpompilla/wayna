@@ -10,6 +10,7 @@ class Migration104 extends Migration
         Schema::table('backend_users', function($table)
         {
             $table->integer('negocio_id')->nullable();
+            $table->string('telefono')->nullable();
         });
     }
 
@@ -18,6 +19,7 @@ class Migration104 extends Migration
         Schema::table('backend_users', function($table)
         {
             $table->dropColumn('negocio_id');
+            $table->dropColumn('telefono');
         });
     }
 }

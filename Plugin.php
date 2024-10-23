@@ -43,7 +43,12 @@ class Plugin extends PluginBase
                     'nameFrom' => 'nombre',
                     'emptyOption' => '-- No asignado --',
                     'tab' => 'Wayna'
-                ], 
+                ],
+                'telefono' => [
+                    'label'   => 'Telefono',
+                    'type' => 'text',
+                    'tab' => 'Wayna'
+                ],
             ]);
         });
     }

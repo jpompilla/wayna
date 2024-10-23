@@ -38,6 +38,7 @@ class Tours extends Controller
         $original = Servicio::find($id);
         $duplicado = $original->replicate();
         $duplicado->nombre = 'Copia de '.$original->nombre;
+        $duplicado->estado = 'Borrador';
         $duplicado->save();
         return \Backend::redirect('soroche/wayna/tours/update/' . $duplicado->id)->with('message', 'Servicio duplicado');
     }

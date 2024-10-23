@@ -25,6 +25,7 @@ class BuilderTableCreateSorocheWaynaNegocios extends Migration
             $table->text('contactos')->nullable();
             $table->string('categoria')->nullable();
             $table->text('params')->nullable();
+            $table->text('terms')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('deleted_at')->nullable();

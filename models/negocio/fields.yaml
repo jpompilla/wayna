@@ -149,3 +149,19 @@ tabs:
             #    - update
             height: false
             tab: 'Parametros Precio'
+        logo:
+            label: Logo
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: left
+            type: fileupload
+            tab: Multimedia
+        terms:
+            label: Terminos y Condiciones
+            type: richeditor
+            size: huge
+            tab: Multimedia
+            

@@ -1,0 +1,24 @@
+columns:
+    asiento:
+        label: Operacion
+        type: text
+        select: nombre
+        relation: asiento
+    operacion_fecha:
+        label: Fecha
+        format: d/m/y
+        type: date
+    cuenta_bancaria:
+        label: Cuenta Bancaria
+        type: text
+        select: nombre
+        relation: cuenta_bancaria
+    monto:
+        label: monto
+        type: number
+    id:
+        label: id
+        type: number
+    updated_at:
+        label: updated_at
+        type: datetime

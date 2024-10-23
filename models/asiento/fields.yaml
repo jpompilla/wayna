@@ -11,25 +11,27 @@ fields:
         required: 1
         placeholder: '-- Seleccione un tipo --'
         options:
-            soroche\Wayna\Models\Negocio: Negocio
+            Soroche\Wayna\Models\Negocio: Negocio
             Backend\Models\User: Asesor
-            soroche\Wayna\Models\Reserva: Reserva
+            Soroche\Wayna\Models\Reserva: Reserva
     movimientos:
-        label: Movimientos
-        prompt: 'Añadir nuevo movimiento'
-        style: default
-        span: left
-        type: repeater
-        form:
-            fields:
+            label: Movimientos
+            type: datatable
+            span: left
+            adding: true
+            deleting: true
+            columns:
                 formato:
-                    label: 'Formato de cuenta'
-                    span: auto
-                    type: text
+                    type: string
+                    title: 'Formato de cuenta'
+                porcentaje:
+                    type: string
+                    title: '% del monto'
                 constante:
-                    label: 'Constante del monto (%)'
-                    span: auto
-                    type: number
+                    type: string
+                    title: 'Constante'
+            dynamicHeight: true
+            height: false
     descripcion:
         label: Descripcion
         span: right

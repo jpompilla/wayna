@@ -1,0 +1,34 @@
+fields:
+    pasaporte_nro:
+        label: 'Nro pasaporte'
+        span: auto
+        type: text
+    nombres:
+        label: Nombres
+        span: auto
+        type: text
+    apellidos:
+        label: Apellidos
+        span: auto
+        type: text
+    nacionalidad:
+        label: Nacionalidad
+        span: auto
+        type: dropdown
+    fecha_nacimiento:
+        label: 'Fecha nacimiento'
+        span: auto
+        type: datepicker
+    acomodacion:
+        label: Acomodacion
+        span: auto
+        type: dropdown
+    pasaporte_img:
+        label: 'File upload'
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
