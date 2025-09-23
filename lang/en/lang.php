@@ -1,6 +1,6 @@
 <?php return [
     'plugin' => [
         'name' => 'Wayna',
-        'description' => ''
+        'description' => 'Sistema de Gestion de Reservas desarrollado por Soroche Digital'
     ]
 ];

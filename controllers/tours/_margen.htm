@@ -5,8 +5,8 @@
                 <table class="table data" data-control="rowlink">
                     <thead>
                         <tr>
-                            <th><span>MARGEN</span></th>
-                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <th width="250"><span>MARGEN (USD)</span></th>
+                            <?php for ($i = 1; $i <= 6; $i++): ?>
                             <th><span>P<?= $i ?></span></th>
                             <?php endfor ?>
                         </tr>
@@ -15,7 +15,7 @@
                     <?php foreach ($model->margen as $margen): ?>
                         <tr>
                             <td><span><?= $margen[0] ?></span></td>
-                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <?php for ($i = 1; $i <= 6; $i++): ?>
                             <td><span><?= number_format($margen[$i],2) ?></span></td>
                             <?php endfor ?>
                         </tr>

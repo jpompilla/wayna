@@ -79,7 +79,9 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 1, 'incluye' => [['nombre'=>'Traslado del aeropuerto al hotel','dia'=>0, 'tipo'=>'Traslado']]]
+                ['servicio' => 1, 'incluye' => [
+                    ['nombre'=>'Traslado del aeropuerto al hotel','dia'=>0, 'tipo'=>'Traslado']
+                ]]
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Valle Sagrado', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
             'params' => [
@@ -91,8 +93,15 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 4, 'incluye' => [['nombre'=>'Transporte Turistico','dia'=>0, 'tipo'=>'Transporte'],['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia'],['nombre'=>'Almuerzo Buffet','dia'=>0,'tipo'=>'Almuerzo']]],
-                ['servicio' => 6, 'incluye' => [['nombre'=>'Tickets de entrada','dia'=>0,'tipo'=>'Entradas']]]
+                ['servicio' => 4, 'incluye' => [
+                    ['nombre'=>'Recojo en el hotel para inicio del tour','dia'=>0, 'tipo'=>'Transporte'],
+                    ['nombre'=>'Tour Valle Sagrado (Pisac, Urubamba y Ollantaytambo)','dia'=>0, 'tipo'=>'Transporte'],
+                    ['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia'],
+                    ['nombre'=>'Almuerzo Buffet','dia'=>0,'tipo'=>'Almuerzo']
+                ]],
+                ['servicio' => 6, 'incluye' => [
+                    ['nombre'=>'Tickets de entrada','dia'=>0,'tipo'=>'Entradas']
+                ]]
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Tren expeditions y Machupicchu', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
             'params' => [
@@ -106,11 +115,21 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 8, 'incluye' => [['nombre'=>'Traslado del hotel a estacion','dia'=>0,'tipo'=>'Traslado']]],
-                ['servicio' => 9, 'incluye' => [['nombre'=>'Tren turistico a Machupicchu','dia'=>0,'tipo'=>'Tren']]],
-                ['servicio' => 11, 'incluye' => [['nombre'=>'Bus de subida y bajada a Machupicchu','dia'=>0,'tipo'=>'Transporte']]],
-                ['servicio' => 12, 'incluye' => [['nombre'=>'Entrada a Machupicchu','dia'=>0,'tipo'=>'Entradas']]],
-                ['servicio' => 13, 'incluye' => [['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia']]]
+                ['servicio' => 8, 'incluye' => [
+                    ['nombre'=>'Recojo y traslado del hotel a estacion','dia'=>0,'tipo'=>'Traslado']
+                ]],
+                ['servicio' => 9, 'incluye' => [
+                    ['nombre'=>'Tren turistico a Machupicchu','dia'=>0,'tipo'=>'Tren']
+                ]],
+                ['servicio' => 11, 'incluye' => [
+                    ['nombre'=>'Bus de subida y bajada a Machupicchu','dia'=>0,'tipo'=>'Transporte']
+                ]],
+                ['servicio' => 12, 'incluye' => [
+                    ['nombre'=>'Entrada a Machupicchu','dia'=>0,'tipo'=>'Entradas']
+                ]],
+                ['servicio' => 13, 'incluye' => [
+                    ['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia']
+                ]]
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Tren Vistadome, Maras y Moray ', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
             'params' => [
@@ -122,10 +141,19 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 10, 'incluye' => [['nombre'=>'Tren Vistadome','dia'=>0,'tipo'=>'Tren']]],
-                ['servicio' => 5, 'incluye' => [['nombre'=>'Transporte turistico','dia'=>0],['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Transporte']]],
-                ['servicio' => 15, 'incluye' => [['nombre'=>'Almuerzo Buffet','dia'=>0,'tipo'=>'Almuerzo']]],
-                ['servicio' => 6, 'incluye' => [['nombre'=>'Tickets de Entrada','dia'=>0,'tipo'=>'Entradas']]]
+                ['servicio' => 10, 'incluye' => [
+                    ['nombre'=>'Tren Vistadome (Aguas Calientes - Ollantaytambo)','dia'=>0,'tipo'=>'Tren']
+                ]],
+                ['servicio' => 5, 'incluye' => [
+                    ['nombre'=>'Transporte Tour Maras y Moray','dia'=>0,'tipo'=>'Transporte'],
+                    ['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia']
+                ]],
+                ['servicio' => 15, 'incluye' => [
+                    ['nombre'=>'Almuerzo Buffet','dia'=>0,'tipo'=>'Almuerzo']
+                ]],
+                ['servicio' => 6, 'incluye' => [
+                    ['nombre'=>'Tickets de Entrada','dia'=>0,'tipo'=>'Entradas']
+                ]]
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Almuerzo peruano y tour escenico', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
             'params' => [
@@ -137,8 +165,13 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 16, 'incluye' => [['nombre'=>'Almuerzo 3 tiempos','dia'=>0,'tipo'=>'Almuerzo']]],
-                ['servicio' => 17, 'incluye' => [['nombre'=>'Transporte 180','dia'=>0,'tipo'=>'Transporte'],['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia']]]
+                ['servicio' => 16, 'incluye' => [
+                    ['nombre'=>'Almuerzo 3 tiempos','dia'=>0,'tipo'=>'Almuerzo']
+                ]],
+                ['servicio' => 17, 'incluye' => [
+                    ['nombre'=>'Transporte Tour Cusco 180','dia'=>0,'tipo'=>'Transporte'],
+                    ['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia']
+                ]]
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Montaña de Colores', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
             'params' => [
@@ -152,7 +185,14 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'Accesorios no indicados','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 19, 'incluye' => [['nombre'=>'Transporte turistico','dia'=>0,'tipo'=>'Transporte'],['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia'],['nombre'=>'Almuerzo buffet','dia'=>0,'tipo'=>'Almuerzo']]]
+                ['servicio' => 19, 'incluye' => [
+                    ['nombre'=>'Recojo en el hotel para iniciar el tour','dia'=>0,'tipo'=>'Transporte'],
+                    ['nombre'=>'Transporte turistico','dia'=>0,'tipo'=>'Transporte'],
+                    ['nombre'=>'Caminata a la Montaña de Colores','dia'=>0,'tipo'=>'Transporte'],                    
+                    ['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia'],                    
+                    ['nombre'=>'Almuerzo buffet','dia'=>0,'tipo'=>'Almuerzo'],
+                    ['nombre'=>'Transporte de retorno al hotel','dia'=>0,'tipo'=>'Transporte']
+                ]]
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Laguna Humantay', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
             'params' => [
@@ -165,7 +205,14 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'Accesorios no indicados','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 18, 'incluye' => [['nombre'=>'Transporte turistico','dia'=>0,'tipo'=>'Transporte'],['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia'],['nombre'=>'Almuerzo buffet','dia'=>0,'tipo'=>'Almuerzo']]]
+                ['servicio' => 18, 'incluye' => [
+                    ['nombre'=>'Recojo en el hotel para iniciar el tour','dia'=>0,'tipo'=>'Transporte'],
+                    ['nombre'=>'Transporte turistico','dia'=>0,'tipo'=>'Transporte'],
+                    ['nombre'=>'Caminata a la Laguna Humantay','dia'=>0,'tipo'=>'Transporte'],                    
+                    ['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia'],                    
+                    ['nombre'=>'Almuerzo buffet','dia'=>0,'tipo'=>'Almuerzo'],
+                    ['nombre'=>'Transporte de retorno al hotel','dia'=>0,'tipo'=>'Transporte']
+                ]]
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Despedida de Cusco', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
             'params' => [
@@ -179,7 +226,9 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 2, 'incluye' => [['nombre'=>'Traslado del hotel al aeropuerto','dia'=>0,'tipo'=>'Traslado']]]
+                ['servicio' => 2, 'incluye' => [
+                    ['nombre'=>'Traslado del hotel al aeropuerto','dia'=>0,'tipo'=>'Traslado']
+                ]]
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'City Tour Cusco', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
             'params' => [
@@ -196,9 +245,17 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 21, 'incluye' => [['nombre'=>'Transporte turistico','dia'=>0,'tipo'=>'Transporte'],['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia']]],
-                ['servicio' => 6, 'incluye' => [['nombre'=>'Tickets de Entrada','dia'=>0,'tipo'=>'Entradas']]],
-                ['servicio' => 20, 'incluye' => [['nombre'=>'Entrada a Koricancha','dia'=>0,'tipo'=>'Entradas']]]
+                ['servicio' => 21, 'incluye' => [
+                    ['nombre'=>'Transporte turistico','dia'=>0,'tipo'=>'Transporte'],
+                    ['nombre'=>'Tour atractivos cercanos (Koricancha, Qenqo, Pucapucara, Tambomachay y Sacsayhuaman)','dia'=>0,'tipo'=>'Transporte'],
+                    ['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia']
+                ]],
+                ['servicio' => 6, 'incluye' => [
+                    ['nombre'=>'Boleto turistico','dia'=>0,'tipo'=>'Entradas']
+                ]],
+                ['servicio' => 20, 'incluye' => [
+                    ['nombre'=>'Entrada a Koricancha','dia'=>0,'tipo'=>'Entradas']
+                ]]
         ]]);
         
         $n = $mplus->servicios()->create(['nombre'=>'Hotel 4* (Cusco)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
@@ -206,21 +263,29 @@ class Seeder1010 extends Seeder
                 ['adelanto' => 100, 'pasarela' => 0.05, 'igv' => 0.18, 'ir' => 0.10, 'facturable' => 70, 'comision' => 10]
             ],
             'items' => [
-                ['servicio' => 3, 'incluye' => [['nombre'=>'Hotel 4 Estrellas (Cusco)','dia'=>0,'tipo'=>'Alojamiento'],['nombre'=>'Desayuno en hotel (Cusco)','dia'=>1,'tipo'=>'Desayuno']]],
+                ['servicio' => 3, 'incluye' => [
+                    ['nombre'=>'Hotel 4 Estrellas (Cusco)','dia'=>0,'tipo'=>'Alojamiento'],
+                    ['nombre'=>'Desayuno en hotel (Cusco)','dia'=>1,'tipo'=>'Desayuno']]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Hotel 4* (Urubamba)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
             'params' => [
                 ['adelanto' => 100, 'pasarela' => 0.05, 'igv' => 0.18, 'ir' => 0.10, 'facturable' => 50, 'comision' => 10]
             ],
             'items' => [
-                ['servicio' => 7, 'incluye' => [['nombre'=>'Hotel 4 Estrellas (Urubamba)','dia'=>0,'tipo'=>'Alojamiento'],['nombre'=>'Desayuno en hotel (Urubamba)','dia'=>1,'tipo'=>'Desayuno']]],
+                ['servicio' => 7, 'incluye' => [
+                    ['nombre'=>'Hotel 4 Estrellas (Urubamba)','dia'=>0,'tipo'=>'Alojamiento'],
+                    ['nombre'=>'Desayuno en hotel (Urubamba)','dia'=>1,'tipo'=>'Desayuno']
+                ]],
         ]]);
-        $n = $mplus->servicios()->create(['nombre'=>'Hotel 3* (Aguas Calientes)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+        $n = $mplus->servicios()->create(['nombre'=>'Hotel Boutique (Aguas Calientes)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
             'params' => [
                 ['adelanto' => 100, 'pasarela' => 0.05, 'igv' => 0.18, 'ir' => 0.10, 'facturable' => 50, 'comision' => 10]
             ],
             'items' => [
-                ['servicio' => 14, 'incluye' => [['nombre'=>'Hotel 3 Estrellas (Aguas Calientes)','dia'=>0,'tipo'=>'Alojamiento'],['nombre'=>'Desayuno en hotel (Aguas Calientes)','dia'=>1,'tipo'=>'Desayuno']]],
+                ['servicio' => 14, 'incluye' => [
+                    ['nombre'=>'Hotel Boutique (Aguas Calientes)','dia'=>0,'tipo'=>'Alojamiento'],
+                    ['nombre'=>'Desayuno en hotel (Aguas Calientes)','dia'=>1,'tipo'=>'Desayuno']
+                ]],
         ]]);
         
         //---- Paquetes: 34
@@ -292,9 +357,18 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 37, 'incluye' => [['nombre'=>'Traslado hotel-terminal','dia'=>0, 'tipo'=>'Traslado']]],
-                ['servicio' => 38, 'incluye' => [['nombre'=>'Transporte Ruta del Sol','dia'=>0,'tipo'=>'Transporte'],['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia']]],
-                ['servicio' => 39, 'incluye' => [['nombre'=>'Traslado terminal-hotel','dia'=>0, 'tipo'=>'Traslado']]],
+                ['servicio' => 37, 'incluye' => [
+                    ['nombre'=>'Traslado hotel-terminal','dia'=>0, 'tipo'=>'Traslado']
+                ]],
+                ['servicio' => 38, 'incluye' => [
+                    ['nombre'=>'Transporte Ruta del Sol (Andahuaylillas, Raqchi, La Raya, Pucara)','dia'=>0,'tipo'=>'Transporte'],
+                    ['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia'],
+                    ['nombre'=>'Almuerzo Buffet','dia'=>0,'tipo'=>'Almuerzo'],
+                    ['nombre'=>'Llegada a Puno','dia'=>0, 'tipo'=>'Traslado']
+                ]],
+                ['servicio' => 39, 'incluye' => [
+                    ['nombre'=>'Traslado terminal-hotel','dia'=>0, 'tipo'=>'Traslado']
+                ]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Lago Titicaca', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado', //53
             'params' => [
@@ -307,9 +381,16 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 40, 'incluye' => [['nombre'=>'Traslado hotel-puerto','dia'=>0, 'tipo'=>'Traslado']]],
-                ['servicio' => 45, 'incluye' => [['nombre'=>'Llancha para el tour','dia'=>0,'tipo'=>'Transporte'],['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia']]],
-                ['servicio' => 41, 'incluye' => [['nombre'=>'Traslado terminal-hotel','dia'=>0, 'tipo'=>'Traslado']]],
+                ['servicio' => 40, 'incluye' => [
+                    ['nombre'=>'Traslado hotel-puerto','dia'=>0, 'tipo'=>'Traslado']
+                ]],
+                ['servicio' => 45, 'incluye' => [
+                    ['nombre'=>'Tour Lago Titicaca','dia'=>0,'tipo'=>'Transporte'],
+                    ['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia']
+                ]],
+                ['servicio' => 41, 'incluye' => [
+                    ['nombre'=>'Traslado terminal-hotel','dia'=>0, 'tipo'=>'Traslado']
+                ]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Despedida de Puno y Llegada a Lima', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado', //54
             'params' => [
@@ -324,8 +405,12 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 42, 'incluye' => [['nombre'=>'Traslado hotel-aeropuerto (Juliaca)','dia'=>0, 'tipo'=>'Traslado']]],
-                ['servicio' => 46, 'incluye' => [['nombre'=>'Traslado aeropuerto-hotel (Lima)','dia'=>0, 'tipo'=>'Traslado']]],
+                ['servicio' => 42, 'incluye' => [
+                    ['nombre'=>'Traslado hotel-aeropuerto (Juliaca)','dia'=>0, 'tipo'=>'Traslado']
+                ]],
+                ['servicio' => 46, 'incluye' => [
+                    ['nombre'=>'Traslado aeropuerto-hotel (Lima)','dia'=>0, 'tipo'=>'Traslado']
+                ]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Ballestas, Paracas y Huacachina', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado', //55
             'params' => [
@@ -339,7 +424,18 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 50, 'incluye' => [['nombre'=>'Fullday Ica','dia'=>0, 'tipo'=>'Traslado']]],
+                ['servicio' => 50, 'incluye' => [
+                    ['nombre'=>'Traslado hotel-terminal de buses','dia'=>0, 'tipo'=>'Traslado'],
+                    ['nombre'=>'Bus Lima-Paracas (Transporte Cruz del Sur, 2° piso, Servicio Cruzero)','dia'=>0, 'tipo'=>'Transporte'],
+                    ['nombre'=>'Traslado terminal de buses - Puerto Paracas','dia'=>0, 'tipo'=>'Traslado'],
+                    ['nombre'=>'Tour Islas Ballestas (Candelabro y Fauna Marina)','dia'=>0, 'tipo'=>'Transporte'],
+                    ['nombre'=>'Traslado Puerto Paracas - terminal de buses','dia'=>0, 'tipo'=>'Traslado'],
+                    ['nombre'=>'Bus Paracas-Ica','dia'=>0, 'tipo'=>'Transporte'],
+                    ['nombre'=>'Traslado terminal de buses - Huacachina','dia'=>0, 'tipo'=>'Traslado'],
+                    ['nombre'=>'Tour Huacachina (Carros Areneros [Tubulares], Sandboard y Sunset [Vista del Ocaso])','dia'=>0, 'tipo'=>'Transporte'],
+                    ['nombre'=>'Bus Ica-Lima (Transporte Cruz del Sur, 2° piso, Servicio Cruzero)','dia'=>0, 'tipo'=>'Transporte'],
+                    ['nombre'=>'Traslado al hotel (Lima)','dia'=>0, 'tipo'=>'Traslado']
+                ]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'City Tour Lima', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado', //56
             'params' => [
@@ -352,7 +448,14 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 51, 'incluye' => [['nombre'=>'City tour lima','dia'=>0, 'tipo'=>'Traslado']]],
+                ['servicio' => 51, 'incluye' => [
+                    ['nombre'=>'Recojo en el hotel para inicio del tour','dia'=>0, 'tipo'=>'Traslado'],
+                    ['nombre'=>'Tickets de entrada','dia'=>0, 'tipo'=>'Entradas'],
+                    ['nombre'=>'City Tour por Lima (Parque del Amor, Huaca Pucllana, El Olivar, Plaza San Martin, Catacubas) ','dia'=>0, 'tipo'=>'Entradas'],
+                    ['nombre'=>'Guia profesional','dia'=>0, 'tipo'=>'Guia'],
+                    ['nombre'=>'Transporte turistico compartido','dia'=>0, 'tipo'=>'Transporte'],
+                    ['nombre'=>'Retorno al hotel','dia'=>0, 'tipo'=>'Traslado']
+                ]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Despedida de Lima', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado', //57
             'params' => [
@@ -365,7 +468,9 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 47, 'incluye' => [['nombre'=>'Traslado hotel-aeropuerto (Lima)','dia'=>0, 'tipo'=>'Traslado']]],
+                ['servicio' => 47, 'incluye' => [
+                    ['nombre'=>'Traslado hotel-aeropuerto (Lima)','dia'=>0, 'tipo'=>'Traslado']
+                ]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Hotel 3* (Cusco)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',//58
             'params' => [
@@ -375,35 +480,50 @@ class Seeder1010 extends Seeder
                 [1=>40,2=>40,3=>40,4=>40,5=>40,6=>40,7=>40,8=>40,9=>40,10=>40]
             ],
             'items' => [
-                ['servicio' => 35, 'incluye' => [['nombre'=>'Hotel 3 Estrellas (Cuscp)','dia'=>0,'tipo'=>'Alojamiento'],['nombre'=>'Desayuno en hotel (Cusco)','dia'=>1,'tipo'=>'Desayuno']]],
+                ['servicio' => 35, 'incluye' => [
+                    ['nombre'=>'Hotel 3 Estrellas (Cusco)','dia'=>0,'tipo'=>'Alojamiento'],
+                    ['nombre'=>'Desayuno en hotel (Cusco)','dia'=>1,'tipo'=>'Desayuno']
+                ]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Hotel 3* (Puno)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',//59
             'params' => [
                 ['adelanto' => 100, 'pasarela' => 0.05, 'igv' => 0.18, 'ir' => 0.10, 'facturable' => 50, 'comision' => 10]
             ],
             'items' => [
-                ['servicio' => 44, 'incluye' => [['nombre'=>'Hotel 3 Estrellas (Puno)','dia'=>0,'tipo'=>'Alojamiento'],['nombre'=>'Desayuno en hotel (Puno)','dia'=>1,'tipo'=>'Desayuno']]],
+                ['servicio' => 44, 'incluye' => [
+                    ['nombre'=>'Hotel 3 Estrellas (Puno)','dia'=>0,'tipo'=>'Alojamiento'],
+                    ['nombre'=>'Desayuno en hotel (Puno)','dia'=>1,'tipo'=>'Desayuno']
+                ]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Hotel 3* (Lima)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',//60
             'params' => [
                 ['adelanto' => 100, 'pasarela' => 0.05, 'igv' => 0.18, 'ir' => 0.10, 'facturable' => 50, 'comision' => 10]
             ],
             'items' => [
-                ['servicio' => 48, 'incluye' => [['nombre'=>'Hotel 3 Estrellas (Lima)','dia'=>0,'tipo'=>'Alojamiento'],['nombre'=>'Desayuno en hotel (Lima)','dia'=>1,'tipo'=>'Desayuno']]],
+                ['servicio' => 48, 'incluye' => [
+                    ['nombre'=>'Hotel 3 Estrellas (Lima)','dia'=>0,'tipo'=>'Alojamiento'],
+                    ['nombre'=>'Desayuno en hotel (Lima)','dia'=>1,'tipo'=>'Desayuno']
+                ]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Hotel 4* (Puno)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',//61
             'params' => [
                 ['adelanto' => 100, 'pasarela' => 0.05, 'igv' => 0.18, 'ir' => 0.10, 'facturable' => 50, 'comision' => 10]
             ],
             'items' => [
-                ['servicio' => 43, 'incluye' => [['nombre'=>'Hotel 4 Estrellas (Puno)','dia'=>0,'tipo'=>'Alojamiento'],['nombre'=>'Desayuno en hotel (Puno)','dia'=>1,'tipo'=>'Desayuno']]],
+                ['servicio' => 43, 'incluye' => [
+                    ['nombre'=>'Hotel 4 Estrellas (Puno)','dia'=>0,'tipo'=>'Alojamiento'],
+                    ['nombre'=>'Desayuno en hotel (Puno)','dia'=>1,'tipo'=>'Desayuno']
+                ]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Hotel 4* (Lima)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',//62
             'params' => [
                 ['adelanto' => 100, 'pasarela' => 0.05, 'igv' => 0.18, 'ir' => 0.10, 'facturable' => 50, 'comision' => 10]
             ],
             'items' => [
-                ['servicio' => 49, 'incluye' => [['nombre'=>'Hotel 4 Estrellas (Lima)','dia'=>0,'tipo'=>'Alojamiento'],['nombre'=>'Desayuno en hotel (Lima)','dia'=>1,'tipo'=>'Desayuno']]],
+                ['servicio' => 49, 'incluye' => [
+                    ['nombre'=>'Hotel 4 Estrellas (Lima)','dia'=>0,'tipo'=>'Alojamiento'],
+                    ['nombre'=>'Desayuno en hotel (Lima)','dia'=>1,'tipo'=>'Desayuno']
+                ]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Despedida de Cusco y Llegada a Lima', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado', //63
             'params' => [
@@ -418,8 +538,12 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 2, 'incluye' => [['nombre'=>'Traslado hotel-aeropuerto (Cusco)','dia'=>0, 'tipo'=>'Traslado']]],
-                ['servicio' => 46, 'incluye' => [['nombre'=>'Traslado aeropuerto-hotel (Lima)','dia'=>0, 'tipo'=>'Traslado']]],
+                ['servicio' => 2, 'incluye' => [
+                    ['nombre'=>'Traslado hotel-aeropuerto (Cusco)','dia'=>0, 'tipo'=>'Traslado']
+                ]],
+                ['servicio' => 46, 'incluye' => [
+                    ['nombre'=>'Traslado aeropuerto-hotel (Lima)','dia'=>0, 'tipo'=>'Traslado']
+                ]],
         ]]);
         $n = $mplus->servicios()->create(['nombre'=>'Tren Vistadome, Maras y Moray y Despedida ', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',//64
             'params' => [
@@ -432,13 +556,178 @@ class Seeder1010 extends Seeder
                 ['nombre'=>'No indicados en el paquete','dia'=>0,'tipo'=>'Propina'],
             ],
             'items' => [
-                ['servicio' => 10, 'incluye' => [['nombre'=>'Tren Vistadome','dia'=>0,'tipo'=>'Tren']]],
-                ['servicio' => 5, 'incluye' => [['nombre'=>'Transporte turistico','dia'=>0],['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Transporte']]],
-                ['servicio' => 15, 'incluye' => [['nombre'=>'Almuerzo Buffet','dia'=>0,'tipo'=>'Almuerzo']]],
-                ['servicio' => 6, 'incluye' => [['nombre'=>'Tickets de Entrada','dia'=>0,'tipo'=>'Entradas']]],
-                ['servicio' => 2, 'incluye' => [['nombre'=>'Traslado hotel-aeropuerto (Cusco)','dia'=>0, 'tipo'=>'Traslado']]],
+                ['servicio' => 10, 'incluye' => [
+                    ['nombre'=>'Tren Vistadome (Aguas Calientes - Ollantaytambo)','dia'=>0,'tipo'=>'Tren']
+                ]],
+                ['servicio' => 5, 'incluye' => [
+                    ['nombre'=>'Transporte Tour Maras y Moray','dia'=>0,'tipo'=>'Transporte'],
+                    ['nombre'=>'Guia profesional','dia'=>0,'tipo'=>'Guia']
+                ]],
+                ['servicio' => 15, 'incluye' => [
+                    ['nombre'=>'Almuerzo Buffet','dia'=>0,'tipo'=>'Almuerzo']
+                ]],
+                ['servicio' => 6, 'incluye' => [
+                    ['nombre'=>'Tickets de Entrada','dia'=>0,'tipo'=>'Entradas']
+                ]],
+                ['servicio' => 2, 'incluye' => [
+                    ['nombre'=>'Traslado hotel-aeropuerto (Cusco)','dia'=>0, 'tipo'=>'Traslado']
+                ]]
         ]]);
-        
+        $n = $mplus->servicios()->create(['nombre'=>'Hotel 3* (Urubamba)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado', //65
+            'params' => [
+                ['adelanto' => 100, 'pasarela' => 0.05, 'igv' => 0.18, 'ir' => 0.10, 'facturable' => 50, 'comision' => 10]
+            ],
+            'items' => [
+                ['servicio' => 7, 'incluye' => [
+                    ['nombre'=>'Hotel 3 Estrellas (Urubamba)','dia'=>0,'tipo'=>'Alojamiento'],
+                    ['nombre'=>'Desayuno en hotel (Urubamba)','dia'=>1,'tipo'=>'Desayuno']
+                ]],
+        ]]);
+        //----- Suplementos Individuales
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 12D (Hotel 3*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>385,2=>192.5,3=>128.33,4=>96.25,5=>77,6=>64.17,7=>55,8=>48.125,9=>42.78,10=>38.5]                
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 11D (Hotel 3*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>350,2=>175,3=>116.67,4=>87.5,5=>70,6=>58.33,7=>50,8=>43.75,9=>38.89,10=>35]                
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 10D (Hotel 3*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>315,2=>157.5,3=>105,4=>78.75,5=>63,6=>52.5,7=>45,8=>39.375,9=>35,10=>31.5]                
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 9D (Hotel 3*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>280,2=>140,3=>93.33,4=>70,5=>56,6=>46.67,7=>40,8=>35,9=>31.11,10=>28]      
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 8D (Hotel 3*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>245,2=>122.5,3=>81.67,4=>61.25,5=>49,6=>40.83,7=>35,8=>30.63,9=>27.22,10=>24.5]      
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 7D (Hotel 3*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>210,2=>105,3=>70,4=>52.5,5=>42,6=>35,7=>30,8=>26.25,9=>23.33,10=>21]      
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 6D (Hotel 3*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>175,2=>87.5,3=>58.33,4=>43.75,5=>35,6=>29.17,7=>25,8=>21.875,9=>19.44,10=>17.5]      
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 5D (Hotel 3*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>140,2=>70,3=>46.67,4=>35,5=>28,6=>23.33,7=>20,8=>17.5,9=>15.56,10=>14]      
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 12D (Hotel 4*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>440,2=>220,3=>146.67,4=>110,5=>88,6=>73.33,7=>62.86,8=>55,9=>48.89,10=>44]      
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 11D (Hotel 4*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>400,2=>200,3=>133.33,4=>100,5=>80,6=>66.67,7=>57.14,8=>50,9=>44.44,10=>40]      
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 10D (Hotel 4*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>360,2=>180,3=>120,4=>90,5=>72,6=>60,7=>51.43,8=>45,9=>40,10=>36]      
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 9D (Hotel 4*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>320,2=>160,3=>106.67,4=>80,5=>64,6=>53.33,7=>45.71,8=>40,9=>35.56,10=>32]      
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 8D (Hotel 4*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>280,2=>140,3=>93.33,4=>70,5=>56,6=>46.67,7=>40,8=>35,9=>31.11,10=>28]      
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 7D (Hotel 4*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>240,2=>120,3=>80,4=>60,5=>48,6=>40,7=>34.29,8=>30,9=>26.67,10=>24]      
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 6D (Hotel 4*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>200,2=>100,3=>66.67,4=>50,5=>40,6=>33.33,7=>28.57,8=>25,9=>22.22,10=>20]      
+            ]
+        ]);
+        $n = $mplus->servicios()->create(['nombre'=>'Suplemento Individual 5D (Hotel 4*)', 'tipo' => 'Tour', 'lugar_id' => 15,'estado'=> 'Privado',
+            'params' => [
+                ['adelanto' => 0, 'pasarela' => 0.05, 'igv' => 0, 'ir' => 0, 'facturable' => 0, 'comision' => 0]
+            ],
+            'items' => [],
+            'precios' => [
+                [1=>160,2=>80,3=>53.33,4=>40,5=>32,6=>26.67,7=>22.86,8=>20,9=>17.78,10=>16]      
+            ]
+        ]);
         //---- Paquetes:
         $n = $mplus->servicios()->create(['nombre'=>'Paquete 7D Cusco (3 Estrellas)', 'tipo' => 'Paquete', 'lugar_id' => 15, 'estado'=> 'Interno',
             'params' => [
@@ -449,7 +738,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 ['tour' => 26, 'hotel' => 58],
@@ -465,7 +754,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 ['tour' => 26, 'hotel' => 58],
@@ -513,7 +802,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 ['tour' => 26, 'hotel' => 58],
@@ -559,7 +848,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 
@@ -603,7 +892,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 ['tour' => 26, 'hotel' => 58],//Cusco 180
@@ -645,7 +934,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 ['tour' => 26, 'hotel' => 58],//Cusco 180
@@ -685,7 +974,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 ['tour' => 26, 'hotel' => 58],//Cusco 180
@@ -723,7 +1012,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 ['tour' => 26, 'hotel' => 58],//Cusco 180
@@ -759,7 +1048,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 ['tour' => 27, 'hotel' => 58],//Montaña
@@ -793,7 +1082,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 ['tour' => 63, 'hotel' => 60],//despedida-llegada
@@ -826,7 +1115,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 ['tour' => 26, 'hotel' => 58],//Cusco 180
@@ -860,7 +1149,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 ['tour' => 26, 'hotel' => 58],//Cusco 180
@@ -890,7 +1179,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 25, 'hotel' => 58],
                 ['tour' => 29]
@@ -918,7 +1207,7 @@ class Seeder1010 extends Seeder
             ],
             'items' => [
                 ['tour' => 22, 'hotel' => 58],
-                ['tour' => 23, 'hotel' => 32],
+                ['tour' => 23, 'hotel' => 65],
                 ['tour' => 24, 'hotel' => 33],
                 ['tour' => 64]
         ]]);

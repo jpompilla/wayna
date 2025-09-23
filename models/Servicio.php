@@ -36,7 +36,8 @@ class Servicio extends Model
         'costos', 
         'margen',
         'items',
-        'no_incluye'
+        'no_incluye',
+        'page_content'
     ];
     
     public $belongsTo = [        
@@ -47,13 +48,13 @@ class Servicio extends Model
             'soroche\Wayna\Models\Negocio'
         ],
         'servicio' => [
-            'soroche\Wayna\Models\Servicio'
+            'soroche\Wayna\Models\Servicio', 'conditions' => "negocio_id <> 1"
         ],
         'tour' => [
-            'soroche\Wayna\Models\Servicio'
+            'soroche\Wayna\Models\Servicio', 'conditions' => "negocio_id = 1"
         ],
         'hotel' => [
-            'soroche\Wayna\Models\Servicio'
+            'soroche\Wayna\Models\Servicio', 'conditions' => "negocio_id = 1"
         ],
     ];
     public $belongsToMany = [
@@ -84,6 +85,45 @@ class Servicio extends Model
         }
     }
     
+    public function getItinerarioAttribute(){
+        $itinerario = [];
+        
+        foreach($this->items as $i => $item){
+            $dia = $i + 1;
+            $tour = Servicio::find($item['tour']);
+            $hotel = null;            
+            if(isset($item['hotel']))
+                $hotel = Servicio::find($item['hotel']);
+            $itinerario[$dia]['nombre'] = $tour->nombre . (isset($hotel)?' + ' . $hotel->nombre:'');            
+            $itinerario[$dia]['no_incluye'] = $tour->no_incluye;
+            
+            if(isset($tour->page_content['descripcion']))
+                $itinerario[$dia]['descripcion'] = $tour->page_content['descripcion'];
+            
+            if(isset($tour->page_content['gallery']))
+                $itinerario[$dia]['gallery'] = $tour->page_content['gallery'];
+            
+            foreach($tour->items as $servicio)
+                foreach($servicio['incluye'] as $incluye)
+                    $itinerario[$i+1+$incluye['dia']]['incluye'][] = $incluye;
+            
+            if(isset($item['hotel']))
+                foreach($hotel->items as $servicio)
+                    foreach($servicio['incluye'] as $incluye)
+                        $itinerario[$i+1+$incluye['dia']]['incluye'][] = $incluye;
+                        
+        }
+        return $itinerario;
+    }
+    
+    public function getCalificationAttribute(){
+        return 5;
+    }
+    
+    public function getDurationAttribute(){
+        return count($this->items);
+    }
+    
     public function beforeSave(){        
         if($this->exists){ //UPDATE
             if($this->tipo == 'Paquete'){
@@ -96,6 +136,19 @@ class Servicio extends Model
                 $this->formatearName();
                 $this->calcularCostosTour();
                 $this->calcularMargen();
+            }
+            else{
+                $this->name = sprintf(
+                    //'%s %s - %s x%d: USD %.2f',
+                    '%s %s - %s x%d',
+                    $this->negocio->nombre,
+                    $this->negocio->categoria=='No categorizado'?'':' ('.$this->negocio->categoria.')',
+                    $this->nombre,
+                    $this->capacidad
+                );
+                $costos = $this->costos;
+                $costos[0][0] = $this->nombre;
+                $this->costos = $costos;
             }
             
         }
@@ -268,7 +321,7 @@ class Servicio extends Model
     
     private function calcularPrecios(){
         $precios = [];
-        if(isset($this->precios))
+        if(isset($this->precios) && isset($this->precios[0][1]))
             $precios = $this->precios;
         else
             for($i=1; $i<=10; $i++)

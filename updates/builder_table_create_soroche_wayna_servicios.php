@@ -28,6 +28,10 @@ class BuilderTableCreateSorocheWaynaServicios extends Migration
             $table->text('costos')->nullable();
             $table->text('margen')->nullable();
             
+            $table->string('page_title')->nullable();
+            $table->string('page_slug')->nullable();
+            $table->text('page_content')->nullable();
+            
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('deleted_at')->nullable();

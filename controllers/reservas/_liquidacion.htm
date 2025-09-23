@@ -1,0 +1,258 @@
+<html>
+<head>
+    <title><?= $reserva->name ?></title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+        body {
+            font-family: 'Roboto', Arial;
+            font-size: 9pt;
+        }
+        .logo{
+            text-align: center;
+            margin-bottom: 0px;
+        }
+        .logo img{
+            height: 40px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 15pt;
+            font-weight: bold;
+            margin-top: 0px;
+        }
+        
+        table {
+            width: 100%;
+            /*border: 1px solid #ccc;*/
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        caption{
+            font-size: 10pt;
+            text-align: left;
+            padding: 2px 8px;
+            background-color: #ddd;
+            font-weight: bold;
+            /*border-left: 10px solid #dc573b;*/
+        }
+        th{
+            font-size: 10pt;
+            background-color: #eee;
+            font-weight: bold;
+            border: 1px solid #ccc;
+        }
+        td{
+            border: 1px solid #ccc;
+        }
+        td, tr.form th{
+            padding-left: 5px;
+            padding-right: 5px;
+            text-align: left;
+        }
+        td.pendiente{
+            background-color: yellow;
+        }
+        td.center{
+            text-align: center;
+        }
+        td.right{
+            text-align: right;
+        }
+        td.vacio{
+            border:0px;
+        }
+        tr.list{
+            vertical-align: top;
+        }
+        tr.terms{
+            font-size: 8pt;
+        }
+        tr.terms ol { 
+            counter-reset: item;
+            padding-left: 0px;
+        }
+        tr.terms ol>li{
+            display: block;
+            padding-left: 0;
+            margin-left: 10px;
+        }
+        tr.terms ol>li:before {
+            content: counters(item, ".") ". ";
+            counter-increment: item;
+        }
+        p.nota{
+            font-size: 7pt;
+        }
+        .size8{
+            font-size: 8pt;
+        }
+        .rojo{
+            border-left: 2px solid red;
+        }
+        .verde{
+            border-left: 2px solid green;
+        }
+        .pend{
+            color: red;
+        }
+        tr.dia{
+            background-color: #f6f6f6;
+        }
+    </style>
+</head>
+<body>
+    <p class="logo">
+        <img src="<?= $reserva->negocio->logo->path ?>" alt="">
+    </p>
+    
+    <h1>LIQUIDACION DE RESERVAS</h1>
+    
+    <table>
+        <caption>A. Datos de Reserva</caption>
+        <tr class="form">
+            <th>Paquete</th>
+            <td colspan="3"><?= $reserva->servicio->nombre ?></td>
+            <th>Codigo</th>
+            <td><?= $reserva->codigo ?></td>
+        </tr>
+        <tr class="form">
+            <th>Fecha inicio</th>
+            <td><?= isset($reserva->fecha_inicio) ? date('d/m/Y', strtotime($reserva->fecha_inicio)) : 'Abierta' ?></td>
+            <th>Fecha fin</th>
+            <td><?= isset($reserva->fecha_fin) ? date('d/m/Y', strtotime($reserva->fecha_fin)) : 'Abierta' ?></td>
+            <th>Fecha registro</th>
+            <td><?= date('d/m/Y',strtotime($reserva->created_at)) ?></td>
+        </tr>
+        <tr class="form">
+            <th>Asesor</th>
+            <td colspan="2"><?= $reserva->user->fullname ?></td>
+            <th>Celular (Asesor)</th>
+            <td colspan="2">(<?= substr($reserva->user->telefono, 0, 3) ?>) <?= substr($reserva->user->telefono, 3, 3) ?>-<?= substr($reserva->user->telefono, 6) ?></td>
+        </tr>
+        <tr class="form">
+            <th>Lider (Grupo)</th>
+            <td colspan="2" class="<?= isset($reserva->lider) ? '' : 'pendiente' ?>"><?= isset($reserva->lider) ? $reserva->lider->fullname : 'Pendiente' ?></td>
+            <th>Celular (Lider)</th>
+            <td colspan="2" class="<?= isset($reserva->lider->telefono) ? '' : 'pendiente' ?>"><?= isset($reserva->lider->telefono) ? $reserva->lider->telefono : 'Pendiente' ?></td>
+        </tr>
+    </table>
+    
+    <table>
+        <caption>B. Resumen de Costos</caption>
+        <tr>
+            <th>Actividad / Servicio (USD)</th>
+            <th>Cantidad</th>
+            <th>Presup</th>
+            <th>Pagado</th>
+            <th>Factur</th>
+        </tr>
+        <!--?= dd($reserva->itinerario) ?-->
+        <!--?= dd($reserva->serviciosPorFecha()) ?-->
+        <?php 
+            $servicios = $reserva->serviciosPorFecha();
+            $pago_total = 0;
+            $costo_total = 0;
+            $fact_total = 0;
+        ?>
+        <?php foreach($reserva->itinerario as $item): ?>
+        <?php $fecha = date('d/m/Y', strtotime($item['fecha'])); ?>
+        <tr class="size8 dia">
+            <td><strong>Dia <?= $item['dia'] ?>. <?= isset($item['fecha'])? date('(d/m)', strtotime($item['fecha'])) : '' ?>: <?= $item['tour'] ?> <?= isset($item['hotel']) ? ' + '.$item['hotel'] : '' ?></strong></td>
+            <td class="center"><strong>#</strong></td>
+            <td class="right"><strong>$ <?= number_format($servicios[$fecha]['costo'],2) ?></strong></td>
+            <td class="right"><strong>$ <?= number_format($servicios[$fecha]['pago'],2) ?></strong></td>
+            <td class="right"><strong>$ <?= number_format($servicios[$fecha]['fact'],2) ?></strong></td>
+        </tr>
+        <?php 
+            $costo_total += $servicios[$fecha]['costo'];
+            $pago_total += $servicios[$fecha]['pago'];
+            $fact_total += $servicios[$fecha]['fact'];
+        ?>
+            <?php if(array_key_exists($fecha, $servicios)): ?>
+            <?php foreach($servicios[$fecha]['servicios'] as $servicio): ?>
+            <?php 
+                $costo = empty($servicio['costo']) ? 0 : $servicio['costo'];
+                $pago = empty($servicio['pago']) ? 0 : $servicio['pago'];
+                ?>
+            <tr class="size8">
+                <td>--- <?= $servicio['servicio'] ?></td>
+                <td class="center"><?= $servicio['cantidad'] ?></td>
+                <td class="right">$ <?= number_format($costo,2) ?></td>
+                <td class="right <?= $costo < $pago ? 'rojo': '' ?> <?= $costo > $pago && $pago > 0 ? 'verde': '' ?> <?= $pago == 0 ? 'pend': '' ?>">$ <?= number_format($pago,2) ?></td>
+                <td class="right">$ <?= number_format(empty($servicio['fact'])?0:$servicio['fact'],2) ?></td>
+            </tr>                
+            <?php endforeach ?>
+            <?php endif ?>
+        <?php endforeach ?>
+        <tr>
+            <th class="size8" colspan="2">Total (USD)</th>
+            <th class="size8">$ <?= number_format($costo_total,2) ?></th>
+            <th class="size8">$ <?= number_format($pago_total,2) ?></th>
+            <th class="size8">$ <?= number_format($fact_total,2) ?></th>
+        </tr>
+    </table>
+    
+    <div style="page-break-after:always;"></div>
+
+    <table>
+        <caption>C. Resumen de Ingresos</caption>
+        <tr>
+            <th width="180">Concepto</th>
+            <th>Fecha</th>
+            <th>Unidad</th>
+            <th>Cantidad</th>
+            <th>Monto Unitario</th>
+            <th>Costo</th>
+            <th>Pagos</th>
+        </tr>
+        <?php $paquete = $reserva->precios[0] ?>
+        <tr class="size8">
+            <td><?= $reserva->servicio? $reserva->servicio->nombre : 'Paquete personalizado '.count($reserva->itinerario).'D' ?></td>
+            <td class="center"><?= isset($reserva->fecha_inicio)? date('d/m/Y', strtotime($reserva->fecha_inicio)) : 'Abierta' ?></td>
+            <td>Por persona</td>
+            <td class="center"><?= $reserva->nro_paxs ?></td>
+            <td class="right">$ <?= number_format($paquete[$reserva->nro_paxs > 10 ? 10 : $reserva->nro_paxs], 2) ?></td>
+            <td class="right">$ <?= number_format($paquete[$reserva->nro_paxs > 10 ? 10 : $reserva->nro_paxs] * $reserva->nro_paxs, 2) ?></td>
+            <td></td>
+        </tr>
+        <?php if(isset($reserva->adicionales)): ?>
+        <?php foreach($reserva->adicionales as $adicional): ?>
+        <tr class="size8">
+            <td><?= $adicional['nombre'] ?></td>
+            <td class="center"><?= isset($adicional['fecha'])? date('d/m/Y', strtotime($adicional['fecha'])) : 'Abierta' ?></td>
+            <td>Por persona</td>
+            <td class="center"><?= $reserva->nro_paxs ?></td>
+            <td class="right">$ <?= number_format($adicional[$reserva->nro_paxs > 10 ? 10 : $reserva->nro_paxs], 2) ?></td>
+            <td class="right">$ <?= number_format($adicional[$reserva->nro_paxs > 10 ? 10 : $reserva->nro_paxs] * $reserva->nro_paxs, 2) ?></td>
+            <td></td>
+        </tr>
+        <?php endforeach ?>
+        <?php endif ?>
+        
+        <?php foreach($reserva->pagos as $pago): ?>
+        <tr class="size8">
+            <td><?= $pago->asiento->nombre ?></td>
+            <td class="center"><?= date('d/m/Y',strtotime($pago->operacion_fecha)) ?></td>
+            <td>Pago grupal</td>
+            <td class="center">1</td>
+            <td class="right">$ <?= number_format(-1 * $pago->monto, 2) ?></td>
+            <td></td>
+            <td class="right">$ <?= number_format(-1 * $pago->monto, 2) ?></td>
+        </tr>
+        <?php endforeach ?>
+        
+        <tr class="form size8">
+            <td colspan="4" class="vacio"></td>
+            <th>Total</th>
+            <td class="right">$ <?= number_format($reserva->total, 2) ?></td>
+            <td class="right">$ <?= number_format(-1 * $reserva->totalpagos, 2) ?></td>
+        </tr>
+        <tr class="form size8">
+            <td colspan="4" class="vacio"></td>
+            <th>Saldo</th>
+            <td colspan="2" class="right"><strong>$ <?= number_format($reserva->total - $reserva->totalpagos, 2) ?></strong></td>
+        </tr>
+    </table>
+</body>
+</html>

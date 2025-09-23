@@ -1,0 +1,42 @@
+<div id="planList">    
+    <div class="list-preview list-flush">
+        <div class="control-list">
+            <table class="table data" data-control="rowlink">
+                <thead>
+                    <tr>
+                        <th class='center'><span>TIPO DE SERVICIO</span></th>
+                        <th class='center'><span>SERVICIO</span></th>
+                        <?php foreach($model->items as $item): ?>
+                        <?php if($item['_group'] == 'paquete' || $item['_group'] == 'tour'): ?>
+                        <th class='center'><span>DIA <?= $item['dia'] ?><br><?= date('d/M',strtotime($item['fecha'])) ?></span></th>
+                        <?php endif ?>
+                        <?php endforeach ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <#?= dd($model->plan()) ?#>
+                    <?php foreach($model->plan() as $i=>$tipo): ?>
+                    <?php foreach($tipo['servicios'] as $s=>$servicio): ?>
+                    <tr>
+                        <?php if($s == 0): ?>
+                        <td rowspan="<?= count($tipo['servicios']) ?>"><span><?= $i ?></span></td>
+                        <?php endif ?>
+                        <td><span><?= $servicio->name ?></span></td>
+                        <td><span>1</span></td>
+                        <td><span>2</span></td>
+                        <td><span>3</span></td>
+                        <td><span>4</span></td>
+                        <td><span>5</span></td>
+                        <td><span>6</span></td>
+                        <td><span>7</span></td>
+                        <td><span>8</span></td>
+                        <td><span>9</span></td>
+                        <td><span>10</span></td>
+                    </tr>
+                    <?php endforeach ?>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+scopes:
+    user:
+        label: Agente
+        modelClass: Backend\Models\User
+        conditions: user_id in (:filtered)
+        nameFrom: first_name
+    estado:
+        label: Estado
+        type: group
+        conditions: estado in (:filtered)
+        options:
+            Abierto: Abierto
+            Confirmado: Confirmado
+            Cotizacion: Cotizacion
+            Cotizado: Cotizado
+            Liquidado: Liquidado
+            Anulado: Anulado

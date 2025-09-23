@@ -1,6 +1,6 @@
 <div data-control="toolbar">
-        <a href="<?= Backend::url('soroche/wayna/reservas/create') ?>" class="btn btn-primary wn-icon-plus"><?= e(trans('backend::lang.form.create')) ?></a>
-            <button
+    <a href="<?= Backend::url('soroche/wayna/reservas/create') ?>" class="btn btn-primary wn-icon-plus"><?= e(trans('backend::lang.form.create')) ?></a>
+    <button
         class="btn btn-default wn-icon-trash-o"
         disabled="disabled"
         onclick="$(this).data('request-data', {
@@ -15,4 +15,5 @@
         data-stripe-load-indicator>
         <?= e(trans('backend::lang.list.delete_selected')) ?>
     </button>
+    <a href="<?= Backend::url('soroche/wayna/reservas/biblia') ?>" class="btn btn-default">Biblia</a>
 </div>

@@ -2,6 +2,14 @@ columns:
     id:
         label: id
         type: number
+    user:
+        label: Agente
+        type: text
+        relation: user
+        select: concat(first_name, ' ', last_name)
+    estado:
+        label: Estado
+        type: partial
     name:
         label: Titulo
         searchable: true
@@ -10,17 +18,18 @@ columns:
         label: codigo
         type: text
         searchable: true
-    servicio:
-        label: Paquete
-        type: text
-        relation: servicio
-        select: nombre
-    fecha_inicio:
-        label: fecha_inicio
-        type: text
     nro_paxs:
         label: nro_paxs
         type: number
+    comision:
+        label: Comision
+        type: number
+    total:
+        label: Total
+        type: number
+    avance:
+        label: Avance
+        type: text
     updated_at:
         label: updated_at
         type: datetime

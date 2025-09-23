@@ -40,6 +40,16 @@ tabs:
                 Mexico: Mexico
                 Estados Unidos: Estados Unidos
                 Puerto Rico: Puerto Rico
+                Panama: Panama
+                Costa Rica: Costa Rica
+                Republica Dominicana: Republica Dominicana
+                China: China
+                Colombia: Colombia
+                El Salvador: El Salvador
+                Guatemala: Guatemala
+                Argentina: Argentina
+                Peru: Peru
+                Venezuela: Venezuela
             type: dropdown
             span: right
             tab: Datos Personales
@@ -49,10 +59,11 @@ tabs:
             type: datepicker
             span: right
             tab: Datos Personales
+            format: d/m/yy
             ignoreTimezone: true
         acomodacion:
             label: Acomodacion
-            span: left
+            span: right
             options:
                 Doble 1: Doble 1
                 Matrimonial 1: Matrimonial 1
@@ -60,14 +71,16 @@ tabs:
                 Individual 1: Individual 1
                 Doble 2: Doble 2
                 Doble 3: Doble 3
+                Doble 4: Doble 4
                 Matrimonial 2: Matrimonial 2
                 Matrimonial 3: Matrimonial 3
+                Matrimonial 4: Matrimonial 4
                 Triple 2: Triple 2
                 Triple 3: Triple 3
                 Individual 2: Individual 2
                 Individual 3: Individual 3
             type: dropdown
-            tab: Datos de Servicio
+            tab: Datos Personales
         contacto:
             label: Contacto
             type: datatable
@@ -88,4 +101,4 @@ tabs:
                     title: Contacto
             dynamicHeight: true
             height: 
-            tab: Datos de Servicio
+            tab: Datos Personales

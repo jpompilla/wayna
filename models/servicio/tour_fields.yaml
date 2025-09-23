@@ -28,7 +28,7 @@ tabs:
             label: Incluye
             prompt: 'Añadir servicio'
             style: collapsed
-            sortable: false
+            sortable: true
             span: left
             form:
                 fields:
@@ -76,10 +76,89 @@ tabs:
                                     -3: '3 dia antes'
                         dynamicHeight: true
                         height: false
+        params:
+            label: Parametros
+            type: datatable
+            span: right
+            adding: false
+            deleting: false
+            columns:
+                adelanto:
+                    type: string
+                    title: 'Adelanto (USD)'
+                pasarela:
+                    type: string
+                    title: '% Pasarela'
+                igv:
+                    type: string
+                    title: 'IGV'
+                ir:
+                    type: string
+                    title: 'Imp. Renta'
+                facturable:
+                    type: string
+                    title: 'Facturable'
+                
+                comision:
+                    type: string
+                    title: 'Comision (USD)'
+            dynamicHeight: true
+            #context:
+            #    - update
+            height: false
+            tab: Servicios
+        precios:
+            type: datatable
+            adding: false
+            deleting: false
+            span: right
+            columns:
+                0:
+                    type: string
+                    title: 'PRECIOS (USD)'
+                    readOnly: true
+                    width: 120px
+                1:
+                    type: string
+                    title: P1
+                2:
+                    type: string
+                    title: P2
+                3:
+                    type: string
+                    title: P3
+                4:
+                    type: string
+                    title: P4
+                5:
+                    type: string
+                    title: P5
+                6:
+                    type: string
+                    title: P6
+                7:
+                    type: string
+                    title: P7
+                8:
+                    type: string
+                    title: P8
+                9:
+                    type: string
+                    title: P9
+                10:
+                    type: string
+                    title: P10
+            dynamicHeight: true
+            height: false
+            tab: Servicios
+        resumen:
+            type: partial
+            span: right
+            tab: Servicios        
         no_incluye:
             label: No incluye
             type: datatable
-            span: right
+            span: left
             adding: true
             deleting: true
             tab: Servicios
@@ -113,88 +192,11 @@ tabs:
                         -2: '2 dias antes'
                         -3: '3 dia antes'
             dynamicHeight: true
-            height: false        
-        params:
-            label: Parametros
-            type: datatable
-            span: left
-            adding: false
-            deleting: false
-            columns:
-                adelanto:
-                    type: string
-                    title: 'Adelanto'
-                pasarela:
-                    type: string
-                    title: '% Pasarela'
-                igv:
-                    type: string
-                    title: 'IGV'
-                ir:
-                    type: string
-                    title: 'Imp. Renta'
-                facturable:
-                    type: string
-                    title: 'Facturable'
-                
-                comision:
-                    type: string
-                    title: 'Comision'
-            dynamicHeight: true
-            #context:
-            #    - update
             height: false
-            tab: 'Precios (USD)'
-        precios:
-            type: datatable
-            adding: false
-            deleting: false
-            columns:
-                0:
-                    type: string
-                    title: 'PRECIOS'
-                    readOnly: true
-                    width: 180px
-                1:
-                    type: string
-                    title: P1
-                2:
-                    type: string
-                    title: P2
-                3:
-                    type: string
-                    title: P3
-                4:
-                    type: string
-                    title: P4
-                5:
-                    type: string
-                    title: P5
-                6:
-                    type: string
-                    title: P6
-                7:
-                    type: string
-                    title: P7
-                8:
-                    type: string
-                    title: P8
-                9:
-                    type: string
-                    title: P9
-                10:
-                    type: string
-                    title: P10
-            dynamicHeight: true
-            height: false
-            tab: 'Precios (USD)'
         costos:
             type: partial
-            tab: 'Precios (USD)'
-        
-        margen:
-            type: partial
-            tab: 'Precios (USD)'
+            span: full
+            tab: Servicios
         lugar:
             label: Lugar
             nameFrom: nombre
@@ -214,3 +216,49 @@ tabs:
                 Publicado: Publicado
                 Deshabilitado: Deshabilitado
             tab: Informacion
+        page_title:
+            label: Page Title
+            span: auto
+            type: text
+            tab: Pagina Web
+        page_slug:
+            label: Slug
+            span: auto
+            preset: page_title
+            tab: Pagina Web
+        page_content:
+            span: full
+            type: nestedform
+            usePanelStyles: false
+            tab: Pagina Web
+            form:
+                tabs:
+                    fields:
+                        descripcion:
+                            label: Descripcion
+                            size: small
+                            type: richeditor
+                            tab: Contenido
+                        image:
+                            label: Imagen
+                            type: mediafinder
+                            span: auto
+                            mode: image
+                            imageWidth: 400 
+                            imageHeight: 400
+                            tab: Contenido
+                        gallery:
+                            label: Galeria
+                            type: repeater
+                            tab: Contenido
+                            span: auto
+                            mode: grid
+                            prompt: Agregrar Imagen
+                            form:
+                                fields:
+                                    image:
+                                        type: mediafinder
+                                        span: auto
+                                        mode: image
+                                        imageWidth: 100 
+                                        imageHeight: 100

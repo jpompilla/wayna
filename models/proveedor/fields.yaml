@@ -51,34 +51,76 @@ tabs:
             tab: General
         contactos:
             label: Contactos
-            prompt: 'Añadir nuevo item'
-            style: collapsed
+            type: datatable
             span: full
-            type: repeater
+            adding: true
+            deleting: true
+            columns:
+                valor:
+                    type: string
+                    title: Contacto
+                tipo:
+                    title: Medio de contacto
+                    type: dropdown
+                    options:
+                        telefono: Telefono
+                        whatsapp: Whatsapp
+                        email: 'Correo Electronico'
+                cargo:
+                    title: Area de contacto
+                    type: dropdown
+                    options:
+                        Reservas: Reservas
+                        Emergencia: Emergencia
+                        Ventas: Ventas
+                nombre:
+                    type: string
+                    title: Contacto
+            dynamicHeight: true
+            height: false
             tab: Contacto
-            form:
-                fields:
-                    valor:
-                        label: Contacto
-                        span: auto
-                        type: text
-                    tipo:
-                        label: 'Tipo de Contacto'
-                        options:
-                            telefono: Telefono
-                            whatsapp: Whatsapp
-                            email: 'Correo Electronico'
-                        showSearch: true
-                        span: auto
-                        type: dropdown
-                    cargo:
-                        label: 'Cargo del Contacto'
-                        span: auto
-                        type: text
-                    nombre:
-                        label: 'Nombre del contacto'
-                        span: auto
-                        type: text
+        #contactos:
+        #    label: Contactos
+        #    prompt: 'Añadir nuevo item'
+        #    style: collapsed
+        #    span: full
+        #    type: repeater
+        #    tab: Contacto
+        #    form:
+        #        fields:
+        #            reservas:
+        #                label: 'Contacto de Reservas'
+        #                span: full
+        #                default: 0
+        #                on: Si
+        #                off: No
+        #                type: switch
+        #            valor:
+        #                label: Contacto
+        #                span: auto
+        #                type: text
+        #            tipo:
+        #                label: 'Medio de Contacto'
+        #                options:
+        #                    telefono: Telefono
+        #                    whatsapp: Whatsapp
+        #                    email: 'Correo Electronico'
+        #                showSearch: true
+        #                span: auto
+        #                type: dropdown
+        #            cargo:
+        #                label: 'Area del Contacto'
+        #                options:
+        #                    Reservas: Reservas
+        #                    Emergencia: Emergencia
+        #                    Ventas: Ventas
+        #                showSearch: true
+        #                span: auto
+        #                type: dropdown
+        #            nombre:
+        #                label: 'Nombre del contacto'
+        #                span: auto
+        #                type: text
         cuentasbancarias:
             label: Cuentas Bancarias
             span: full
@@ -97,3 +139,134 @@ tabs:
             type: partial
             path: $/soroche/wayna/controllers/proveedores/_servicios.htm
             tab: Servicios
+        evaluaciones:
+            label: Evaluaciones y criterios
+            comment: "EVALUACION: Menor a 2.5 No aprobado, [2.5-3.5] Observacion, [3.5-4.5] Aprobado, [4.5-5] Excelente"
+            type: datatable
+            span: full
+            context:
+                - update
+            adding: true
+            deleting: true
+            columns:
+                fecha:
+                    type: string
+                    readOnly: 0
+                    title: Fecha
+                    validation:
+                        required:
+                            message: Ingrese una fecha
+                        regex:
+                            pattern: "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$"
+                            message: "Por favor ingresa una fecha valida en formato dd/mm/aaaa"
+                instalaciones:
+                    title: Instalaciones / Unidades
+                    type: dropdown
+                    options:
+                        5: 5 - Excelente
+                        4: 4 - Bien
+                        3: 3 - Regular
+                        2: 2 - Deficiente
+                        1: 1 - Muy deficiente
+                        0: No aplica
+                    validation:
+                        required:
+                            message: Seleccion una calificación
+                trato:
+                    title: Trato Personal
+                    type: dropdown
+                    options:
+                        5: 5 - Excelente
+                        4: 4 - Bien
+                        3: 3 - Regular
+                        2: 2 - Deficiente
+                        1: 1 - Muy deficiente
+                        0: No aplica
+                    validation:
+                        required:
+                            message: Seleccion una calificación
+                limpieza:
+                    title: Limpieza
+                    type: dropdown
+                    options:
+                        5: 5 - Excelente
+                        4: 4 - Bien
+                        3: 3 - Regular
+                        2: 2 - Deficiente
+                        1: 1 - Muy deficiente
+                        0: No aplica
+                    validation:
+                        required:
+                            message: Seleccion una calificación
+                tiempo:
+                    title: Tiempo de Respuesta
+                    type: dropdown
+                    options:
+                        5: 5 - Excelente
+                        4: 4 - Bien
+                        3: 3 - Regular
+                        2: 2 - Deficiente
+                        1: 1 - Muy deficiente
+                        0: No aplica
+                    validation:
+                        required:
+                            message: Seleccion una calificación
+                precio:
+                    title: Calidad/Precio
+                    type: dropdown
+                    options:
+                        5: 5 - Excelente
+                        4: 4 - Bien
+                        3: 3 - Regular
+                        2: 2 - Deficiente
+                        1: 1 - Muy deficiente
+                        0: No aplica
+                    validation:
+                        required:
+                            message: Seleccion una calificación
+                facturacion:
+                    title: Facturacion
+                    type: dropdown
+                    options:
+                        5: 5 - Excelente
+                        4: 4 - Bien
+                        3: 3 - Regular
+                        2: 2 - Deficiente
+                        1: 1 - Muy deficiente
+                        0: No aplica
+                    validation:
+                        required:
+                            message: Seleccion una calificación
+                seguridad:
+                    title: Seguridad
+                    type: dropdown
+                    options:
+                        5: 5 - Excelente
+                        4: 4 - Bien
+                        3: 3 - Regular
+                        2: 2 - Deficiente
+                        1: 1 - Muy deficiente
+                        0: No aplica
+                    validation:
+                        required:
+                            message: Seleccion una calificación
+                experiencia:
+                    title: Reputacion o Experiencia
+                    type: dropdown
+                    options:
+                        5: 5 - Excelente
+                        4: 4 - Bien
+                        3: 3 - Regular
+                        2: 2 - Deficiente
+                        1: 1 - Muy deficiente
+                        0: No aplica
+                    validation:
+                        required:
+                            message: Seleccion una calificación
+                puntaje:
+                    title: Puntaje
+                    type: string
+                    readOnly: true
+            dynamicHeight: true
+            height: false
+            tab: Evaluaciones

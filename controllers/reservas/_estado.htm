@@ -1,0 +1,15 @@
+<?php if($value == 'Abierto'): ?>
+<span class="btn btn-default btn-xs" style="background-color:#656565;">
+<?php elseif ($value == 'Cotizacion'): ?>
+<span class="btn btn-default btn-xs" style="background-color:#ffc107;">
+<?php elseif ($value == 'Cotizado'): ?>
+<span class="btn btn-default btn-xs" style="background-color:#ff9800;">
+<?php elseif ($value == 'Confirmado'): ?>
+<span class="btn btn-default btn-xs" style="background-color:#8bc34a;">
+<?php elseif ($value == 'Anulado'): ?>
+<span style="font-weight:bold;text-decoration:line-through;">
+<?php else: ?>
+<span style="font-weight:bold;">
+<?php endif ?>
+<?= $value ?>
+</span>

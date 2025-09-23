@@ -2,15 +2,23 @@ columns:
     id:
         label: id
         type: number
+        searchable: true
     nombre:
         label: nombre
         type: text
+        searchable: true
+    contacto:
+        label: Contacto
+        type: text
+        sortable: false
     razon_social:
         label: razon_social
         type: text
+        searchable: true
     ruc:
         label: RUC
         type: text
+        searchable: true
     direccion:
         label: direccion
         type: text

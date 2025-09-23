@@ -105,7 +105,7 @@
             <th>Fecha inicio</th>
             <td><?= isset($reserva->fecha_inicio) ? date('d/m/Y', strtotime($reserva->fecha_inicio)) : 'Abierta' ?></td>
             <th>Fecha fin</th>
-            <td><?= isset($reserva->fecha_inicio) ? date('d/m/Y', strtotime($reserva->fecha_inicio)) : 'Abierta' ?></td>
+            <td><?= isset($reserva->fecha_fin) ? date('d/m/Y', strtotime($reserva->fecha_fin)) : 'Abierta' ?></td>
             <th>Fecha registro</th>
             <td><?= date('d/m/Y',strtotime($reserva->created_at)) ?></td>
         </tr>
@@ -162,15 +162,19 @@
         </tr>
         <?php if(isset($reserva->vuelos) && isset($reserva->vuelos[0]['fecha'])): ?>
         <?php foreach($reserva->vuelos as $vuelo): ?>
-        <tr>
-            <td class="center"><?=$vuelo['fecha'] ?></td>
-            <td class="center"><?=$vuelo['ruta'] ?></td>
-            <td class="center"><?=$vuelo['aerolinea'] ?></td>
-            <td class="center"><?=$vuelo['vuelo'] ?></td>
-            <td class="center"><?=$vuelo['salida'] ?></td>
-            <td class="center"><?=$vuelo['llegada'] ?></td>
-            <td class="center"><?=$vuelo['pasajeros'] ?></td>
-        </tr>
+            <?php if(isset($vuelo['fecha'])): ?>
+            <tr>
+                <td class="center"><?=$vuelo['fecha'] ?></td>
+                <td class="center"><?=$vuelo['ruta'] ?></td>
+                <td class="center"><?=$vuelo['aerolinea'] ?></td>
+                <td class="center"><?=$vuelo['vuelo'] ?></td>
+                <td class="center"><?=$vuelo['salida'] ?></td>
+                <td class="center"><?=$vuelo['llegada'] ?></td>
+                <td class="center"><?=$vuelo['pasajeros'] ?></td>
+            </tr>
+            <?php else: ?>
+            <tr><td colspan="7" class="pendiente">Pendiente</td></tr>
+            <?php endif ?>
         <?php endforeach ?>
         <?php else: ?>
         <tr><td colspan="7" class="pendiente">Pendiente</td></tr>
@@ -186,9 +190,10 @@
             <th>Vuelo</th>
             <th>Hotel</th>
         </tr>
-        <!--?= dd($reserva->itinerario()) ?-->
+        <!--?= dd($reserva->itinerario) ?-->
         <!--?= dd($reserva->vuelos) ?-->
-        <?php foreach($reserva->itinerario() as $item): ?>
+        <?php foreach($reserva->itinerario as $item): ?>
+        <?php if(array_key_exists('dia', $item)): ?>
         <tr>
             <td class="center"><?= $item['dia'] ?></td>
             <td class="center"><?= isset($item['fecha'])? date('d/m/Y', strtotime($item['fecha'])) : 'Abierta' ?></td>
@@ -196,6 +201,7 @@
             <td class="center"><?= isset($item['vuelo']) ? $item['vuelo'] : '' ?></td>
             <td><?= $item['hotel'] ?></td>
         </tr>
+        <?php endif ?>
         <?php endforeach ?>
     </table>
     
@@ -205,8 +211,9 @@
             <th>Fecha</th>
             <th>Actividad</th>
         </tr>
-        <?php if(isset($reserva->precios['adicionales'])): ?>
-        <?php foreach($reserva->precios['adicionales'] as $item): ?>        
+    
+        <?php if(isset($reserva->adicionales) && count($reserva->adicionales) > 0): ?>
+        <?php foreach($reserva->adicionales as $item): ?>        
         <tr>
             <td class="center"><?= isset($item['fecha'])? date('d/m/Y', strtotime($item['fecha'])) : 'Abierta' ?></td>
             <td><?= $item['nombre'] ?></td>
@@ -220,7 +227,7 @@
     <table>
         <caption>F. Balance</caption>
         <tr>
-            <th>Concepto</th>
+            <th width="180">Concepto</th>
             <th>Fecha</th>
             <th>Unidad</th>
             <th>Cantidad</th>
@@ -228,25 +235,25 @@
             <th>Costo</th>
             <th>Pagos</th>
         </tr>
-        <?php $paquete = $reserva->precios['paquete'] ?>
+        <?php $paquete = $reserva->precios[0] ?>
         <tr>
-            <td><?= $paquete['nombre'] ?></td>
+            <td><?= $reserva->servicio? $reserva->servicio->nombre : 'Paquete personalizado '.count($reserva->itinerario).'D' ?></td>
             <td class="center"><?= isset($reserva->fecha_inicio)? date('d/m/Y', strtotime($reserva->fecha_inicio)) : 'Abierta' ?></td>
             <td>Por persona</td>
             <td class="center"><?= $reserva->nro_paxs ?></td>
-            <td class="right">$ <?= number_format($paquete[$reserva->nro_paxs], 2) ?></td>
-            <td class="right">$ <?= number_format($paquete[$reserva->nro_paxs] * $reserva->nro_paxs, 2) ?></td>
+            <td class="right">$ <?= number_format($paquete[$reserva->nro_paxs > 10 ? 10 : $reserva->nro_paxs], 2) ?></td>
+            <td class="right">$ <?= number_format($paquete[$reserva->nro_paxs > 10 ? 10 : $reserva->nro_paxs] * $reserva->nro_paxs, 2) ?></td>
             <td></td>
         </tr>
-        <?php if(isset($reserva->precios['adicionales'])): ?>
-        <?php foreach($reserva->precios['adicionales'] as $adicional): ?>
+        <?php if(isset($reserva->adicionales)): ?>
+        <?php foreach($reserva->adicionales as $adicional): ?>
         <tr>
             <td><?= $adicional['nombre'] ?></td>
             <td class="center"><?= isset($adicional['fecha'])? date('d/m/Y', strtotime($adicional['fecha'])) : 'Abierta' ?></td>
             <td>Por persona</td>
             <td class="center"><?= $reserva->nro_paxs ?></td>
-            <td class="right">$ <?= number_format($adicional[$reserva->nro_paxs], 2) ?></td>
-            <td class="right">$ <?= number_format($adicional[$reserva->nro_paxs] * $reserva->nro_paxs, 2) ?></td>
+            <td class="right">$ <?= number_format($adicional[$reserva->nro_paxs > 10 ? 10 : $reserva->nro_paxs], 2) ?></td>
+            <td class="right">$ <?= number_format($adicional[$reserva->nro_paxs > 10 ? 10 : $reserva->nro_paxs] * $reserva->nro_paxs, 2) ?></td>
             <td></td>
         </tr>
         <?php endforeach ?>
@@ -282,20 +289,23 @@
     
     <table>
         <caption>G. Detalles del servicio</caption>
-        <?php foreach($reserva->itinerario() as $i => $item): ?>
+        <?php foreach($reserva->itinerario as $i => $item): ?>
+        <?php if(array_key_exists('dia', $item)): ?>
         <tr class="form">
             <th colspan="2"><?= $item['nombre'] ?></th>
         </tr>
         <tr>
-            <td><strong>Incluye</strong></td>
+            <td width="60%"><strong>Incluye</strong></td>
             <td><strong>No incluye</strong></td>
         </tr>
         <tr class="list">
             <td>
             <ul>
+                <?php if(isset($item['incluye'])): ?>
                 <?php foreach($item['incluye'] as $i): ?>
                 <li><?= $i ?></li>
                 <?php endforeach ?>
+                <?php endif ?>
             </ul>
             </td>
             <td>
@@ -308,6 +318,7 @@
             </ul>
             </td>
         </tr>
+        <?php endif ?>
         <?php endforeach ?>
     </table>
     
@@ -326,8 +337,8 @@
         <tr class="form">
             <th>Llamadas</th>
             <td>
-                +51 984206669 <br>
-                +51 984206669            
+                +51 984 206 669 <br>
+                +51 959 499 916           
             </td>
             <th>Correo Electronico</th>
             <td>
@@ -337,12 +348,12 @@
         <tr class="form">
             <th>Whatsapp</th>
             <td>
-                +51 984206669 <br>
-                +51 984206669            
+                +51 984 206 669 <br>
+                +51 959 499 916
             </td>
             <th>Dirección</th>
             <td>
-                <?= $reserva->negocio->direccion ?>
+                Av. Las Flores 203, San Sebastian, Cusco, Perú.
             </td>
         </tr>
     </table>

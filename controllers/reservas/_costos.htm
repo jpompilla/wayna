@@ -1,0 +1,43 @@
+<!--?= dd($model->costos) ?-->
+<div id="costosList">    
+    <div class="list-preview list-flush">
+        <div class="control-list">
+            <table class="table data" data-control="rowlink">
+                <thead>
+                    <tr>
+                        <th class="center" width="250"><span><strong>COSTOS (USD)</strong></span></th>
+                        <?php for ($i = 1; $i <= 10; $i++): ?>
+                        <th class="center"><span>P<?= $i ?></span></th>
+                        <?php endfor ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span><strong>COSTO OPERATIVO</strong></span></td>
+                        <?php for ($i = 1; $i <= 10; $i++): ?>
+                        <td class="right"><span><strong><?= number_format($model->costos[$i],2) ?></strong></span></td>
+                        <?php endfor ?>
+                    </tr>
+                    
+                    <?php foreach ($model->costos['servicios'] as $costos): ?>
+                    <tr class="tour">
+                        <td><span><strong><?= $costos[0] ?></strong></span></td>
+                        <?php for ($i = 1; $i <= 10; $i++): ?>
+                        <td class="right"><span><strong><?= number_format($costos[$i],2) ?></strong></span></td>
+                        <?php endfor ?>
+                    </tr>
+                    <?php foreach ($costos['servicios'] as $sc): ?>
+                        <tr class="tour service">
+                            <td><span><?= $sc[0] ?></span></td>
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                            <td class="right"><span><?= number_format($sc[$i],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                    <?php endforeach ?>    
+                    <?php endforeach ?>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -50,9 +50,23 @@ class Pax extends Model
         $telefono = '';
         
         foreach($this->contacto as $contacto)
-            if($contacto['tipo']=='Telefono')
+            if(isset($contacto['tipo']) && $contacto['tipo']=='Telefono')
                 $telefono = '('.substr($contacto['dato'], 0, 3).') '.substr($contacto['dato'], 3);
         
         return $telefono;
+    }
+    
+    public function getLidercontactoAttribute(){
+        $telefono = '';
+        
+        foreach($this->contacto as $contacto)
+            if(isset($contacto['tipo']) && $contacto['tipo']=='Telefono')
+                $telefono = $contacto['dato'];
+        
+        return $telefono.' - '.$this->nombres.' '.$this->apellidos;;
+    }
+
+    public function getEdadAttribute(){
+        return floor((time()-strtotime($this->fecha_nacimiento))/(60*60*24*365.25));
     }
 }

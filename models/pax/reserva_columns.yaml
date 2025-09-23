@@ -15,6 +15,10 @@ columns:
         label: fecha_nacimiento
         type: date
         format: d/m/yy
+        ignoreTimezone: true
+    edad:
+        label: Edad
+        type: text
     acomodacion:
         label: acomodacion
         type: text

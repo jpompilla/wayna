@@ -13,6 +13,9 @@ columns:
         label: Servicio
         type: text
         searchable: true
+    tipo:
+        label: Tipo
+        type: text
     capacidad:
         label: Capacidad
         type: number

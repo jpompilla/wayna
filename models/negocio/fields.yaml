@@ -48,34 +48,34 @@ tabs:
             tab: General
         contactos:
             label: Contactos
-            prompt: 'Añadir nuevo item'
-            style: collapsed
+            type: datatable
             span: full
-            type: repeater
+            adding: true
+            deleting: true
+            columns:
+                valor:
+                    type: string
+                    title: Contacto
+                tipo:
+                    title: Medio de contacto
+                    type: dropdown
+                    options:
+                        telefono: Telefono
+                        whatsapp: Whatsapp
+                        email: 'Correo Electronico'
+                cargo:
+                    title: Area de contacto
+                    type: dropdown
+                    options:
+                        Reservas: Reservas
+                        Emergencia: Emergencia
+                        Ventas: Ventas
+                nombre:
+                    type: string
+                    title: Contacto
+            dynamicHeight: true
+            height: false
             tab: Contacto
-            form:
-                fields:
-                    valor:
-                        label: Contacto
-                        span: auto
-                        type: text
-                    tipo:
-                        label: 'Tipo de Contacto'
-                        options:
-                            telefono: Telefono
-                            whatsapp: Whatsapp
-                            email: 'Correo Electronico'
-                        showSearch: true
-                        span: auto
-                        type: dropdown
-                    cargo:
-                        label: 'Cargo del Contacto'
-                        span: auto
-                        type: text
-                    nombre:
-                        label: 'Nombre del contacto'
-                        span: auto
-                        type: text
         users:
             label: Colaboradores
             span: full

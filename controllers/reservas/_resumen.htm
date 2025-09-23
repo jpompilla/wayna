@@ -1,0 +1,79 @@
+<div id="margenList">    
+    <!--?php if (isset($model->margen)): ?-->
+        <div class="list-preview list-flush">
+            <div class="control-list">
+                <table class="table data" data-control="rowlink">
+                    <thead>
+                        <tr>
+                            <th class="center" width="250"><span><strong>RESUMEN (USD)</strong></span></th>
+                            <?php for ($i = 1; $i <= 6; $i++): ?>
+                            <th class="center"><span>P<?= $i ?></span></th>
+                            <?php endfor ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($model->precios as $precio): ?>
+                        <tr>
+                            <td><span><strong>A. INGRESOS</strong></span></td>
+                            <?php for ($i = 1; $i <= 6; $i++): ?>
+                            <td class="right"><span><strong><?= number_format($precio[$i],2) ?></strong></span></td>
+                            <?php endfor ?>
+                        </tr>
+                    <?php endforeach ?>
+                        <tr>
+                            <td><strong>B. COSTOS</strong></td>
+                            <?php for ($i = 1; $i <= 6; $i++): ?>
+                            <td class="right"><strong><?= number_format($model->costoTotal($i),2) ?></strong></td>
+                            <?php endfor ?>
+                        </tr>
+                        <tr>
+                            <td><span><?= $model->costos[0] ?></span></td>
+                            <?php for ($i = 1; $i <= 6; $i++): ?>
+                            <td class="right"><span><?= number_format($model->costos[$i],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                        <tr>
+                            <td><span>PASARELA (<?= number_format($model->params[0]['pasarela'] * 100,0) ?>%)</span></td>
+                            <?php for ($i = 1; $i <= 6; $i++): ?>
+                            <td class="right"><span><?= number_format($model->params[0]['pasarela'] * $model->params[0]['adelanto'],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                        <tr>
+                            <td><span>IGV (<?= number_format($model->params[0]['igv'] * 100,0) ?>%)</span></td>
+                            <?php for ($i = 1; $i <= 6; $i++): ?>
+                            <td class="right"><span><?= number_format($model->params[0]['igv'] * $model->params[0]['adelanto'],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                        <tr>
+                            <td><span>IR (<?= number_format($model->params[0]['ir'] * 100,0) ?>%)</span></td>
+                            <?php for ($i = 1; $i <= 6; $i++): ?>
+                            <td class="right"><span><?= number_format($model->params[0]['ir'] * $model->params[0]['adelanto'],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                        <tr>
+                            <td><span>COMISION</span></td>
+                            <?php for ($i = 1; $i <= 6; $i++): ?>
+                            <td class="right"><span><?= number_format($model->params[0]['comision'],2) ?></span></td>
+                            <?php endfor ?>
+                        </tr>
+                        <tr>
+                            <td><span><strong>C. MARGEN</strong></span></td>
+                            <?php for ($i = 1; $i <= 6; $i++): ?>
+                            <td class="right"><span><strong><?= number_format($precio[$i] - $model->costoTotal($i), 2) ?></strong></span></td>
+                            <?php endfor ?>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <!--?php endif ?-->
+</div>
+<style>
+    td.right, th.right{
+        text-align: right;
+    }
+    
+    td.center, th.center{
+        text-align: center;
+    }
+</style>

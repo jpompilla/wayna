@@ -15,26 +15,26 @@
                         </tr>
                     </thead>
                     <tbody>                        
-                        <?php $paquete = $model->precios['paquete'] ?>
+                        <?php $paquete = $model->precios[0] ?>
                         <tr>
-                            <td><span><?= $paquete['nombre'] ?></span></td>
+                            <td><span><?= $model->servicio? $model->servicio->nombre : 'Paquete personalizado '.count($model->itinerario).'D' ?></span></td>
                             <td class='center'><span><?= isset($model->fecha_inicio)? date('d/m/Y',strtotime($model->fecha_inicio)) : 'Abierto' ?></span></td>
                             <td><span>Por persona</span></td>
                             <td class='right'><span><?= $model->nro_paxs ?></span></td>
-                            <td class='right'><span>USD <?= number_format($paquete[$model->nro_paxs], 2) ?></span></td>
-                            <td class='right'><span>USD <?= number_format($paquete[$model->nro_paxs] * $model->nro_paxs, 2) ?></span></td>
+                            <td class='right'><span>USD <?= number_format($paquete[$model->nro_paxs > 10 ? 10 : $model->nro_paxs], 2) ?></span></td>
+                            <td class='right'><span>USD <?= number_format($paquete[$model->nro_paxs > 10 ? 10 : $model->nro_paxs] * $model->nro_paxs, 2) ?></span></td>
                             <td></td>
                         </tr>
                         <!--?= dd($model->precios) ?-->
-                        <?php if(isset($model->precios['adicionales'])): ?>
-                        <?php foreach($model->precios['adicionales'] as $adicional): ?>
+                        <?php if(isset($model->adicionales)): ?>
+                        <?php foreach($model->adicionales as $adicional): ?>
                         <tr>
                             <td><span><?= $adicional['nombre'] ?></span></td>
                             <td class='center'><span><?= isset($adicional['fecha'])? date('d/m/Y',strtotime($adicional['fecha'])): 'Abierto' ?></span></td>
                             <td><span>Por persona</span></td>
                             <td class='right'><span><?= $model->nro_paxs ?></span></td>
-                            <td class='right'><span>USD <?= number_format($adicional[$model->nro_paxs], 2) ?></span></td>
-                            <td class='right'><span>USD <?= number_format($adicional[$model->nro_paxs] * $model->nro_paxs, 2) ?></span></td>
+                            <td class='right'><span>USD <?= number_format($adicional[$model->nro_paxs > 10 ? 10 : $model->nro_paxs], 2) ?></span></td>
+                            <td class='right'><span>USD <?= number_format($adicional[$model->nro_paxs > 10 ? 10 : $model->nro_paxs] * $model->nro_paxs, 2) ?></span></td>
                             <td></td>
                         </tr>
                         <?php endforeach ?>
@@ -47,7 +47,7 @@
                             <td class='center'><span><?= date('d/m/Y',strtotime($pago->operacion_fecha)) ?></span></td>
                             <td><span>Pago grupal</span></td>
                             <td class='right'><span>1</span></td>
-                            <td class='right'><span>USD <?= number_format(-1 * $pago->monto/$model->nro_paxs, 2) ?></span></td>
+                            <td class='right'><span>USD <?= number_format(-1 * $pago->monto, 2) ?></span></td>
                             <td></td>
                             <td class='right'><span>USD <?= number_format(-1 * $pago->monto, 2) ?></span></td>
                         </tr>

@@ -24,7 +24,7 @@ tabs:
         items:
             prompt: 'Añadir servicio'
             style: collapsed
-            span: full
+            span: auto
             titleFrom: nombre
             type: repeater
             tab: Servicios
@@ -55,80 +55,87 @@ tabs:
         params:
             label: Parametros
             type: datatable
-            span: left
+            span: right
             adding: false
             deleting: false
             columns:
                 adelanto:
                     type: string
-                    title: Adelanto
+                    title: 'Adelanto (USD)'
                 pasarela:
                     type: string
                     title: '% Pasarela'
                 igv:
                     type: string
-                    title: IGV
+                    title: 'IGV'
                 ir:
                     type: string
                     title: 'Imp. Renta'
                 facturable:
                     type: string
-                    title: Facturable
+                    title: 'Facturable'
+                
                 comision:
                     type: string
-                    title: Comision
+                    title: 'Comision (USD)'
             dynamicHeight: true
+            #context:
+            #    - update
             height: false
-            tab: 'Precios (USD)'
+            tab: Servicios
         precios:
             type: datatable
             adding: false
             deleting: false
+            span: right
             columns:
-                -
+                0:
                     type: string
-                    title: PRECIOS
+                    title: 'PRECIOS (USD)'
                     readOnly: true
-                    width: 180px
-                -
+                    width: 120px
+                1:
                     type: string
                     title: P1
-                -
+                2:
                     type: string
                     title: P2
-                -
+                3:
                     type: string
                     title: P3
-                -
+                4:
                     type: string
                     title: P4
-                -
+                5:
                     type: string
                     title: P5
-                -
+                6:
                     type: string
                     title: P6
-                -
+                7:
                     type: string
                     title: P7
-                -
+                8:
                     type: string
                     title: P8
-                -
+                9:
                     type: string
                     title: P9
-                -
+                10:
                     type: string
                     title: P10
             dynamicHeight: true
             height: false
-            tab: 'Precios (USD)'
+            tab: Servicios
+        resumen:
+            type: partial
+            span: right
+            tab: Servicios
         costos:
             type: partial
-            tab: 'Precios (USD)'
-        margen:
-            type: partial
-            tab: 'Precios (USD)'
+            span: full
+            tab: Servicios
+        
         lugar:
             label: Lugar
             nameFrom: nombre
@@ -148,3 +155,77 @@ tabs:
                 Publicado: Publicado
                 Deshabilitado: Deshabilitado
             tab: Informacion
+        page_title:
+            label: Page Title
+            span: auto
+            type: text
+            tab: Pagina Web
+        page_slug:
+            label: Slug
+            span: auto
+            preset: page_title
+            tab: Pagina Web
+        page_content:
+            span: full
+            type: nestedform
+            usePanelStyles: false
+            tab: Pagina Web
+            form:
+                tabs:
+                    fields:
+                        subtitle:
+                            label: Subtitulo
+                            size: tiny
+                            type: richeditor
+                            tab: Contenido
+                        descripcion:
+                            label: Descripcion
+                            size: small
+                            type: richeditor
+                            tab: Contenido
+                        image:
+                            label: Imagen
+                            type: mediafinder
+                            span: auto
+                            mode: image
+                            imageWidth: 400 
+                            imageHeight: 400
+                            tab: Contenido
+                        gallery:
+                            label: Galeria
+                            type: repeater
+                            tab: Contenido
+                            span: auto
+                            mode: grid
+                            prompt: Agregrar Imagen
+                            form:
+                                fields:
+                                    image:
+                                        type: mediafinder
+                                        span: auto
+                                        mode: image
+                                        imageWidth: 100 
+                                        imageHeight: 100
+                        tags:
+                            label: Etiquetas
+                            type: taglist
+                            tab: Clasificacion
+                            mode: array
+                            span: auto
+                            options:
+                                - Machupicchu
+                                - Cusco
+                                - Lima
+                                - Ica
+                                - Puno
+                        #permissions:
+                        #    label: Permissions
+                        #    type: checkboxlist
+                        #    # set to true to explicitly enable the "Select All", "Select None" options
+                        #    # on lists that have <=10 items (>10 automatically enables it)
+                        #    quickselect: true
+                        #    default: open_account
+                        #    options:
+                        #        open_account: Open account
+                        #        close_account: Close account
+                        #        modify_account: Modify account

@@ -2,30 +2,61 @@ columns:
     id:
         label: id
         type: number
+    #negocio:
+    #    label: Proveedor
+    #    type: text
+    #    select: nombre
+    #    relation: negocio
+    #    searchable: true
     nombre:
         label: nombre
+        searchable: true
         type: text
+    #lugar:
+    #    label: lugar
+    #    type: text
+    #    select: nombre
+    #    relation: lugar
     tipo:
         label: tipo
         type: text
+    estado:
+        label: Estado
+        type: text
     precios[0][1]:
-        label: P1
-        type: dolares
+        label: Precio 1
+        type: number
+        format: $%.2f
     precios[0][2]:
-        label: P2
-        type: dolares
+        label: Precio 2
+        type: number
+        format: $%.2f
     precios[0][3]:
-        label: P3
-        type: dolares
+        label: Precio 3
+        type: number
+        format: $%.2f
     precios[0][4]:
-        label: P4
-        type: dolares
+        label: Precio 4
+        type: number
+        format: $%.2f
     params[0][adelanto]:
-        label: Adelanto
-        type: dolares
+        label: Reserva
+        type: number
+        format: $%.2f
     params[0][comision]:
         label: Comision
-        type: dolares
+        type: number
+        format: $%.2f
+    margen[0][4]:
+        label: Margen 4
+        type: number
+        format: $%.2f
+    #capacidad:
+    #    label: capacidad
+    #    type: number
+    #costo:
+    #    label: costo
+    #    type: number
     updated_at:
         label: updated_at
         type: datetime

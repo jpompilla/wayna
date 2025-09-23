@@ -34,7 +34,9 @@
                     <?= e(trans('backend::lang.form.save_and_close')) ?>
                 </button>
                 
-                <a class="btn btn-default" target="_blank" data-hotkey="ctrl+i, cmd+i" href="<?= Backend::url('soroche/wayna/reservas/invoice/'.$this->params[0]) ?>">Descarga Invoice</a>
+                <a class="btn btn-default" target="_blank" data-hotkey="ctrl+n, cmd+n" href="<?= Backend::url('soroche/wayna/reservas/invoice/'.$this->params[0]) ?>">Invoice</a>
+                <a class="btn btn-default" target="_blank" data-hotkey="ctrl+m, cmd+m" href="<?= Backend::url('soroche/wayna/reservas/estado/'.$this->params[0]) ?>">Estado</a>
+                <a class="btn btn-default" target="_blank" data-hotkey="ctrl+m, cmd+m" href="<?= Backend::url('soroche/wayna/reservas/liquidacion/'.$this->params[0]) ?>">Liquidación</a>
                 
                 <button
                     type="button"
@@ -70,4 +72,10 @@
     #Repeater-formItems-items-items li[data-collapse-title="Fullday"] .field-repeater-add-item{
         display:none;
     }
+    
+    /*
+    #Repeater-formPlan-items-plan .field-repeater .field-repeater .field-repeater-add-item,
+    #Repeater-formPlan-items-plan .field-repeater .field-repeater .repeater-item-remove{
+        display:none;
+    }*/
 </style>

@@ -30,7 +30,8 @@ class Negocio extends Model
      */
     public $jsonable = [
         'contactos',
-        'params'
+        'params',
+        'evaluaciones'
     ];
     
     public $attachOne = [
@@ -76,4 +77,26 @@ class Negocio extends Model
             'otherKey' => 'proveedor_id'
         ],
     ];
+    
+    public function getContactoAttribute(){
+        $rpta = '';
+
+        if(isset($this->contactos) && count($this->contactos))
+        foreach($this->contactos as $contacto)
+            if(array_key_exists('reservas', $contacto) && $contacto['reservas'])
+                $rpta = $contacto['valor'];
+        
+        return $rpta;
+    }
+    
+    public function getPlantillaAttribute(){
+        $rpta = '';
+        
+        if(isset($this->contactos) && count($this->contactos))
+        foreach($this->contactos as $contacto)
+            if($contacto['reservas'])
+                $rpta = $contacto['plantilla'];
+        
+        return $rpta;
+    }
 }

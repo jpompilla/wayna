@@ -22,12 +22,13 @@ fields:
         required: 1
         placeholder: '-- Seleccione un tipo --'
         options:
+            Entradas: Entradas
             Alojamiento: Alojamiento
-            Alimentacion: Alimentación
+            Trenes y transporte: Trenes y transporte
+            Tour Endoce: Tour Endoce
             Traslado: Traslado
             Guiado: Guiado
-            Entradas: Entradas
-            Endoce: Tour Endoce
+            Alimentacion: Alimentación
     lugar:
         label: Lugar
         nameFrom: nombre

@@ -5,12 +5,23 @@ columns:
     nombre:
         label: nombre
         type: text
+        searchable: true
+    contacto:
+        label: Contacto
+        type: text
+        sortable: false
+    emergencia:
+        label: Emergencia
+        type: text
+        sortable: false
     razon_social:
         label: razon_social
         type: text
+        searchable: true
     ruc:
         label: RUC
         type: text
+        searchable: true
     direccion:
         label: direccion
         type: text
@@ -19,6 +30,10 @@ columns:
         type: text
         select: nombre
         relation: tipo
+    evaluacion:
+        label: Evaluacion
+        type: text
+        sortable: false
     updated_at:
         label: updated_at
         type: datetime

@@ -13,17 +13,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $limite = 4; $paquete = $model->precios['paquete']; ?>
+                        <?php $limite = 4; $precios = $model->precios[0]; ?>
                         <tr>
-                            <td><span><?= $paquete['nombre'] ?></span></td>
+                            <td><span><?= $model->servicio? $model->servicio->nombre : 'Paquete personalizado '.count($model->itinerario).'D' ?></span></td>
                             <?php for($i=1; $i <= $limite; $i++): ?>
                             <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($paquete[$i], 0) ?>
+                                <?= number_format($precios[$i], 0) ?>
                             <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
                             <?php endfor ?>
                         </tr>
-                        <?php if(isset($model->precios['adicionales'])): ?>
-                        <?php foreach($model->precios['adicionales'] as $adicional): ?>
+                        
+                        <?php if(isset($model->adicionales)): ?>
+                        <?php foreach($model->adicionales as $adicional): ?>
                         <tr>
                             <td><span><?= $adicional['nombre'] ?></span></td>
                             <?php for($i=1; $i <= $limite; $i++): ?>
@@ -35,30 +36,27 @@
                         <?php endforeach ?>
                         <?php endif ?>
                         
-                        <?php $total = $model->precios['total']; ?>
                         <tr>
-                            <th><span><?= $total['nombre'] ?></span></th>
+                            <th><span>PRECIO TOTAL (por pax)</span></th>
                             <?php for($i=1; $i <= $limite; $i++): ?>
                             <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($total[$i], 0) ?>
+                                <?= number_format($model->precioTotal($i), 0) ?>
                             <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
                             <?php endfor ?>
                         </tr>
-                        <?php $adelanto = $model->precios['adelanto']; ?>
                         <tr>
-                            <th><span><?= $adelanto['nombre'] ?></span></th>
+                            <th><span>ADELANTO (por pax)</span></th>
                             <?php for($i=1; $i <= $limite; $i++): ?>
                             <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($adelanto[$i], 0) ?>
+                                <?= number_format($model->params[0]['adelanto'], 0) ?>
                             <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
                             <?php endfor ?>
                         </tr>
-                        <?php $comision = $model->precios['comision']; ?>
                         <tr>
-                            <th><span><?= $comision['nombre'] ?></span></th>
+                            <th><span>COMISION (por pax)</span></th>
                             <?php for($i=1; $i <= $limite; $i++): ?>
                             <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($comision[$i], 0) ?>
+                                <?= number_format($model->params[0]['comision'], 0) ?>
                             <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
                             <?php endfor ?>
                         </tr>

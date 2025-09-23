@@ -1,25 +1,41 @@
 fields:
     name:
         label: Nombre
-        span: auto
-        readOnly: 1
+        span: storm
+        cssClass: col-md-6
+        readOnly: true
         default: 'Nueva Reserva'
         type: text
-    codigo:
-        label: Codigo
-        span: auto
-        readOnly: 1
-        default: 'Nueva Reserva'
-        type: text
-    #fecha_abierta:
-    #    label: 'Fecha abierta'
+    #codigo:
+    #    label: Codigo
     #    span: storm
-    #    cssClass: col-md-2
-    #    default: 1
-    #    type: switch
-    #    'on': SI
-    #    'off': 'NO'
-    #    #tab: Servicios
+    #    cssClass: col-md-3
+    #    readOnly: 1
+    #    default: 'Nueva Reserva'
+    #    type: text
+    user:
+        label: 'Asesor'
+        span: storm
+        cssClass: col-md-3
+        type: relation
+        select: concat(first_name, ' ', last_name)
+        placeholder: '-- Asesor --'
+        required: true
+    estado:
+        label: Estado
+        span: storm
+        cssClass: col-md-3
+        type: dropdown
+        required: true
+        default: Abierto
+        options:
+            Abierto: Abierto
+            Cotizacion: Cotizacion
+            Cotizado: Cotizado
+            Confirmado: Confirmado
+            Liquidado: Liquidado
+            Anulado: Anulado
+            Plan: Generar Plan
 tabs:
     fields:
         servicio:
@@ -27,15 +43,15 @@ tabs:
             span: storm
             cssClass: col-md-6
             type: dropdown
-            placeholder: '-- Seleccione un servicio --'
-            required: 1
+            placeholder: '-- Paquete personalizado --'
+            required: true
             tab: Servicios
         nro_paxs:
             label: 'Nro pasajeros'
             span: storm
             cssClass: col-md-3
             default: 2
-            required: 1
+            required: true
             type: number
             tab: Servicios
         fecha_inicio:
@@ -44,19 +60,16 @@ tabs:
             span: storm
             cssClass: col-md-3
             ignoreTimezone: true
-            #trigger:
-            #    action: hide
-            #    field: fecha_abierta
-            #    condition: checked
+            format: d/m/Y
             type: datepicker
             tab: Servicios
         items:
             type: repeater
+            label: 'Itinerario'
             tab: Servicios
             prompt: 'Agregar servicio'
             style: collapsed
-            span: storm
-            cssClass: col-md-8
+            span: left
             titleFrom: nombre
             context:
                 - update
@@ -83,6 +96,7 @@ tabs:
                             readOnly: 1
                             label: Fecha
                             mode: date
+                            format: d/m/Y
                             ignoreTimezone: true
                             type: datepicker
                         tour:
@@ -91,7 +105,7 @@ tabs:
                             descriptionFrom: description
                             placeholder: '-- Seleccion un servicio --'
                             showSearch: true
-                            readOnly: 1
+                            readOnly: 0
                             span: left
                             type: dropdown
                         hotel:
@@ -100,191 +114,11 @@ tabs:
                             descriptionFrom: description
                             placeholder: '-- Seleccion un alojamiento --'
                             showSearch: true
-                            readOnly: 1
+                            readOnly: 0
                             span: right
                             type: dropdown
-                        tour_servicios:
-                            type: repeater
-                            span: left
-                            sortable: false
-                            style: collapsed
-                            label: Tour - Incluye
-                            form:
-                                fields:
-                                    servicio:
-                                        label: Servicio
-                                        nameFrom: name
-                                        descriptionFrom: description
-                                        placeholder: '-- Seleccion un servicio --'
-                                        showSearch: true
-                                        readOnly: 1
-                                        span: full
-                                        type: relation
-                                    incluye:
-                                        label: Incluye (detalle)
-                                        type: datatable
-                                        span: full
-                                        adding: false
-                                        deleting: false
-                                        columns:
-                                            nombre:
-                                                type: string
-                                                title: 'Texto'
-                                                readOnly: 1
-                                            tipo:
-                                                type: string 
-                                                title: 'Tipo'
-                                                readOnly: 1
-                                                options:
-                                                    Traslado: Traslado
-                                                    Transporte: Transporte Turistico
-                                                    Tren: Tren
-                                                    Guia: Guia
-                                                    Entradas: Entradas
-                                                    Alojamiento: Alojamiento
-                                                    Desayuno: Desayuno
-                                                    Almuerzo: Almuerzo
-                                                    Cena: Cena
-                                            dia:
-                                                type: dropdown 
-                                                title: 'dia'
-                                                options:
-                                                    0: 'Mismo dia'
-                                                    1: 'Un dia despues'
-                                                    2: '2 dias despues'
-                                                    3: '3 dias despues'
-                                                    -1: 'Un dia antes'
-                                                    -2: '2 dias antes'
-                                                    -3: '3 dia antes'
-                        hotel_servicios:
-                            type: repeater
-                            tab: Incluye
-                            span: right
-                            sortable: false
-                            style: collapsed
-                            label: Hotel - Incluye
-                            form:
-                                fields:
-                                    servicio:
-                                        label: Servicio
-                                        nameFrom: name
-                                        descriptionFrom: description
-                                        placeholder: '-- Seleccion un servicio --'
-                                        showSearch: true
-                                        readOnly: 1
-                                        span: full
-                                        type: relation
-                                    incluye:
-                                        label: Incluye (detalle)
-                                        type: datatable
-                                        span: full
-                                        adding: false
-                                        deleting: false
-                                        columns:
-                                            nombre:
-                                                type: string
-                                                readOnly: 1
-                                                title: 'Texto'
-                                            tipo:
-                                                type: string 
-                                                readOnly: 1
-                                                title: 'Tipo'
-                                                options:
-                                                    Traslado: Traslado
-                                                    Transporte: Transporte Turistico
-                                                    Tren: Tren
-                                                    Guia: Guia
-                                                    Entradas: Entradas
-                                                    Alojamiento: Alojamiento
-                                                    Desayuno: Desayuno
-                                                    Almuerzo: Almuerzo
-                                                    Cena: Cena
-                                            dia:
-                                                type: dropdown 
-                                                title: 'dia'
-                                                options:
-                                                    0: 'Mismo dia'
-                                                    1: 'Un dia despues'
-                                                    2: '2 dias despues'
-                                                    3: '3 dias despues'
-                                                    -1: 'Un dia antes'
-                                                    -2: '2 dias antes'
-                                                    -3: '3 dia antes'
-                        tour_no_incluye:
-                            type: datatable
-                            label: Tour - No Incluye
-                            span: left
-                            adding: false
-                            deleting: false
-                            columns:
-                                nombre:
-                                    type: string
-                                    title: 'Texto'
-                                    readOnly: 1
-                                tipo:
-                                    type: string 
-                                    title: 'Tipo'
-                                    readOnly: 1
-                                    options:
-                                        Traslado: Traslado
-                                        Transporte: Transporte Turistico
-                                        Tren: Tren
-                                        Guia: Guia
-                                        Entradas: Entradas
-                                        Alojamiento: Alojamiento
-                                        Desayuno: Desayuno
-                                        Almuerzo: Almuerzo
-                                        Cena: Cena
-                                dia:
-                                    type: dropdown 
-                                    title: 'dia'
-                                    options:
-                                        0: 'Mismo dia'
-                                        1: 'Un dia despues'
-                                        2: '2 dias despues'
-                                        3: '3 dias despues'
-                                        -1: 'Un dia antes'
-                                        -2: '2 dias antes'
-                                        -3: '3 dia antes'
-                        hotel_no_incluye:
-                            tab: No Incluye
-                            type: datatable
-                            label: Hotel - No Incluye
-                            span: right
-                            adding: false
-                            deleting: false
-                            columns:
-                                nombre:
-                                    type: string
-                                    title: 'Texto'
-                                    readOnly: 1
-                                tipo:
-                                    type: string 
-                                    title: 'Tipo'
-                                    readOnly: 1
-                                    options:
-                                        Traslado: Traslado
-                                        Transporte: Transporte Turistico
-                                        Tren: Tren
-                                        Guia: Guia
-                                        Entradas: Entradas
-                                        Alojamiento: Alojamiento
-                                        Desayuno: Desayuno
-                                        Almuerzo: Almuerzo
-                                        Cena: Cena
-                                dia:
-                                    type: dropdown 
-                                    title: 'dia'
-                                    options:
-                                        0: 'Mismo dia'
-                                        1: 'Un dia despues'
-                                        2: '2 dias despues'
-                                        3: '3 dias despues'
-                                        -1: 'Un dia antes'
-                                        -2: '2 dias antes'
-                                        -3: '3 dia antes'
                 tour:
-                    name: Fullday
+                    name: Dia adicional
                     description: Día completo con/sin hotel
                     icon: icon-cube
                     fields:
@@ -305,6 +139,7 @@ tabs:
                             readOnly: 1
                             label: Fecha
                             mode: date
+                            format: d/m/Y
                             ignoreTimezone: true
                             type: datepicker
                         tour:
@@ -323,188 +158,8 @@ tabs:
                             showSearch: true
                             span: right
                             type: dropdown
-                        tour_servicios:
-                            type: repeater
-                            span: left
-                            sortable: false
-                            style: collapsed
-                            label: Tour - Incluye
-                            form:
-                                fields:
-                                    servicio:
-                                        label: Servicio
-                                        nameFrom: name
-                                        descriptionFrom: description
-                                        placeholder: '-- Seleccion un servicio --'
-                                        showSearch: true
-                                        readOnly: 1
-                                        span: full
-                                        type: relation
-                                    incluye:
-                                        label: Incluye (detalle)
-                                        type: datatable
-                                        span: full
-                                        adding: false
-                                        deleting: false
-                                        columns:
-                                            nombre:
-                                                type: string
-                                                title: 'Texto'
-                                                readOnly: 1
-                                            tipo:
-                                                type: string 
-                                                title: 'Tipo'
-                                                readOnly: 1
-                                                options:
-                                                    Traslado: Traslado
-                                                    Transporte: Transporte Turistico
-                                                    Tren: Tren
-                                                    Guia: Guia
-                                                    Entradas: Entradas
-                                                    Alojamiento: Alojamiento
-                                                    Desayuno: Desayuno
-                                                    Almuerzo: Almuerzo
-                                                    Cena: Cena
-                                            dia:
-                                                type: dropdown 
-                                                title: 'dia'
-                                                options:
-                                                    0: 'Mismo dia'
-                                                    1: 'Un dia despues'
-                                                    2: '2 dias despues'
-                                                    3: '3 dias despues'
-                                                    -1: 'Un dia antes'
-                                                    -2: '2 dias antes'
-                                                    -3: '3 dia antes'
-                        hotel_servicios:
-                            type: repeater
-                            tab: Incluye
-                            span: right
-                            sortable: false
-                            style: collapsed
-                            label: Hotel - Incluye
-                            form:
-                                fields:
-                                    servicio:
-                                        label: Servicio
-                                        nameFrom: name
-                                        descriptionFrom: description
-                                        placeholder: '-- Seleccion un servicio --'
-                                        showSearch: true
-                                        readOnly: 1
-                                        span: full
-                                        type: relation
-                                    incluye:
-                                        label: Incluye (detalle)
-                                        type: datatable
-                                        span: full
-                                        adding: false
-                                        deleting: false
-                                        columns:
-                                            nombre:
-                                                type: string
-                                                readOnly: 1
-                                                title: 'Texto'
-                                            tipo:
-                                                type: string 
-                                                readOnly: 1
-                                                title: 'Tipo'
-                                                options:
-                                                    Traslado: Traslado
-                                                    Transporte: Transporte Turistico
-                                                    Tren: Tren
-                                                    Guia: Guia
-                                                    Entradas: Entradas
-                                                    Alojamiento: Alojamiento
-                                                    Desayuno: Desayuno
-                                                    Almuerzo: Almuerzo
-                                                    Cena: Cena
-                                            dia:
-                                                type: dropdown 
-                                                title: 'dia'
-                                                options:
-                                                    0: 'Mismo dia'
-                                                    1: 'Un dia despues'
-                                                    2: '2 dias despues'
-                                                    3: '3 dias despues'
-                                                    -1: 'Un dia antes'
-                                                    -2: '2 dias antes'
-                                                    -3: '3 dia antes'
-                        tour_no_incluye:
-                            type: datatable
-                            label: Tour - No Incluye
-                            span: left
-                            adding: false
-                            deleting: false
-                            columns:
-                                nombre:
-                                    type: string
-                                    title: 'Texto'
-                                    readOnly: 1
-                                tipo:
-                                    type: string 
-                                    title: 'Tipo'
-                                    readOnly: 1
-                                    options:
-                                        Traslado: Traslado
-                                        Transporte: Transporte Turistico
-                                        Tren: Tren
-                                        Guia: Guia
-                                        Entradas: Entradas
-                                        Alojamiento: Alojamiento
-                                        Desayuno: Desayuno
-                                        Almuerzo: Almuerzo
-                                        Cena: Cena
-                                dia:
-                                    type: dropdown 
-                                    title: 'dia'
-                                    options:
-                                        0: 'Mismo dia'
-                                        1: 'Un dia despues'
-                                        2: '2 dias despues'
-                                        3: '3 dias despues'
-                                        -1: 'Un dia antes'
-                                        -2: '2 dias antes'
-                                        -3: '3 dia antes'
-                        hotel_no_incluye:
-                            tab: No Incluye
-                            type: datatable
-                            label: Hotel - No Incluye
-                            span: right
-                            adding: false
-                            deleting: false
-                            columns:
-                                nombre:
-                                    type: string
-                                    title: 'Texto'
-                                    readOnly: 1
-                                tipo:
-                                    type: string 
-                                    title: 'Tipo'
-                                    readOnly: 1
-                                    options:
-                                        Traslado: Traslado
-                                        Transporte: Transporte Turistico
-                                        Tren: Tren
-                                        Guia: Guia
-                                        Entradas: Entradas
-                                        Alojamiento: Alojamiento
-                                        Desayuno: Desayuno
-                                        Almuerzo: Almuerzo
-                                        Cena: Cena
-                                dia:
-                                    type: dropdown 
-                                    title: 'dia'
-                                    options:
-                                        0: 'Mismo dia'
-                                        1: 'Un dia despues'
-                                        2: '2 dias despues'
-                                        3: '3 dias despues'
-                                        -1: 'Un dia antes'
-                                        -2: '2 dias antes'
-                                        -3: '3 dia antes'
                 adicional:
-                    name: Adicional
+                    name: Servicio Adicional
                     description: Servicios adicionales
                     icon: icon-bed
                     fields:
@@ -525,6 +180,7 @@ tabs:
                             readOnly: 1
                             label: Fecha
                             mode: date
+                            format: d/m/Y
                             ignoreTimezone: true
                             type: datepicker
                         actividad:
@@ -535,218 +191,142 @@ tabs:
                             showSearch: true
                             span: full
                             type: dropdown
-                        servicios:
-                            type: repeater
-                            label: Incluye
+                personalizado:
+                    name: Dia personalizado
+                    description: Día con/sin hotel a cotizar
+                    icon: icon-cube
+                    fields:
+                        nombre:
+                            span: full
+                            readOnly: 1
+                            label: Dia
+                            default: Nuevo dia a cotizar
+                            type: text
+                        dia:
+                            span: auto
+                            readOnly: 1
+                            label: Dia
+                            default: 1
+                            type: number
+                        fecha:
+                            span: auto
+                            readOnly: 1
+                            label: Fecha
+                            mode: date
+                            format: d/m/Y
+                            ignoreTimezone: true
+                            type: datepicker
+                        tour:
+                            label: Tour
+                            nameFrom: name
+                            descriptionFrom: description
+                            placeholder: '-- Seleccion un servicio --'
+                            showSearch: true
                             span: left
-                            sortable: false
-                            style: collapsed
-                            form:
-                                fields:
-                                    servicio:
-                                        label: Servicio
-                                        nameFrom: name
-                                        descriptionFrom: description
-                                        placeholder: '-- Seleccion un servicio --'
-                                        showSearch: true
-                                        readOnly: 1
-                                        span: full
-                                        type: relation
-                                    incluye:
-                                        label: Incluye (detalle)
-                                        type: datatable
-                                        span: full
-                                        adding: true
-                                        deleting: true
-                                        columns:
-                                            nombre:
-                                                type: string
-                                                title: 'Texto'
-                                            tipo:
-                                                type: dropdown 
-                                                title: 'Tipo'
-                                                options:
-                                                    Traslado: Traslado
-                                                    Transporte: Transporte Turistico
-                                                    Tren: Tren
-                                                    Guia: Guia
-                                                    Entradas: Entradas
-                                                    Alojamiento: Alojamiento
-                                                    Desayuno: Desayuno
-                                                    Almuerzo: Almuerzo
-                                                    Cena: Cena
-                                            dia:
-                                                type: dropdown 
-                                                title: 'dia'
-                                                options:
-                                                    0: 'Mismo dia'
-                                                    1: 'Un dia despues'
-                                                    2: '2 dias despues'
-                                                    3: '3 dias despues'
-                                                    -1: 'Un dia antes'
-                                                    -2: '2 dias antes'
-                                                    -3: '3 dia antes'
-                                        dynamicHeight: true
-                                        #context:
-                                        #    - update
-                                        height: false
-                        no_incluye:
-                            label: No Incluye
-                            type: datatable
+                            type: dropdown
+                        hotel:
+                            label: Hotel
+                            nameFrom: name
+                            descriptionFrom: description
+                            placeholder: '-- Seleccion un alojamiento --'
+                            showSearch: true
                             span: right
-                            adding: true
-                            deleting: true
-                            columns:
-                                nombre:
-                                    type: string
-                                    title: 'Texto'
-                                tipo:
-                                    type: dropdown 
-                                    title: 'Tipo'
-                                    options:
-                                        Traslado: Traslado
-                                        Transporte: Transporte Turistico
-                                        Tren: Tren
-                                        Guia: Guia
-                                        Entradas: Entradas
-                                        Alojamiento: Alojamiento
-                                        Desayuno: Desayuno
-                                        Almuerzo: Almuerzo
-                                        Cena: Cena
-                                dia:
-                                    type: dropdown 
-                                    title: 'dia'
-                                    options:
-                                        0: 'Mismo dia'
-                                        1: 'Un dia despues'
-                                        2: '2 dias despues'
-                                        3: '3 dias despues'
-                                        -1: 'Un dia antes'
-                                        -2: '2 dias antes'
-                                        -3: '3 dia antes'
-                            dynamicHeight: true
-                            #context:
-                            #    - update
-                            height: false
+                            type: dropdown
+        params:
+            label: Parametros
+            type: datatable
+            span: right
+            adding: false
+            deleting: false
+            columns:
+                adelanto:
+                    type: string
+                    title: 'Adelanto (USD)'
+                pasarela:
+                    type: string
+                    title: '% Pasarela'
+                igv:
+                    type: string
+                    title: 'IGV'
+                ir:
+                    type: string
+                    title: 'Imp. Renta'
+                facturable:
+                    type: string
+                    title: 'Facturable'
+                
+                comision:
+                    type: string
+                    title: 'Comision (USD)'
+            dynamicHeight: true
+            context:
+                - update
+            height: false
+            tab: Servicios
         precios:
-            span: storm
-            cssClass: col-md-4
+            type: datatable
+            adding: false
+            deleting: false
+            span: right
+            columns:
+                0:
+                    type: string
+                    title: 'PRECIOS (USD)'
+                    readOnly: true
+                    width: 120px
+                1:
+                    type: string
+                    title: P1
+                2:
+                    type: string
+                    title: P2
+                3:
+                    type: string
+                    title: P3
+                4:
+                    type: string
+                    title: P4
+                5:
+                    type: string
+                    title: P5
+                6:
+                    type: string
+                    title: P6
+                7:
+                    type: string
+                    title: P7
+                8:
+                    type: string
+                    title: P8
+                9:
+                    type: string
+                    title: P9
+                10:
+                    type: string
+                    title: P10
+            dynamicHeight: true
+            height: false
+            context:
+                - update
+            tab: Servicios
+        resumen:
+            type: partial
+            span: right
+            context:
+                - update
+            tab: Servicios
+        cotizacion:
+            span: right
             type: partial
             context:
                 - update
             tab: Servicios
-        #adicionales:
-        #    prompt: 'Añadir servicio'
-        #    style: collapsed
-        #    span: full
-        #    type: repeater
-        #    titleFrom: servicio
-        #    tab: Adicionales
-        #    form:
-        #        fields:
-        #            programado:
-        #                label: 'Con fecha programada / NO: por definir'
-        #                span: full
-        #                default: 1
-        #                on: Si
-        #                off: No
-        #                type: switch
-        #            servicio:
-        #                label: Servicio
-        #                nameFrom: name
-        #                descriptionFrom: description
-        #                placeholder: '-- Seleccion un servicio --'
-        #                showSearch: true
-        #                span: auto
-        #                type: relation
-        #            fecha:
-        #                label: Fecha
-        #                mode: date
-        #                span: auto
-        #                format: d/m/yy
-        #                trigger:
-        #                    action: hide
-        #                    field: programado
-        #                    condition: unchecked
-        #                type: datepicker
-        #            incluye:
-        #                label: Incluye
-        #                type: datatable
-        #                span: left
-        #                adding: false
-        #                deleting: false
-        #                columns:
-        #                    nombre:
-        #                        type: string
-        #                        readOnly: 1
-        #                        title: Texto
-        #                    tipo:
-        #                        type: dropdown
-        #                        title: Tipo
-        #                        readOnly: 0
-        #                        options:
-        #                            Traslado: Traslado
-        #                            Transporte: 'Transporte Turistico'
-        #                            Tren: Tren
-        #                            Guia: Guia
-        #                            Entradas: Entradas
-        #                            Alojamiento: Alojamiento
-        #                            Desayuno: Desayuno
-        #                            Almuerzo: Almuerzo
-        #                            Cena: Cena
-        #                    dia:
-        #                        type: dropdown
-        #                        title: dia
-        #                        readOnly: 0
-        #                        options:
-        #                            0: 'Mismo dia'
-        #                            1: 'Un dia despues'
-        #                            2: '2 dias despues'
-        #                            3: '3 dias despues'
-        #                            -1: 'Un dia antes'
-        #                            -2: '2 dias antes'
-        #                            -3: '3 dia antes'
-        #                dynamicHeight: true
-        #                height: false
-        #            no_incluye:
-        #                label: No incluye
-        #                type: datatable
-        #                span: right
-        #                adding: false
-        #                deleting: false
-        #                columns:
-        #                    nombre:
-        #                        type: string
-        #                        readOnly: 1
-        #                        title: Texto
-        #                    tipo:
-        #                        type: dropdown
-        #                        title: Tipo
-        #                        readOnly: 0
-        #                        options:
-        #                            Traslado: Traslado
-        #                            Transporte: 'Transporte Turistico'
-        #                            Tren: Tren
-        #                            Guia: Guia
-        #                            Entradas: Entradas
-        #                            Alojamiento: Alojamiento
-        #                            Desayuno: Desayuno
-        #                            Almuerzo: Almuerzo
-        #                            Cena: Cena
-        #                    dia:
-        #                        type: dropdown
-        #                        title: dia
-        #                        readOnly: 0
-        #                        options:
-        #                            0: 'Mismo dia'
-        #                            1: 'Un dia despues'
-        #                            2: '2 dias despues'
-        #                            3: '3 dias despues'
-        #                            -1: 'Un dia antes'
-        #                            -2: '2 dias antes'
-        #                            -3: '3 dia antes'
-        #                dynamicHeight: true
-        #                height: false
+        costos:
+            type: partial
+            span: full
+            context:
+                - update
+            tab: Servicios
         paxs:
             label: Pasajeros
             span: full
@@ -791,6 +371,7 @@ tabs:
                         Avianca: Avianca
                         Sky Airlines: Sky Airlines
                         Jetsmart: Jetsmart
+                        Arajet Airline: Arajet Airline
                 vuelo:
                     type: string
                     readOnly: 0
@@ -818,6 +399,25 @@ tabs:
             dynamicHeight: true
             height: false
             tab: Paxs y Vuelos
+        obs:
+            span: full
+            type: nestedform
+            context:
+                - update
+            usePanelStyles: false
+            tab: Paxs y Vuelos
+            form:
+                fields:
+                    salud:
+                        label: Restricciones alimentarias o de salud
+                        span: left
+                        size: small
+                        type: textarea
+                    particulares:
+                        label: Necesidades particulares o aconteciimentos importantes
+                        span: right
+                        size: small
+                        type: textarea
         pagos:
             label: Pagos
             span: full
@@ -839,3 +439,1106 @@ tabs:
                 - update
             type: partial
             tab: Pagos y Balance
+        plan:
+            type: repeater
+            span: storm
+            cssClass: col-md-9
+            #style: collapsed
+            context:
+                - update
+            tab: Plan de Reservas
+            form:
+                fields:
+                    nombre:
+                        label: 'Tipo de Servicio'
+                        span: full
+                        type: text
+                    proveedores:
+                        type: repeater
+                        span: full
+                        style: collapsed
+                        prompt: 'Agregar Proveedor'
+                        groups:
+                            general:
+                                name: Servicio General
+                                description: Servicios generales
+                                icon: icon-bell
+                                fields:
+                                    nombre:
+                                        label: Proveedor
+                                        type: text
+                                        span: full
+                                    servicios:
+                                        label: Servicios
+                                        type: datatable
+                                        span: full
+                                        #span: storm
+                                        #cssClass: col-md-8
+                                        adding: true
+                                        deleting: true
+                                        columns:
+                                            fecha:
+                                                type: string
+                                                title: Fecha
+                                                width: 100px
+                                                validation:
+                                                    regex:
+                                                        pattern: "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$"
+                                                        message: "Por favor ingresa una fecha valida en formato dd/mm/aaaa"
+                                            cantidad:
+                                                type: string
+                                                width: 50px
+                                                title: Cant
+                                            concepto:
+                                                type: dropdown
+                                                width: 300px
+                                                title: Concepto
+                                            cu:
+                                                type: string
+                                                width: 50px
+                                                title: CU ($)
+                                            costo:
+                                                type: string
+                                                width: 50px
+                                                title: Total ($)
+                                            pu:
+                                                type: string
+                                                width: 50px
+                                                title: PU ($-S/)
+                                            tc:
+                                                type: string
+                                                width: 50px
+                                                title: TC (S/)
+                                            pago:
+                                                type: string
+                                                width: 50px
+                                                title: Pago ($)
+                                            fact:
+                                                type: string
+                                                width: 50px
+                                                title: Fact ($)
+                                    estados:
+                                        type: repeater
+                                        span: full
+                                        mode: grid
+                                        label: Estados
+                                        prompt: 'Agregar Estado'
+                                        sortable: false
+                                        maxItems: 4
+                                        columns: 4
+                                        groups:
+                                            requerimiento:
+                                                name: Requerimiento
+                                                description: Estado de Requerimiento
+                                                fields:
+                                                    nombre:
+                                                        label: Requerimiento
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    contacto:
+                                                        label: Contacto
+                                                        type: text
+                                                    req:
+                                                        label: Plantilla
+                                                        type: textarea
+                                                        span: full
+                                            confirmacion:
+                                                name: Confirmacion
+                                                description: Estado de Confirmacion
+                                                fields:
+                                                    nombre:
+                                                        label: Confirmacion
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    req:
+                                                        label: Detalles
+                                                        type: textarea
+                                                        span: full
+                                            pagado:
+                                                name: Pagado
+                                                description: Estado de Pagado
+                                                fields:
+                                                    nombre:
+                                                        label: Pagado
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    pagos:
+                                                        type: repeater
+                                                        prompt: Agregar Pago
+                                                        style: collapsed
+                                                        form:
+                                                            fields:
+                                                                soles:
+                                                                    label: 'Monto (S/)'
+                                                                    span: full
+                                                                    type: number
+                                                                tc:
+                                                                    label: 'Tipo Cambio (S/)'
+                                                                    span: full
+                                                                    type: number
+                                                                monto:
+                                                                    label: 'Monto (USD)'
+                                                                    span: full
+                                                                    type: number
+                                                                fecha:
+                                                                    label: 'Fecha y hora'
+                                                                    span: full
+                                                                    mode: datetime
+                                                                    type: datepicker
+                                                                file:
+                                                                    label: Captura
+                                                                    mode: image
+                                                                    useCaption: true
+                                                                    span: full
+                                                                    type: mediafinder
+                                                        trigger:
+                                                            action: show
+                                                            field: nombre
+                                                            condition: value[2]
+                                            facturado:
+                                                name: Facturado
+                                                description: Estado de Facturado
+                                                fields:
+                                                    nombre:
+                                                        label: Facturado
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                            3: No aplica ✅
+                                                    comprobantes:
+                                                        type: repeater
+                                                        prompt: Agregar Comprobante
+                                                        style: collapsed
+                                                        titleFrom: comprobante
+                                                        form:
+                                                            fields:
+                                                                proveedor:
+                                                                    label: Razon Social
+                                                                    span: full
+                                                                    type: text
+                                                                comprobante:
+                                                                    label: Nro Comprobante
+                                                                    span: full
+                                                                    type: text
+                                                                fecha:
+                                                                    label: 'Fecha'
+                                                                    span: full
+                                                                    mode: date
+                                                                    type: datepicker
+                                                                concepto:
+                                                                    label: Concepto
+                                                                    span: full
+                                                                    type: text
+                                                                monto:
+                                                                    label: 'Monto (USD)'
+                                                                    span: left
+                                                                    type: number
+                                                                monto_tributario:
+                                                                    label: 'Tributario (USD)'
+                                                                    span: right
+                                                                    type: number
+                                                                file:
+                                                                    label: Captura
+                                                                    mode: image
+                                                                    useCaption: true
+                                                                    span: full
+                                                                    type: mediafinder
+                                                        trigger:
+                                                            action: show
+                                                            field: nombre
+                                                            condition: value[2]
+                            entradas:
+                                name: Entradas
+                                description: Entradas
+                                icon: icon-ticket
+                                fields:
+                                    nombre:
+                                        label: Proveedor
+                                        type: text
+                                        span: full
+                                    servicios:
+                                        label: Servicios
+                                        type: datatable
+                                        span: full
+                                        #span: storm
+                                        #cssClass: col-md-8
+                                        adding: true
+                                        deleting: true
+                                        columns:
+                                            fecha:
+                                                type: string
+                                                title: Fecha
+                                                width: 100px
+                                                validation:
+                                                    regex:
+                                                        pattern: "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$"
+                                                        message: "Por favor ingresa una fecha valida en formato dd/mm/aaaa"
+                                            cantidad:
+                                                type: string
+                                                width: 50px
+                                                title: Cant
+                                            concepto:
+                                                type: dropdown
+                                                width: 300px
+                                                title: Concepto
+                                            cu:
+                                                type: string
+                                                width: 50px
+                                                title: CU ($)
+                                            costo:
+                                                type: string
+                                                width: 50px
+                                                title: Total ($)
+                                            pu:
+                                                type: string
+                                                width: 50px
+                                                title: PU ($-S/)
+                                            tc:
+                                                type: string
+                                                width: 50px
+                                                title: TC (S/)
+                                            pago:
+                                                type: string
+                                                width: 50px
+                                                title: Pago ($)
+                                            fact:
+                                                type: string
+                                                width: 50px
+                                                title: Fact ($)
+                                            hora:
+                                                type: string
+                                                title: Hora
+                                                width: 50px
+                                                validation:
+                                                    regex:
+                                                        pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                                                        message: "Por favor ingresa una hora de salida valida, formato: hh:mm"
+                                    estados:
+                                        type: repeater
+                                        span: full
+                                        mode: grid
+                                        label: Estados
+                                        prompt: 'Agregar Estado'
+                                        sortable: false
+                                        maxItems: 4
+                                        columns: 4
+                                        groups:
+                                            requerimiento:
+                                                name: Requerimiento
+                                                description: Estado de Requerimiento
+                                                fields:
+                                                    nombre:
+                                                        label: Requerimiento
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    contacto:
+                                                        label: Contacto
+                                                        type: text
+                                                    req:
+                                                        label: Plantilla
+                                                        type: textarea
+                                                        span: full
+                                            confirmacion:
+                                                name: Confirmacion
+                                                description: Estado de Confirmacion
+                                                fields:
+                                                    nombre:
+                                                        label: Confirmacion
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    req:
+                                                        label: Detalles
+                                                        type: textarea
+                                                        span: full
+                                            pagado:
+                                                name: Pagado
+                                                description: Estado de Pagado
+                                                fields:
+                                                    nombre:
+                                                        label: Pagado
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    pagos:
+                                                        type: repeater
+                                                        prompt: Agregar Pago
+                                                        style: collapsed
+                                                        form:
+                                                            fields:
+                                                                soles:
+                                                                    label: 'Monto (S/)'
+                                                                    span: full
+                                                                    type: number
+                                                                tc:
+                                                                    label: 'Tipo Cambio (S/)'
+                                                                    span: full
+                                                                    type: number
+                                                                monto:
+                                                                    label: 'Monto (USD)'
+                                                                    span: full
+                                                                    type: number
+                                                                fecha:
+                                                                    label: 'Fecha y hora'
+                                                                    span: full
+                                                                    mode: datetime
+                                                                    type: datepicker
+                                                                file:
+                                                                    label: Captura
+                                                                    mode: image
+                                                                    useCaption: true
+                                                                    span: full
+                                                                    type: mediafinder
+                                                                pagopath:
+                                                                    type: partial
+                                                        trigger:
+                                                            action: show
+                                                            field: nombre
+                                                            condition: value[2]
+                                            facturado:
+                                                name: Facturado
+                                                description: Estado de Facturado
+                                                fields:
+                                                    nombre:
+                                                        label: Facturado
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                            3: No aplica ✅
+                                                    comprobantes:
+                                                        type: repeater
+                                                        prompt: Agregar Comprobante
+                                                        style: collapsed
+                                                        titleFrom: comprobante
+                                                        form:
+                                                            fields:
+                                                                proveedor:
+                                                                    label: Razon Social
+                                                                    span: full
+                                                                    type: text
+                                                                comprobante:
+                                                                    label: Nro Comprobante
+                                                                    span: full
+                                                                    type: text
+                                                                fecha:
+                                                                    label: 'Fecha'
+                                                                    span: full
+                                                                    mode: date
+                                                                    type: datepicker
+                                                                concepto:
+                                                                    label: Concepto
+                                                                    span: full
+                                                                    type: text
+                                                                monto:
+                                                                    label: 'Monto (USD)'
+                                                                    span: left
+                                                                    type: number
+                                                                monto_tributario:
+                                                                    label: 'Tributario (USD)'
+                                                                    span: right
+                                                                    type: number
+                                                                file:
+                                                                    label: Captura
+                                                                    mode: image
+                                                                    useCaption: true
+                                                                    span: full
+                                                                    type: mediafinder
+                                                        trigger:
+                                                            action: show
+                                                            field: nombre
+                                                            condition: value[2]
+                            trenes:
+                                name: Trenes
+                                description: Servicios Trenes
+                                icon: icon-train
+                                fields:
+                                    nombre:
+                                        label: Proveedor
+                                        type: text
+                                        span: full
+                                    servicios:
+                                        label: Servicios
+                                        type: datatable
+                                        span: full
+                                        #span: storm
+                                        #cssClass: col-md-8
+                                        adding: true
+                                        deleting: true
+                                        columns:
+                                            fecha:
+                                                type: string
+                                                title: Fecha
+                                                width: 100px
+                                                validation:
+                                                    regex:
+                                                        pattern: "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$"
+                                                        message: "Por favor ingresa una fecha valida en formato dd/mm/aaaa"
+                                            cantidad:
+                                                type: string
+                                                width: 50px
+                                                title: Cant
+                                            concepto:
+                                                type: dropdown
+                                                width: 300px
+                                                title: Concepto
+                                            cu:
+                                                type: string
+                                                width: 50px
+                                                title: CU ($)
+                                            costo:
+                                                type: string
+                                                width: 50px
+                                                title: Total ($)
+                                            pu:
+                                                type: string
+                                                width: 50px
+                                                title: PU ($-S/)
+                                            tc:
+                                                type: string
+                                                width: 50px
+                                                title: TC (S/)
+                                            pago:
+                                                type: string
+                                                width: 50px
+                                                title: Pago ($)
+                                            fact:
+                                                type: string
+                                                width: 50px
+                                                title: Fact ($)
+                                            salida:
+                                                type: string
+                                                title: Salida
+                                                width: 70px
+                                                validation:
+                                                    regex:
+                                                        pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                                                        message: "Por favor ingresa una hora de salida valida, formato: hh:mm"
+                                            llegada:
+                                                type: string
+                                                title: Llegada
+                                                width: 70px
+                                                validation:
+                                                    regex:
+                                                        pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                                                        message: "Por favor ingresa una hora de salida valida, formato: hh:mm"
+                                    estados:
+                                        type: repeater
+                                        span: full
+                                        mode: grid
+                                        label: Estados
+                                        prompt: 'Agregar Estado'
+                                        sortable: false
+                                        columns: 4
+                                        maxItems: 4
+                                        groups:
+                                            requerimiento:
+                                                name: Requerimiento
+                                                description: Estado de Requerimiento
+                                                fields:
+                                                    nombre:
+                                                        label: Requerimiento
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    contacto:
+                                                        label: Contacto
+                                                        type: text
+                                                    req:
+                                                        label: Plantilla
+                                                        type: textarea
+                                                        span: full
+                                            confirmacion:
+                                                name: Confirmacion
+                                                description: Estado de Confirmacion
+                                                fields:
+                                                    nombre:
+                                                        label: Confirmacion
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    req:
+                                                        label: Detalles
+                                                        type: textarea
+                                                        span: full
+                                            pagado:
+                                                name: Pagado
+                                                description: Estado de Pagado
+                                                fields:
+                                                    nombre:
+                                                        label: Pagado
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    pagos:
+                                                        type: repeater
+                                                        prompt: Agregar Pago
+                                                        style: collapsed
+                                                        form:
+                                                            fields:
+                                                                soles:
+                                                                    label: 'Monto (S/)'
+                                                                    span: full
+                                                                    type: number
+                                                                tc:
+                                                                    label: 'Tipo Cambio (S/)'
+                                                                    span: full
+                                                                    type: number
+                                                                monto:
+                                                                    label: 'Monto (USD)'
+                                                                    span: full
+                                                                    type: number
+                                                                fecha:
+                                                                    label: 'Fecha y hora'
+                                                                    span: full
+                                                                    mode: datetime
+                                                                    type: datepicker
+                                                                file:
+                                                                    label: Captura
+                                                                    mode: image
+                                                                    useCaption: true
+                                                                    span: full
+                                                                    type: mediafinder
+                                                        trigger:
+                                                            action: show
+                                                            field: nombre
+                                                            condition: value[2]
+                                            facturado:
+                                                name: Facturado
+                                                description: Estado de Facturado
+                                                fields:
+                                                    nombre:
+                                                        label: Facturado
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                            3: No aplica ✅
+                                                    comprobantes:
+                                                        type: repeater
+                                                        prompt: Agregar Comprobante
+                                                        style: collapsed
+                                                        titleFrom: comprobante
+                                                        form:
+                                                            fields:
+                                                                proveedor:
+                                                                    label: Razon Social
+                                                                    span: full
+                                                                    type: text
+                                                                comprobante:
+                                                                    label: Nro Comprobante
+                                                                    span: full
+                                                                    type: text
+                                                                fecha:
+                                                                    label: 'Fecha'
+                                                                    span: full
+                                                                    mode: date
+                                                                    type: datepicker
+                                                                concepto:
+                                                                    label: Concepto
+                                                                    span: full
+                                                                    type: text
+                                                                monto:
+                                                                    label: 'Monto (USD)'
+                                                                    span: left
+                                                                    type: number
+                                                                monto_tributario:
+                                                                    label: 'Tributario (USD)'
+                                                                    span: right
+                                                                    type: number
+                                                                file:
+                                                                    label: Captura
+                                                                    mode: image
+                                                                    useCaption: true
+                                                                    span: full
+                                                                    type: mediafinder
+                                                        trigger:
+                                                            action: show
+                                                            field: nombre
+                                                            condition: value[2]
+                            traslados:
+                                name: Traslados
+                                description: Servicios Traslados
+                                icon: icon-bus
+                                fields:
+                                    nombre:
+                                        label: Proveedor
+                                        type: text
+                                        span: full
+                                    servicios:
+                                        label: Servicios
+                                        type: datatable
+                                        span: full
+                                        #span: storm
+                                        #cssClass: col-md-8
+                                        adding: true
+                                        deleting: true
+                                        columns:
+                                            fecha:
+                                                type: string
+                                                title: Fecha
+                                                width: 100px
+                                                validation:
+                                                    regex:
+                                                        pattern: "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$"
+                                                        message: "Por favor ingresa una fecha valida en formato dd/mm/aaaa"
+                                            cantidad:
+                                                type: string
+                                                width: 50px
+                                                title: Cant
+                                            concepto:
+                                                type: dropdown
+                                                width: 300px
+                                                title: Concepto
+                                            cu:
+                                                type: string
+                                                width: 70px
+                                                title: C. Uni (USD)
+                                            costo:
+                                                type: string
+                                                width: 70px
+                                                title: Total (USD)
+                                            ruta:
+                                                type: string
+                                                readOnly: 0
+                                                width: 200px
+                                                title: Ruta
+                                                validation:
+                                                    regex:
+                                                        pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+ ?- ?[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$"
+                                                        message: "Por favor ingresa una ruta valida en formato 'inicio - fin'"
+                                            salida:
+                                                type: string
+                                                title: Salida
+                                                width: 70px
+                                                validation:
+                                                    regex:
+                                                        pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                                                        message: "Por favor ingresa una hora de salida valida, formato: hh:mm"
+                                            llegada:
+                                                type: string
+                                                title: Llegada
+                                                width: 70px
+                                                validation:
+                                                    regex:
+                                                        pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                                                        message: "Por favor ingresa una hora de salida valida, formato: hh:mm"
+                                    estados:
+                                        type: repeater
+                                        span: full
+                                        mode: grid
+                                        label: Estados
+                                        prompt: 'Agregar Estado'
+                                        sortable: false
+                                        maxItems: 4
+                                        columns: 2
+                                        groups:
+                                            requerimiento:
+                                                name: Requerimiento
+                                                description: Estado de Requerimiento
+                                                fields:
+                                                    nombre:
+                                                        label: Requerimiento
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    contacto:
+                                                        label: Contacto
+                                                        type: text
+                                                    req:
+                                                        label: Plantilla
+                                                        type: textarea
+                                                        span: full
+                                            confirmacion:
+                                                name: Confirmacion
+                                                description: Estado de Confirmacion
+                                                fields:
+                                                    nombre:
+                                                        label: Confirmacion
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    req:
+                                                        label: Detalles
+                                                        type: textarea
+                                                        span: full
+                                            pagado:
+                                                name: Pagado
+                                                description: Estado de Pagado
+                                                fields:
+                                                    nombre:
+                                                        label: Pagado
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    pagos:
+                                                        type: repeater
+                                                        prompt: Agregar Pago
+                                                        style: collapsed
+                                                        form:
+                                                            fields:
+                                                                soles:
+                                                                    label: 'Monto (S/)'
+                                                                    span: full
+                                                                    type: number
+                                                                tc:
+                                                                    label: 'Tipo Cambio (S/)'
+                                                                    span: full
+                                                                    type: number
+                                                                monto:
+                                                                    label: 'Monto (USD)'
+                                                                    span: full
+                                                                    type: number
+                                                                fecha:
+                                                                    label: 'Fecha y hora'
+                                                                    span: full
+                                                                    mode: datetime
+                                                                    type: datepicker
+                                                                file:
+                                                                    label: Captura
+                                                                    mode: image
+                                                                    useCaption: true
+                                                                    span: full
+                                                                    type: mediafinder
+                                                        trigger:
+                                                            action: show
+                                                            field: nombre
+                                                            condition: value[2]
+                                            facturado:
+                                                name: Facturado
+                                                description: Estado de Facturado
+                                                fields:
+                                                    nombre:
+                                                        label: Facturado
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                            3: No aplica ✅
+                                                    comprobantes:
+                                                        type: repeater
+                                                        prompt: Agregar Comprobante
+                                                        style: collapsed
+                                                        titleFrom: comprobante
+                                                        form:
+                                                            fields:
+                                                                proveedor:
+                                                                    label: Razon Social
+                                                                    span: full
+                                                                    type: text
+                                                                comprobante:
+                                                                    label: Nro Comprobante
+                                                                    span: full
+                                                                    type: text
+                                                                fecha:
+                                                                    label: 'Fecha'
+                                                                    span: full
+                                                                    mode: date
+                                                                    type: datepicker
+                                                                concepto:
+                                                                    label: Concepto
+                                                                    span: full
+                                                                    type: text
+                                                                monto:
+                                                                    label: 'Monto (USD)'
+                                                                    span: left
+                                                                    type: number
+                                                                monto_tributario:
+                                                                    label: 'Tributario (USD)'
+                                                                    span: right
+                                                                    type: number
+                                                                file:
+                                                                    label: Captura
+                                                                    mode: image
+                                                                    useCaption: true
+                                                                    span: full
+                                                                    type: mediafinder
+                                                        trigger:
+                                                            action: show
+                                                            field: nombre
+                                                            condition: value[2]
+                            alojamientos:
+                                name: Alojamientos
+                                description: Servicios Alojamientos
+                                icon: icon-bed
+                                fields:
+                                    nombre:
+                                        label: Proveedor
+                                        type: text
+                                        span: full
+                                    fechas:
+                                        label: Fechas
+                                        type: checkboxlist
+                                        cssClass: 'inline-options'
+                                        span: full
+                                    servicios:
+                                        label: Servicios
+                                        type: datatable
+                                        span: full
+                                        #span: storm
+                                        #cssClass: col-md-8
+                                        adding: true
+                                        deleting: true
+                                        columns:
+                                            #fecha:
+                                            #    type: string
+                                            #    title: Fecha
+                                            #    width: 100px
+                                            #    validation:
+                                            #        regex:
+                                            #            pattern: "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$"
+                                            #            message: "Por favor ingresa una fecha valida en formato dd/mm/aaaa"
+                                            cantidad:
+                                                type: string
+                                                width: 50px
+                                                title: Cant
+                                            concepto:
+                                                type: dropdown
+                                                width: 300px
+                                                title: Concepto
+                                            cu:
+                                                type: string
+                                                width: 50px
+                                                title: CU ($)
+                                            costo:
+                                                type: string
+                                                width: 50px
+                                                title: Total ($)
+                                            pu:
+                                                type: string
+                                                width: 50px
+                                                title: PU ($-S/)
+                                            tc:
+                                                type: string
+                                                width: 50px
+                                                title: TC (S/)
+                                            pago:
+                                                type: string
+                                                width: 50px
+                                                title: Pago ($)
+                                            fact:
+                                                type: string
+                                                width: 50px
+                                                title: Fact ($)
+                                    estados:
+                                        type: repeater
+                                        span: full
+                                        mode: grid
+                                        label: Estados
+                                        prompt: 'Agregar Estado'
+                                        sortable: false
+                                        maxItems: 4
+                                        columns: 4
+                                        groups:
+                                            requerimiento:
+                                                name: Requerimiento
+                                                description: Estado de Requerimiento
+                                                fields:
+                                                    nombre:
+                                                        label: Requerimiento
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    contacto:
+                                                        label: Contacto
+                                                        type: text
+                                                    req:
+                                                        label: Plantilla
+                                                        type: textarea
+                                                        span: full
+                                            confirmacion:
+                                                name: Confirmacion
+                                                description: Estado de Confirmacion
+                                                fields:
+                                                    nombre:
+                                                        label: Confirmacion
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    req:
+                                                        label: Detalles
+                                                        type: textarea
+                                                        span: full
+                                            pagado:
+                                                name: Pagado
+                                                description: Estado de Pagado
+                                                fields:
+                                                    nombre:
+                                                        label: Pagado
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                    pagos:
+                                                        type: repeater
+                                                        prompt: Agregar Pago
+                                                        style: collapsed
+                                                        form:
+                                                            fields:
+                                                                soles:
+                                                                    label: 'Monto (S/)'
+                                                                    span: full
+                                                                    type: number
+                                                                tc:
+                                                                    label: 'Tipo Cambio (S/)'
+                                                                    span: full
+                                                                    type: number
+                                                                monto:
+                                                                    label: 'Monto (USD)'
+                                                                    span: full
+                                                                    type: number
+                                                                fecha:
+                                                                    label: 'Fecha y hora'
+                                                                    span: full
+                                                                    mode: datetime
+                                                                    type: datepicker
+                                                                file:
+                                                                    label: Captura
+                                                                    mode: image
+                                                                    useCaption: true
+                                                                    span: full
+                                                                    type: mediafinder
+                                                        trigger:
+                                                            action: show
+                                                            field: nombre
+                                                            condition: value[2]
+                                            facturado:
+                                                name: Facturado
+                                                description: Estado de Facturado
+                                                fields:
+                                                    nombre:
+                                                        label: Facturado
+                                                        type: dropdown
+                                                        span: full
+                                                        default: 0
+                                                        options:
+                                                            0: Pendiente 🟧
+                                                            1: Parcialmente 🟨
+                                                            2: Hecho ✅
+                                                            3: No aplica ✅
+                                                    comprobantes:
+                                                        type: repeater
+                                                        prompt: Agregar Comprobante
+                                                        style: collapsed
+                                                        titleFrom: comprobante
+                                                        form:
+                                                            fields:
+                                                                proveedor:
+                                                                    label: Razon Social
+                                                                    span: full
+                                                                    type: text
+                                                                comprobante:
+                                                                    label: Nro Comprobante
+                                                                    span: full
+                                                                    type: text
+                                                                fecha:
+                                                                    label: 'Fecha'
+                                                                    span: full
+                                                                    mode: date
+                                                                    type: datepicker
+                                                                concepto:
+                                                                    label: Concepto
+                                                                    span: full
+                                                                    type: text
+                                                                monto:
+                                                                    label: 'Monto (USD)'
+                                                                    span: left
+                                                                    type: number
+                                                                monto_tributario:
+                                                                    label: 'Tributario (USD)'
+                                                                    span: right
+                                                                    type: number
+                                                                file:
+                                                                    label: Captura
+                                                                    mode: image
+                                                                    useCaption: true
+                                                                    span: full
+                                                                    type: mediafinder
+                                                        trigger:
+                                                            action: show
+                                                            field: nombre
+                                                            condition: value[2]
+        control:
+            type: partial
+            label: Control
+            span: storm
+            cssClass: col-md-3
+            context:
+                - update
+            tab: Plan de Reservas
