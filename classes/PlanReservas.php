@@ -228,6 +228,7 @@ class PlanReservas
                     $this->plan[$t]['proveedores'][$p]['estados'][0]['contacto'] = $prov->contacto;
                 }
 
+                if(array_key_exists('pagos', $proveedor['estados'][2]) && is_array($proveedor['estados'][2]['pagos']))
                 foreach($proveedor['estados'][2]['pagos'] as $i => $pago){
                     if(array_key_exists('tc', $pago) && !empty($pago['tc']) && is_numeric($pago['tc']) && $pago['tc'] > 0)
                         $this->plan[$t]['proveedores'][$p]['estados'][2]['pagos'][$i]['monto'] = ceil((empty($pago['soles']) ? 0: $pago['soles']) / $pago['tc']);

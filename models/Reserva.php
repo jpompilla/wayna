@@ -314,7 +314,7 @@ class Reserva extends Model
                             $rpta[$servicioItem['fecha']]['fact'] = 0;
                         }
                         $rpta[$servicioItem['fecha']]['costo'] += $si['costo'];
-                        $rpta[$servicioItem['fecha']]['pago'] += $si['pago'];
+                        $rpta[$servicioItem['fecha']]['pago'] += empty($si['pago']) ? 0 : $si['pago'];
                         $rpta[$servicioItem['fecha']]['fact'] += empty($si['fact']) ? 0 : $si['fact'];
                     }
         }
@@ -332,7 +332,7 @@ class Reserva extends Model
                                 $rpta[date('d/m/Y', strtotime($fecha))]['fact'] = 0;
                             }
                             $rpta[date('d/m/Y', strtotime($fecha))]['costo'] += $si['costo'];
-                            $rpta[date('d/m/Y', strtotime($fecha))]['pago'] += $si['pago'];
+                            $rpta[date('d/m/Y', strtotime($fecha))]['pago'] += empty($si['pago']) ? 0 : $si['pago'];
                             $rpta[date('d/m/Y', strtotime($fecha))]['fact'] += empty($si['fact']) ? 0 : $si['fact'];
                         }
         }
