@@ -342,6 +342,7 @@ class Reserva extends Model
     public function entradaPorFecha($fecha){
         $rpta = '';
         
+        if(isset($this->plan))
         foreach ($this->plan as $t => $tipoItem)        
             foreach ($tipoItem['proveedores'] as $p => $proveedorItem)
                 if(mb_substr($proveedorItem['nombre'], 5) == 'TuBoleto Cultura')
@@ -354,7 +355,8 @@ class Reserva extends Model
     
     public function trenPorFecha($fecha){
         $rpta = '';
-        
+
+        if(isset($this->plan))
         foreach ($this->plan as $t => $tipoItem)        
             foreach ($tipoItem['proveedores'] as $p => $proveedorItem)
                 if(mb_substr($proveedorItem['nombre'], 5) == 'Peru Rail')
@@ -368,6 +370,7 @@ class Reserva extends Model
     public function hotelPorFecha($fecha, $pendiente){
         $rpta = '';
         
+        if(isset($this->plan))
         foreach ($this->plan as $t => $tipo)
         if(mb_substr($tipo['nombre'], 5) == 'Alojamiento'){
             foreach ($tipo['proveedores'] as $p => $proveedorItem){
