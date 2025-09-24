@@ -606,6 +606,8 @@ tabs:
                                                                     useCaption: true
                                                                     span: full
                                                                     type: mediafinder
+                                                                pagopath:
+                                                                    type: partial
                                                         trigger:
                                                             action: show
                                                             field: nombre
@@ -1046,222 +1048,8 @@ tabs:
                                                                     useCaption: true
                                                                     span: full
                                                                     type: mediafinder
-                                                        trigger:
-                                                            action: show
-                                                            field: nombre
-                                                            condition: value[2]
-                                            facturado:
-                                                name: Facturado
-                                                description: Estado de Facturado
-                                                fields:
-                                                    nombre:
-                                                        label: Facturado
-                                                        type: dropdown
-                                                        span: full
-                                                        default: 0
-                                                        options:
-                                                            0: Pendiente 🟧
-                                                            1: Parcialmente 🟨
-                                                            2: Hecho ✅
-                                                            3: No aplica ✅
-                                                    comprobantes:
-                                                        type: repeater
-                                                        prompt: Agregar Comprobante
-                                                        style: collapsed
-                                                        titleFrom: comprobante
-                                                        form:
-                                                            fields:
-                                                                proveedor:
-                                                                    label: Razon Social
-                                                                    span: full
-                                                                    type: text
-                                                                comprobante:
-                                                                    label: Nro Comprobante
-                                                                    span: full
-                                                                    type: text
-                                                                fecha:
-                                                                    label: 'Fecha'
-                                                                    span: full
-                                                                    mode: date
-                                                                    type: datepicker
-                                                                concepto:
-                                                                    label: Concepto
-                                                                    span: full
-                                                                    type: text
-                                                                monto:
-                                                                    label: 'Monto (USD)'
-                                                                    span: left
-                                                                    type: number
-                                                                monto_tributario:
-                                                                    label: 'Tributario (USD)'
-                                                                    span: right
-                                                                    type: number
-                                                                file:
-                                                                    label: Captura
-                                                                    mode: image
-                                                                    useCaption: true
-                                                                    span: full
-                                                                    type: mediafinder
-                                                        trigger:
-                                                            action: show
-                                                            field: nombre
-                                                            condition: value[2]
-                            traslados:
-                                name: Traslados
-                                description: Servicios Traslados
-                                icon: icon-bus
-                                fields:
-                                    nombre:
-                                        label: Proveedor
-                                        type: text
-                                        span: full
-                                    servicios:
-                                        label: Servicios
-                                        type: datatable
-                                        span: full
-                                        #span: storm
-                                        #cssClass: col-md-8
-                                        adding: true
-                                        deleting: true
-                                        columns:
-                                            fecha:
-                                                type: string
-                                                title: Fecha
-                                                width: 100px
-                                                validation:
-                                                    regex:
-                                                        pattern: "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$"
-                                                        message: "Por favor ingresa una fecha valida en formato dd/mm/aaaa"
-                                            cantidad:
-                                                type: string
-                                                width: 50px
-                                                title: Cant
-                                            concepto:
-                                                type: dropdown
-                                                width: 300px
-                                                title: Concepto
-                                            cu:
-                                                type: string
-                                                width: 70px
-                                                title: C. Uni (USD)
-                                            costo:
-                                                type: string
-                                                width: 70px
-                                                title: Total (USD)
-                                            ruta:
-                                                type: string
-                                                readOnly: 0
-                                                width: 200px
-                                                title: Ruta
-                                                validation:
-                                                    regex:
-                                                        pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+ ?- ?[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$"
-                                                        message: "Por favor ingresa una ruta valida en formato 'inicio - fin'"
-                                            salida:
-                                                type: string
-                                                title: Salida
-                                                width: 70px
-                                                validation:
-                                                    regex:
-                                                        pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
-                                                        message: "Por favor ingresa una hora de salida valida, formato: hh:mm"
-                                            llegada:
-                                                type: string
-                                                title: Llegada
-                                                width: 70px
-                                                validation:
-                                                    regex:
-                                                        pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
-                                                        message: "Por favor ingresa una hora de salida valida, formato: hh:mm"
-                                    estados:
-                                        type: repeater
-                                        span: full
-                                        mode: grid
-                                        label: Estados
-                                        prompt: 'Agregar Estado'
-                                        sortable: false
-                                        maxItems: 4
-                                        columns: 2
-                                        groups:
-                                            requerimiento:
-                                                name: Requerimiento
-                                                description: Estado de Requerimiento
-                                                fields:
-                                                    nombre:
-                                                        label: Requerimiento
-                                                        type: dropdown
-                                                        span: full
-                                                        default: 0
-                                                        options:
-                                                            0: Pendiente 🟧
-                                                            1: Parcialmente 🟨
-                                                            2: Hecho ✅
-                                                    contacto:
-                                                        label: Contacto
-                                                        type: text
-                                                    req:
-                                                        label: Plantilla
-                                                        type: textarea
-                                                        span: full
-                                            confirmacion:
-                                                name: Confirmacion
-                                                description: Estado de Confirmacion
-                                                fields:
-                                                    nombre:
-                                                        label: Confirmacion
-                                                        type: dropdown
-                                                        span: full
-                                                        default: 0
-                                                        options:
-                                                            0: Pendiente 🟧
-                                                            1: Parcialmente 🟨
-                                                            2: Hecho ✅
-                                                    req:
-                                                        label: Detalles
-                                                        type: textarea
-                                                        span: full
-                                            pagado:
-                                                name: Pagado
-                                                description: Estado de Pagado
-                                                fields:
-                                                    nombre:
-                                                        label: Pagado
-                                                        type: dropdown
-                                                        span: full
-                                                        default: 0
-                                                        options:
-                                                            0: Pendiente 🟧
-                                                            1: Parcialmente 🟨
-                                                            2: Hecho ✅
-                                                    pagos:
-                                                        type: repeater
-                                                        prompt: Agregar Pago
-                                                        style: collapsed
-                                                        form:
-                                                            fields:
-                                                                soles:
-                                                                    label: 'Monto (S/)'
-                                                                    span: full
-                                                                    type: number
-                                                                tc:
-                                                                    label: 'Tipo Cambio (S/)'
-                                                                    span: full
-                                                                    type: number
-                                                                monto:
-                                                                    label: 'Monto (USD)'
-                                                                    span: full
-                                                                    type: number
-                                                                fecha:
-                                                                    label: 'Fecha y hora'
-                                                                    span: full
-                                                                    mode: datetime
-                                                                    type: datepicker
-                                                                file:
-                                                                    label: Captura
-                                                                    mode: image
-                                                                    useCaption: true
-                                                                    span: full
-                                                                    type: mediafinder
+                                                                pagopath:
+                                                                    type: partial
                                                         trigger:
                                                             action: show
                                                             field: nombre
@@ -1474,6 +1262,8 @@ tabs:
                                                                     useCaption: true
                                                                     span: full
                                                                     type: mediafinder
+                                                                pagopath:
+                                                                    type: partial
                                                         trigger:
                                                             action: show
                                                             field: nombre

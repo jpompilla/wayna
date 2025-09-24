@@ -85,7 +85,6 @@ class PlanReservas
     private function toGrupo($tipo){
         return match ($tipo) {
             'Entradas' => 'entradas',
-            'Traslado' => 'traslados',
             'Alojamiento' => 'alojamientos',
             'Trenes y transporte' => 'trenes',
             default => 'general',
