@@ -630,7 +630,7 @@ tabs:
                                                         type: repeater
                                                         prompt: Agregar Comprobante
                                                         style: collapsed
-                                                        titleFrom: comprobante
+                                                        titleFrom: proveedor
                                                         form:
                                                             fields:
                                                                 proveedor:
@@ -652,18 +652,16 @@ tabs:
                                                                     type: text
                                                                 monto:
                                                                     label: 'Monto (USD)'
-                                                                    span: left
-                                                                    type: number
-                                                                monto_tributario:
-                                                                    label: 'Tributario (USD)'
-                                                                    span: right
+                                                                    span: full
                                                                     type: number
                                                                 file:
-                                                                    label: Captura
-                                                                    mode: image
-                                                                    useCaption: true
+                                                                    label: PDF
+                                                                    prompt: 'Buscar'
+                                                                    mode: file
                                                                     span: full
                                                                     type: mediafinder
+                                                                filepath:
+                                                                    type: partial
                                                         trigger:
                                                             action: show
                                                             field: nombre
@@ -847,7 +845,7 @@ tabs:
                                                         type: repeater
                                                         prompt: Agregar Comprobante
                                                         style: collapsed
-                                                        titleFrom: comprobante
+                                                        titleFrom: proveedor
                                                         form:
                                                             fields:
                                                                 proveedor:
@@ -869,18 +867,16 @@ tabs:
                                                                     type: text
                                                                 monto:
                                                                     label: 'Monto (USD)'
-                                                                    span: left
-                                                                    type: number
-                                                                monto_tributario:
-                                                                    label: 'Tributario (USD)'
-                                                                    span: right
+                                                                    span: full
                                                                     type: number
                                                                 file:
-                                                                    label: Captura
-                                                                    mode: image
-                                                                    useCaption: true
+                                                                    label: PDF
+                                                                    prompt: 'Buscar'
+                                                                    mode: file
                                                                     span: full
                                                                     type: mediafinder
+                                                                filepath:
+                                                                    type: partial
                                                         trigger:
                                                             action: show
                                                             field: nombre
@@ -1072,7 +1068,7 @@ tabs:
                                                         type: repeater
                                                         prompt: Agregar Comprobante
                                                         style: collapsed
-                                                        titleFrom: comprobante
+                                                        titleFrom: proveedor
                                                         form:
                                                             fields:
                                                                 proveedor:
@@ -1094,18 +1090,16 @@ tabs:
                                                                     type: text
                                                                 monto:
                                                                     label: 'Monto (USD)'
-                                                                    span: left
-                                                                    type: number
-                                                                monto_tributario:
-                                                                    label: 'Tributario (USD)'
-                                                                    span: right
+                                                                    span: full
                                                                     type: number
                                                                 file:
-                                                                    label: Captura
-                                                                    mode: image
-                                                                    useCaption: true
+                                                                    label: PDF
+                                                                    prompt: 'Buscar'
+                                                                    mode: file
                                                                     span: full
                                                                     type: mediafinder
+                                                                filepath:
+                                                                    type: partial
                                                         trigger:
                                                             action: show
                                                             field: nombre
@@ -1286,7 +1280,7 @@ tabs:
                                                         type: repeater
                                                         prompt: Agregar Comprobante
                                                         style: collapsed
-                                                        titleFrom: comprobante
+                                                        titleFrom: proveedor
                                                         form:
                                                             fields:
                                                                 proveedor:
@@ -1308,18 +1302,16 @@ tabs:
                                                                     type: text
                                                                 monto:
                                                                     label: 'Monto (USD)'
-                                                                    span: left
-                                                                    type: number
-                                                                monto_tributario:
-                                                                    label: 'Tributario (USD)'
-                                                                    span: right
+                                                                    span: full
                                                                     type: number
                                                                 file:
-                                                                    label: Captura
-                                                                    mode: image
-                                                                    useCaption: true
+                                                                    label: PDF
+                                                                    prompt: 'Buscar'
+                                                                    mode: file
                                                                     span: full
                                                                     type: mediafinder
+                                                                filepath:
+                                                                    type: partial
                                                         trigger:
                                                             action: show
                                                             field: nombre

@@ -233,6 +233,11 @@ class PlanReservas
                         $this->plan[$t]['proveedores'][$p]['estados'][2]['pagos'][$i]['monto'] = ceil((empty($pago['soles']) ? 0: $pago['soles']) / $pago['tc']);
                         $this->plan[$t]['proveedores'][$p]['estados'][2]['pagos'][$i]['pagopath'] = $pago['file'];
                 }
+
+                if(array_key_exists('comprobantes', $proveedor['estados'][3]) && is_array($proveedor['estados'][3]['comprobantes']))
+                foreach($proveedor['estados'][3]['comprobantes'] as $i => $comprobante){
+                        $this->plan[$t]['proveedores'][$p]['estados'][3]['comprobantes'][$i]['filepath'] = $comprobante['file'];
+                }
             }
         }
     }
