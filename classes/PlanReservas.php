@@ -276,6 +276,7 @@ class PlanReservas
                             'trenes' => $this->renderTrenes(null),
                             'entradas' => $this->renderEntradas(),
                             'obs' => $this->renderObs(),
+                            'rid' => $this->reserva->rid,
                         ];
                         $plantila .= $this->renderTemplate($this->plantillaTour, $data);
                     }
@@ -448,6 +449,7 @@ Atentamente.';
     private string $plantillaTour = '
 *Tour/Servicio:* {{nombre}}
 *Fecha:* {{fecha}}
+*File:* {{rid}}
 *Pasajeros:* {{nro}}
 {{paxs}}*Alojamiento:*
 {{hoteles}}*Idioma:* Español
