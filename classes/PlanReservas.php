@@ -210,7 +210,7 @@ class PlanReservas
                     $costos = $serv->costos[0];
                     $nro_paxs = $this->reserva->nro_paxs;
                     $capacidad = $serv->capacidad;
-                    $cantidad = ceil($nro_paxs / $capacidad);
+                    $cantidad = $servicio['cantidad'];
                     $pu = empty($servicio['pu']) ? 0 : $servicio['pu'];
                     
                     //$this->plan[$t]['proveedores'][$p]['servicios'][$s]['cantidad'] = $cantidad;
