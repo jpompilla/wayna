@@ -218,7 +218,7 @@ class PlanReservas
                     $this->plan[$t]['proveedores'][$p]['servicios'][$s]['costo'] = $costos[$nro_paxs>10 ? 10 : $nro_paxs];
                     if(!empty($servicio['pu']))
                         if(array_key_exists('tc', $servicio) && !empty($servicio['tc']) && is_numeric($servicio['tc']) && $servicio['tc'] > 0)
-                            $this->plan[$t]['proveedores'][$p]['servicios'][$s]['pago'] = ceil($pu * $cantidad / $servicio['tc']);
+                            $this->plan[$t]['proveedores'][$p]['servicios'][$s]['pago'] = round($pu * $cantidad / $servicio['tc'],2);
                         else
                             $this->plan[$t]['proveedores'][$p]['servicios'][$s]['pago'] = $pu * $cantidad;
                 }
