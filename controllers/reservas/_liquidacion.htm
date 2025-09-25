@@ -155,6 +155,7 @@
         ?>
         <?php foreach($reserva->itinerario as $item): ?>
         <?php $fecha = date('d/m/Y', strtotime($item['fecha'])); ?>
+        <?php if(array_key_exists($fecha, $servicios)): ?>
         <tr class="size8 dia">
             <td><strong>Dia <?= $item['dia'] ?>. <?= isset($item['fecha'])? date('(d/m)', strtotime($item['fecha'])) : '' ?>: <?= $item['tour'] ?> <?= isset($item['hotel']) ? ' + '.$item['hotel'] : '' ?></strong></td>
             <td class="center"><strong>#</strong></td>
@@ -167,7 +168,6 @@
             $pago_total += $servicios[$fecha]['pago'];
             $fact_total += $servicios[$fecha]['fact'];
         ?>
-            <?php if(array_key_exists($fecha, $servicios)): ?>
             <?php foreach($servicios[$fecha]['servicios'] as $servicio): ?>
             <?php 
                 $costo = empty($servicio['costo']) ? 0 : $servicio['costo'];
@@ -181,7 +181,7 @@
                 <td class="right">$ <?= number_format(empty($servicio['fact'])?0:$servicio['fact'],2) ?></td>
             </tr>                
             <?php endforeach ?>
-            <?php endif ?>
+        <?php endif ?>
         <?php endforeach ?>
         <tr>
             <th class="size8" colspan="2">Total (USD)</th>
