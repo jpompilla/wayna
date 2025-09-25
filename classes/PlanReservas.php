@@ -172,9 +172,9 @@ class PlanReservas
             foreach($checks as $ch => $check)
                 $valores[$ch] += $check;
         }
-
+        $nro_proveedores = count($proveedores);
         foreach($valores as $v => $valor){            
-            $valores[$v] = floor($valores[$v] / count($proveedores));
+            $valores[$v] = floor($valores[$v] / ($nro_proveedores > 0 ? $nro_proveedores : 1));
             $tipo .= $this->getChecks($valores[$v]);
         }
 
@@ -339,6 +339,7 @@ class PlanReservas
             }
 
         $rpta = '';
+        if(isset($servicios))
         foreach ($servicios as $i => $item) {
             $servicio = Servicio::find($item['concepto']);
             $rpta .= ' - '.$item['fecha'].': '.$servicio->nombre.' '.(isset($item['salida'])?$item['salida']:'ND').'->'.(isset($item['llegada'])?$item['llegada']:'ND').PHP_EOL;
