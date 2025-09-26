@@ -79,6 +79,9 @@ tabs:
                 Triple 3: Triple 3
                 Individual 2: Individual 2
                 Individual 3: Individual 3
+                Doble 5: Doble 5
+                Doble 6: Doble 6
+                Doble 7: Doble 7
             type: dropdown
             tab: Datos Personales
         contacto:
