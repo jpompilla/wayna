@@ -164,7 +164,7 @@ class PlanReservas
     }
     private function checksProveedores($t, $proveedores){
         $tipo = '';
-        $valores = [0,0,0,0];
+        $valores = [2,2,2,2];
         foreach($proveedores as $p => $proveedor){
             $nombre = mb_substr($this->plan[$t]['proveedores'][$p]['nombre'], 5);
             list($estado, $checks) = $this->checksEstados($proveedor['estados']);

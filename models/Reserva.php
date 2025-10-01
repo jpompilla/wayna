@@ -142,6 +142,9 @@ class Reserva extends Model
         $hotel = '';
         $trenes = '';
         $tours = '';
+        
+        if(!isset($this->plan))
+            return '';
 
         foreach ($this->plan as $t => $tipoItem){
             if(mb_substr($tipoItem['nombre'], 5) == 'Alojamiento')
@@ -152,7 +155,7 @@ class Reserva extends Model
                 $tours = mb_substr($tipoItem['nombre'], 3, 1);
         }
 
-        return "$hotel$trenes$tours";
+        return "$trenes$hotel$tours";
     }
     
     /*---------- Combos -------------*/
