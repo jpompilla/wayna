@@ -137,6 +137,23 @@ class Reserva extends Model
         
         return $rpta;
     }
+
+    public function getFacturacionAttribute(){
+        $hotel = '';
+        $trenes = '';
+        $tours = '';
+
+        foreach ($this->plan as $t => $tipoItem){
+            if(mb_substr($tipoItem['nombre'], 5) == 'Alojamiento')
+                $hotel = mb_substr($tipoItem['nombre'], 3, 1);
+            if(mb_substr($tipoItem['nombre'], 5) == 'Trenes y transporte')
+                $trenes = mb_substr($tipoItem['nombre'], 3, 1);
+            if(mb_substr($tipoItem['nombre'], 5) == 'Tour Endoce')
+                $tours = mb_substr($tipoItem['nombre'], 3, 1);
+        }
+
+        return "$hotel$trenes$tours";
+    }
     
     /*---------- Combos -------------*/
     public function getServicioOptions(){    

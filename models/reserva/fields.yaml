@@ -1324,3 +1324,11 @@ tabs:
             context:
                 - update
             tab: Plan de Reservas
+        facturacion:
+            type: partial
+            label: Facturacion
+            span: storm
+            cssClass: col-md-3
+            context:
+                - update
+            tab: Plan de Reservas

@@ -14,10 +14,10 @@ columns:
         label: Titulo
         searchable: true
         type: text
-    codigo:
-        label: codigo
-        type: text
-        searchable: true
+    #codigo:
+    #    label: codigo
+    #    type: text
+    #    searchable: true
     nro_paxs:
         label: nro_paxs
         type: number
@@ -30,6 +30,12 @@ columns:
     avance:
         label: Avance
         type: text
+        width: 100px
+    facturacion:
+        label: Factura
+        type: text
+        width: 85px
+        sortable: false
     updated_at:
         label: updated_at
         type: datetime
