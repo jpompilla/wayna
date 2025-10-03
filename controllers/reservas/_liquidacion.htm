@@ -154,6 +154,7 @@
             $fact_total = 0;
         ?>
         <?php foreach($reserva->itinerario as $item): ?>
+        <?php if(array_key_exists('fecha', $item)): ?>
         <?php $fecha = date('d/m/Y', strtotime($item['fecha'])); ?>
         <?php if(array_key_exists($fecha, $servicios)): ?>
         <tr class="size8 dia">
@@ -181,6 +182,7 @@
                 <td class="right">$ <?= number_format(empty($servicio['fact'])?0:$servicio['fact'],2) ?></td>
             </tr>                
             <?php endforeach ?>
+        <?php endif ?>
         <?php endif ?>
         <?php endforeach ?>
         <tr>
