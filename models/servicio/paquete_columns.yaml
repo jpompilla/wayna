@@ -20,7 +20,7 @@ columns:
         type: text
     estado:
         label: Estado
-        type: text
+        type: partial
     precios[0][1]:
         label: Precio 1
         type: number

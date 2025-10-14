@@ -1,0 +1,11 @@
+scopes:
+    estado:
+        label: Estado
+        type: group
+        conditions: estado in (:filtered)
+        options:
+            Borrador: Borrador
+            Privado: Privado
+            Interno: Interno
+            Publicado: Publicado
+            Deshabilitado: Deshabilitado

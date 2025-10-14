@@ -35,21 +35,19 @@ class Paquetes extends Controller
         //dd($rpta);
     }
     
-    /*
-    public function duplicate($id = null){
-        $config = $this->makeConfig('$/soroche/wayna/models/servicio/paquete_fields.yaml');
+    public function update($recordId, $context = null)
+    {
+        //
+        // Do any custom code here
+        //
+        $paquete = Servicio::find($recordId);
         
-        $original = Servicio::find($id);
-        $duplicado = $original->replicate();
-        $duplicado->nombre = 'Copia de '.$original->nombre;
-        $config->model = $duplicado;
-        
-        $this->initForm($duplicado);        
-        $widget = $this->makeWidget('Backend\Widgets\Form', $config);
-        
-        $this->vars['widget'] = $widget;
+        $this->pageTitle = $paquete->nombre;
+    
+        // Call the FormController behavior update() method
+        return $this->asExtension('FormController')->update($recordId, $context);
     }
-    */
+
     public function duplicate($id = null){
         $original = Servicio::find($id);
         $duplicado = $original->replicate();
