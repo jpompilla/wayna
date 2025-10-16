@@ -50,4 +50,7 @@
     - builder_table_update_soroche_wayna_negocios.php
 1.0.18:
     - 'Add column fecha_fin to table soroche_wayna_reservas'
-    - builder_table_update_soroche_wayna_reservas_5.php
+    - builder_table_update_soroche_wayna_reservas5.php
+1.0.19:
+    - 'Update fecha_fin on Reservas table'
+    - migration1019.php

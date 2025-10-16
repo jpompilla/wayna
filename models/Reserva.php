@@ -72,19 +72,7 @@ class Reserva extends Model
         ],
     ];
     
-    
     /*---------- Atributos -------------*/
-    public function getFechaFinAttribute(){
-        $fecha_fin = null;
-        
-        foreach($this->items as $item)
-            if($item['_group'] == 'paquete' || $item['_group'] == 'tour')
-                $fecha_fin = $item['fecha'];
-        
-        
-        return $fecha_fin;
-    }
-    
     public function getLiderAttribute(){
         $lider = count($this->paxs) ? $this->paxs[0] : null;
         
@@ -299,6 +287,7 @@ class Reserva extends Model
         $this->generarItinerario();
         $this->formatearName();
         $this->calcularTotales();
+        $this->fecha_fin = $this->getFechaFin();
     }
     
     public function filterFields($fields, $context = null)
@@ -621,6 +610,16 @@ class Reserva extends Model
         $this->total = $total;
         $this->totalpagos = $pagos;
         $this->comision = $comision;
+    }
+
+    private function getFechaFin(){
+        $fecha_fin = null;
+        
+        foreach($this->items as $item)
+            if($item['_group'] == 'paquete' || $item['_group'] == 'tour')
+                $fecha_fin = $item['fecha'];
+        
+        return $fecha_fin;
     }
 }
 
