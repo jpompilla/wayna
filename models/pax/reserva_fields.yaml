@@ -50,6 +50,7 @@ tabs:
                 Argentina: Argentina
                 Peru: Peru
                 Venezuela: Venezuela
+                Nicaragua: Nicaragua
             type: dropdown
             span: right
             tab: Datos Personales
