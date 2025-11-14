@@ -89,6 +89,19 @@ class Reservas extends Controller
     }
     
     public function biblia(){
-        
+        $this->pageTitle = 'Biblia de Reservas';
+
+        $fechas = [];
+        for ($offset = -2; $offset <= 4; $offset++) {
+            $fechas[] = date('Y-m-d', strtotime("$offset days"));
+        }
+        $hoy = date('Y-m-d');
+        $mañana = date('Y-m-d', strtotime("+1 days"));
+        $inicio = reset($fechas);
+        $fin = end($fechas);
+
+        $reservas = Reserva::porRangoFechas($inicio, $fin)->get();
+
+        return $this->makePartial('biblia', ['fechas' => $fechas, 'reservas' => $reservas, 'hoy' => $hoy, 'mañana' => $mañana]);
     }
 }

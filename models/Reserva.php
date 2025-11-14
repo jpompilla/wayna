@@ -306,6 +306,13 @@ class Reserva extends Model
     }
     
     /*---------- Metodos -------------*/
+
+    public function itinerarioPorFecha(){
+        $rpta = [];
+        foreach($this->itinerario as $item)
+                $rpta[$item['fecha']] = $item;
+        return $rpta;
+    }
     
     public function serviciosPorFecha(){
         $rpta[] = [];
@@ -316,13 +323,16 @@ class Reserva extends Model
                     foreach ($proveedorItem['servicios'] as $s => $servicioItem){
                         $si = $servicioItem;
                         $si['servicio'] = Servicio::find($si['concepto'])->nombre;
+                        $si['tipo'] = 'tour';
+                        $si['confirmado'] = $this->getCheck($proveedorItem['estados'][1]['nombre']);
+                        $si['pagado'] = $this->getCheck($proveedorItem['estados'][2]['nombre']);
                         $rpta[$servicioItem['fecha']]['servicios'][] = $si;
                         if(!array_key_exists('costo', $rpta[$servicioItem['fecha']]) || empty($rpta[$servicioItem['fecha']]['costo'])){
                             $rpta[$servicioItem['fecha']]['costo'] = 0;
                             $rpta[$servicioItem['fecha']]['pago'] = 0;
                             $rpta[$servicioItem['fecha']]['fact'] = 0;
                         }
-                        $rpta[$servicioItem['fecha']]['costo'] += $si['costo'];
+                        $rpta[$servicioItem['fecha']]['costo'] += empty($si['costo']) ? 0 : $si['costo'];
                         $rpta[$servicioItem['fecha']]['pago'] += empty($si['pago']) ? 0 : $si['pago'];
                         $rpta[$servicioItem['fecha']]['fact'] += empty($si['fact']) ? 0 : $si['fact'];
                     }
@@ -333,7 +343,12 @@ class Reserva extends Model
                     foreach ($proveedorItem['fechas'] as $fecha)
                         foreach ($proveedorItem['servicios'] as $s => $servicioItem){
                             $si = $servicioItem;
-                            $si['servicio'] = Servicio::find($si['concepto'])->name;
+                            $s = Servicio::find($si['concepto']);
+                            $si['servicio'] = $s->name;
+                            $si['nombre'] = $s->nombre;
+                            $si['tipo'] = 'hotel';
+                            $si['confirmado'] = $this->getCheck($proveedorItem['estados'][1]['nombre']);
+                            $si['pagado'] = $this->getCheck($proveedorItem['estados'][2]['nombre']);
                             $rpta[date('d/m/Y', strtotime($fecha))]['servicios'][] = $si;
                             if(!array_key_exists('costo', $rpta[date('d/m/Y', strtotime($fecha))]) || empty($rpta[date('d/m/Y', strtotime($fecha))]['costo'])){
                                 $rpta[date('d/m/Y', strtotime($fecha))]['costo'] = 0;
@@ -620,6 +635,29 @@ class Reserva extends Model
                 $fecha_fin = $item['fecha'];
         
         return $fecha_fin;
+    }
+
+    private function getCheck($estado){
+        $rpta = '';
+        
+        if($estado == 2 || $estado == 3)
+            $rpta = '✅';
+        if($estado == 1)
+            $rpta = '🟨';
+        if($estado == 0)
+            $rpta = '🟧';
+        
+        return $rpta;
+    }
+
+    /*---------- Scopes -------------*/
+
+    public function scopePorRangoFechas($query, $inicio, $fin)
+    {
+        $query->where('fecha_inicio', '<=', $fin)
+              ->where('fecha_fin', '>=', $inicio);
+
+        return $query;
     }
 }
 
