@@ -3,7 +3,7 @@
         <table class="table data" data-control="rowlink">
             <thead>
                 <tr>
-                    <th class="text-center" style="background-color: #dc573b;"><span style="color: #fff;">Biblia de Reservas</span></th>
+                    <th class="text-center" style="background-color: #dc573b;"><span style="color: #fff;">Seguimiento de Reservas</span></th>
                     <th class="text-center"><span>Nro Paxs</span></th>                
                     
                     <?php if (!empty($fechas) && is_array($fechas)): ?>
@@ -49,6 +49,7 @@
                         <?php 
                             $itinerario = $reserva->itinerarioPorFecha();
                             $servicios = $reserva->serviciosPorFecha();
+                            $vuelos = $reserva->vuelosPorFecha();
                         ?>
                         <!--?= dd($itinerario) ?-->
                         <?php foreach ($fechas as $fecha): ?>
@@ -59,11 +60,23 @@
                                 <?php if(array_key_exists(date('d/m/Y', strtotime($fecha)), $servicios)): ?>
                                 <?php foreach($servicios[date('d/m/Y', strtotime($fecha))]['servicios'] as $servicio): ?>
                                 <?php if($servicio['tipo']=='tour'): ?>
-                                    <li><?= $servicio['confirmado'] ?> <?= $servicio['servicio'] ?></li>
+                                    <li>
+                                        <?= $servicio['confirmado'] ?> <?= $servicio['servicio'] ?>
+                                        <?php if(array_key_exists('salida', $servicio)): ?><span class="time"><?= $servicio['salida']?>→<?= $servicio['llegada']?></span><?php endif ?>
+                                        <?php if(array_key_exists('hora', $servicio) && !empty($servicio['hora'])): ?><span class="time"><?= $servicio['hora']?>hrs</span><?php endif ?>
+                                    </li>
                                 <?php endif ?>
                                 <?php endforeach ?>
                                 <?php endif ?>
                                 </ul>
+                                <ul>
+                                <?php if(array_key_exists(date('d/m/Y', strtotime($fecha)), $vuelos)): ?>
+                                <?php foreach($vuelos[date('d/m/Y', strtotime($fecha))] as $vuelo): ?>
+                                    <li><i class="icon-plane"></i> <?= $vuelo['ruta'] ?> (<?= $vuelo['vuelo'] ?>) <span class="time"><?= $vuelo['salida'] ?>→<?= $vuelo['llegada'] ?></span></li>
+                                <?php endforeach ?>
+                                <?php endif ?>
+                                </ul>
+
                                 <?= $reserva->hotelPorFecha($fecha,null) ?>
                                 <ul>
                                 <?php if(array_key_exists(date('d/m/Y', strtotime($fecha)), $servicios)): ?>
@@ -98,6 +111,14 @@
     }
     .activity ul li{
         list-style-type: none;
+        font-size: 11px;
+    }
+    .activity ul li .time{
+        background-color: #999;
+        color: #fff;
+        padding: 2px 4px;
+        border-radius: 5px;
+        font-size: 10px;
     }
     .hoy{
         

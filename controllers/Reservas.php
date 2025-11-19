@@ -89,18 +89,25 @@ class Reservas extends Controller
     }
     
     public function biblia(){
-        $this->pageTitle = 'Biblia de Reservas';
+        $this->pageTitle = 'Seguimiento de Reservas (Biblia)';
+
+        $tz = new \DateTimeZone('America/Lima');
+        $now = new \DateTime('now', $tz);
 
         $fechas = [];
         for ($offset = -2; $offset <= 4; $offset++) {
-            $fechas[] = date('Y-m-d', strtotime("$offset days"));
+            $d = (clone $now)->modify("$offset days");
+            $fechas[] = $d->format('Y-m-d');
         }
-        $hoy = date('Y-m-d');
-        $mañana = date('Y-m-d', strtotime("+1 days"));
+        $hoy = $now->format('Y-m-d');
+        $mañana = (clone $now)->modify('+1 day')->format('Y-m-d');
+
         $inicio = reset($fechas);
         $fin = end($fechas);
 
         $reservas = Reserva::porRangoFechas($inicio, $fin)->get();
+
+        BackendMenu::setContext('Soroche.Wayna', 'menu-seguimiento');
 
         return $this->makePartial('biblia', ['fechas' => $fechas, 'reservas' => $reservas, 'hoy' => $hoy, 'mañana' => $mañana]);
     }

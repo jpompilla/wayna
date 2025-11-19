@@ -306,6 +306,28 @@ class Reserva extends Model
     }
     
     /*---------- Metodos -------------*/
+    public function vuelosPorFecha(){
+        $rpta = [];
+        foreach($this->vuelos as $item)
+            $rpta[$item['fecha']][] = $item;
+        return $rpta;
+    }
+
+    public function trenesPorFecha(){
+        $rpta = [];
+    
+        if(isset($this->plan))
+        foreach ($this->plan as $t => $tipoItem)        
+            foreach ($tipoItem['proveedores'] as $p => $proveedorItem)
+                if(mb_substr($proveedorItem['nombre'], 5) == 'Peru Rail')
+                    foreach ($proveedorItem['servicios'] as $s => $servicioItem){
+                        $si = $servicioItem;
+                        $si['servicio'] = Servicio::find($si['concepto'])->nombre;
+                        $rpta[$servicioItem['fecha']][] = $si;
+                    }
+                        
+        return $rpta;
+    }
 
     public function itinerarioPorFecha(){
         $rpta = [];
@@ -411,8 +433,7 @@ class Reserva extends Model
         
         return $rpta;
     }
-    
-    
+
     private function importarItems(){
         $items = [];
         foreach($this->servicio->items as $i=>$item){
