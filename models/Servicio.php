@@ -65,6 +65,10 @@ class Servicio extends Model
             'otherKey' => 'negocio_id'
         ],
     ];
+
+    public function getDiasAttribute(){
+        return count($this->items);
+    }
     
     public function getNegocioOptions(){    
         $rpta = [];
