@@ -4,6 +4,8 @@ scopes:
         modelClass: Backend\Models\User
         conditions: user_id in (:filtered)
         nameFrom: first_name
+        permissions: 
+            - manage_reservas
     estado:
         label: Estado
         type: group

@@ -38,7 +38,8 @@ class Reserva extends Model
         'adicionales',
         'vuelos',
         'plan',
-        'obs'
+        'obs',
+        'cotizacion'
     ];
     
     /*---------- Relaciones -------------*/
@@ -145,6 +146,75 @@ class Reserva extends Model
 
         return "$trenes$hotel$tours";
     }
+    public function getN10Attribute(){
+        return $this->nro_paxs > 10 ? 10 : $this->nro_paxs;
+    }
+    public function getBrochureAttribute(){
+        $rpta = [];
+
+        foreach($this->items as $i => $item){
+            if($item['_group'] == 'paquete'){
+                $rpta[$i]['_group'] = $item['_group'];
+                $rpta[$i]['nombre'] = $item['nombre'];
+                $rpta[$i]['dia'] = $item['dia'];
+                $rpta[$i]['fecha'] = $item['fecha'];
+                $rpta[$i]['tour'] = Servicio::find($item['tour']);
+                $itemHotel = Servicio::find($item['hotel']);
+                $servicio = Servicio::find($itemHotel?->items[0]['servicio']);
+                $rpta[$i]['hotel'] = $servicio?->negocio;
+            }
+        }
+
+        return $rpta;
+    }
+    public function getNroDiasAttribute(){
+        $rpta = 0;
+        foreach($this->items as $item)
+            if($item['_group'] == 'paquete' || $item['_group'] == 'tour' || $item['_group'] == 'personalizado')
+                $rpta++;
+        return $rpta;
+    }
+    public function getPaqueteAttribute(){
+        $rpta = 'No definido';
+
+        if(!isset($this->items))
+            return $rpta;
+        if(count($this->items) == 0)
+            return $rpta;
+        
+        $dias = 0;
+        $ciudades = [];
+        $estrellas = 0;
+        $patron = '/Hotel\s+(.+?)\s*\(([^)]+)\)/';
+        
+        foreach($this->items as $item)
+            if($item['_group'] == 'paquete' || $item['_group'] == 'tour' || $item['_group'] == 'personalizado'){
+                $dias ++;
+
+                if (preg_match($patron, $item['nombre'], $matches)) {
+                    $estrellas = max($estrellas, (int)$matches[1]);
+                    $ciudades[] = $matches[2];
+                }
+            }
+        $ciudades = array_unique($ciudades);
+        $ciudades = array_filter($ciudades, function($c) {
+            return $c != 'Valle Sagrado' && $c != 'Aguas Calientes';
+        });
+
+        $lugares = '';
+        if(count($ciudades) == 0)
+            $lugares = '';
+        if(count($ciudades) == 1)
+            $lugares = $ciudades[0];
+        if(count($ciudades) > 1){
+            $ciudad = array_pop($ciudades);
+            $lugares = implode(', ', $ciudades) . ' y ' . $ciudad;
+        }
+
+        $rpta = "Paquete $dias"."D $lugares ($estrellas estrellas)";
+
+        return $rpta;
+    }
     
     /*---------- Combos -------------*/
     public function getServicioOptions(){    
@@ -153,8 +223,10 @@ class Reserva extends Model
         $user = BackendAuth::getUser();
         
         $rpta = Servicio::where('negocio_id', $user->negocio_id)
-                ->whereIn('tipo', ['Paquete','Tour'])
-                ->whereIn('estado', ['Interno','Publicado'])->get()->lists('nombre', 'id');
+                ->whereIn('tipo', ['Paquete'])
+                ->whereIn('estado', ['Interno'])
+                ->orderBy('nombre', 'asc')
+                ->get()->lists('nombre', 'id');
         
         return $rpta;
     }
@@ -180,13 +252,12 @@ class Reserva extends Model
         
         $rpta = Servicio::where('negocio_id', $user->negocio_id)
                 //->whereIn('tipo', ['Paquete','Tour'])
-                ->whereIn('tipo', ['Tour'])
+                ->whereIn('tipo', ['Hotel'])
                 //->whereIn('estado', ['Interno','Publicado'])
                 ->get()->lists('nombre', 'id');
         
         return $rpta;
     }
-    
     public function getActividadOptions(){
         $rpta = [];
         
@@ -194,13 +265,25 @@ class Reserva extends Model
         
         $rpta = Servicio::where('negocio_id', $user->negocio_id)
                 //->whereIn('tipo', ['Paquete','Tour'])
-                ->whereIn('tipo', ['Tour'])
+                ->whereIn('tipo', ['Bono', 'Otro'])
                 //->whereIn('estado', ['Interno','Publicado'])
                 ->get()->lists('nombre', 'id');
         
         return $rpta;
     }
-    
+    public function getAjusteOptions(){
+        $rpta = [];
+        
+        $user = BackendAuth::getUser();
+        
+        $rpta = Servicio::where('negocio_id', $user->negocio_id)
+                //->whereIn('tipo', ['Paquete','Tour'])
+                ->whereIn('tipo', ['Bono', 'Otro'])
+                //->whereIn('estado', ['Interno','Publicado'])
+                ->get()->lists('nombre', 'id');
+        
+        return $rpta;
+    }
     public function getFechasOptions(){
         $rpta = [];
         
@@ -230,6 +313,8 @@ class Reserva extends Model
 
     public function beforeSave(){        
         $user = BackendAuth::getUser();
+
+        //trace_log($this->original['estado'].' -> '.$this->estado);
         
         if(!$this->exists){ //CREATE
             if(!$this->negocio_id)
@@ -248,12 +333,20 @@ class Reserva extends Model
                 $this->params = $user->negocio->params;
                 $this->precios = [[0=>'TOTAL',1=>0,2=>0,3=>0,4=>0,5=>0,6=>0,7=>0,8=>0,9=>0,10=>0]];
             }
+            if($this->estado == 'Cotizacion'){
+                $this->generarCotizacion();
+            }
         }
         else { //UPDATE
             $this->actualizarItemsAdicionalesCostos();
-            $this->params = $this->servicio->params;
-            $this->precios = $this->servicio->precios;
-            
+            if(isset($this->servicio)){
+                $this->params = $this->servicio->params;
+                $this->precios = $this->servicio->precios;
+            }
+
+            if($this->estado == 'Cotizacion'){
+                $this->generarCotizacion();
+            }
             //if($this->estado == 'Confirmado' && !isset($this->plan)){ //<--- cambiar estado
             if($this->estado == 'Plan'){
                 /*
@@ -290,17 +383,26 @@ class Reserva extends Model
         $this->fecha_fin = $this->getFechaFin();
     }
     
-    public function filterFields($fields, $context = null)
-    {
+    public function filterFields($fields, $context = null){
+        $user = BackendAuth::getUser();
+        
+        if(isset($fields->user))
+            $fields->user->readOnly = !$user->hasAccess('soroche.wayna.manage_reservas');
+
+        if($context == 'create'){
+            $fields->user->value = $user->id;
+        }
         if ($context == 'update'){
             $fields->servicio->readOnly = true;
+            /*
             if($this->personalizado){
                 $fields->cotizacion->hidden = true;
             }
+            */
             if(!$this->personalizado){
-                $fields->costos->hidden = true;
-                $fields->resumen->hidden = true;
-                $fields->params->readOnly = true;
+                //$fields->costos->hidden = true;
+                //$fields->resumen->hidden = true;
+                //$fields->params->readOnly = true;
             }
         }
     }
@@ -363,7 +465,7 @@ class Reserva extends Model
             if(mb_substr($tipoItem['nombre'], 5) == 'Alojamiento')
                 foreach ($tipoItem['proveedores'] as $p => $proveedorItem)
                     foreach ($proveedorItem['fechas'] as $fecha)
-                        foreach ($proveedorItem['servicios'] as $s => $servicioItem){
+                        foreach ($proveedorItem['servicios'] as $s => $servicioItem){ 
                             $si = $servicioItem;
                             $s = Servicio::find($si['concepto']);
                             $si['servicio'] = $s->name;
@@ -377,7 +479,7 @@ class Reserva extends Model
                                 $rpta[date('d/m/Y', strtotime($fecha))]['pago'] = 0;
                                 $rpta[date('d/m/Y', strtotime($fecha))]['fact'] = 0;
                             }
-                            $rpta[date('d/m/Y', strtotime($fecha))]['costo'] += $si['costo'];
+                            $rpta[date('d/m/Y', strtotime($fecha))]['costo'] += empty($si['costo']) ? 0 : $si['costo'];
                             $rpta[date('d/m/Y', strtotime($fecha))]['pago'] += empty($si['pago']) ? 0 : $si['pago'];
                             $rpta[date('d/m/Y', strtotime($fecha))]['fact'] += empty($si['fact']) ? 0 : $si['fact'];
                         }
@@ -470,8 +572,10 @@ class Reserva extends Model
                 $items[$i] = $this->formatearItem($item['_group'], $tour, $hotel, $dia);
                 $costos['servicios'][] = $this->formatearCostos($tour, $hotel, $dia, $costos);
             }
-            if($item['_group'] == 'adicional'){                
+            if($item['_group'] == 'adicional'){
+                $nro_paxs = $item['nro_paxs'] ?? $this->nro_paxs;
                 $items[$i] = $this->formatearItem('adicional', $tour, null, $dia);
+                $items[$i]['nro_paxs'] = $nro_paxs;
                 $adicionales[] = $this->formatearAdicional($tour, null, $dia);
             }
         }
@@ -592,15 +696,119 @@ class Reserva extends Model
         $this->itinerario = $itinerario;
     }
     
+    private function generarCotizacion(){
+        $cotizacion = [];
+        
+        $cotizacion['paquete']['nombre'] = $this->paquete;
+        $cotizacion['paquete']['nro_paxs'] = $this->n10;
+        $cotizacion['paquete']['pu'] = 0;
+        $cotizacion['paquete']['precio'] = 0;
+        $cotizacion['paquete']['ru'] = 0;
+        $cotizacion['paquete']['reserva'] = 0;
+        $cotizacion['paquete']['cmu'] = 0;
+        $cotizacion['paquete']['comision'] = 0;
+
+        $cotizacion['adelanto']['nro_paxs'] = $this->n10;
+        $cotizacion['adelanto']['ru'] = 0;
+        $cotizacion['adelanto']['reserva'] = 0;
+
+        $cotizacion['comision']['nro_paxs'] = $this->n10;
+        $cotizacion['comision']['cmu'] = 0;
+        $cotizacion['comision']['comision'] = 0;
+
+        if(isset($this->items))
+        foreach($this->items as $i => $item){
+            if($item['_group'] == 'paquete'){
+                $cotizacion['items'][$i]['nombre'] = $item['nombre'];
+                $cotizacion['items'][$i]['_group'] = 'paquete';
+                $cotizacion['items'][$i]['dia'] = $item['dia'];
+                $cotizacion['items'][$i]['fecha'] = $item['fecha'];
+                $cotizacion['items'][$i]['pu'] = 0;
+                $cotizacion['items'][$i]['precio'] = 0;
+                $cotizacion['items'][$i]['ru'] = 0;
+                $cotizacion['items'][$i]['reserva'] = 0;
+                $cotizacion['items'][$i]['cmu'] = 0;
+                $cotizacion['items'][$i]['comision'] = 0;
+
+                $tour = Servicio::find($item['tour']);
+                $cotizacion['items'][$i]['servicios'][0]['nombre'] = $tour->nombre;
+                $cotizacion['items'][$i]['servicios'][0]['nro_paxs'] = $this->n10;
+                $cotizacion['items'][$i]['pu'] += $cotizacion['items'][$i]['servicios'][0]['pu'] = $tour->precios[0][$this->n10];
+                $cotizacion['items'][$i]['servicios'][0]['precio'] = $cotizacion['items'][$i]['servicios'][0]['pu'] * $this->nro_paxs;
+                $cotizacion['paquete']['pu'] += $tour->precios[0][$this->n10];
+
+                $cotizacion['items'][$i]['ru'] += $cotizacion['items'][$i]['servicios'][0]['ru'] = $tour->params[0]['adelanto'];
+                $cotizacion['items'][$i]['servicios'][0]['reserva'] = $cotizacion['items'][$i]['servicios'][0]['ru'] * $this->nro_paxs;
+                $cotizacion['paquete']['ru'] += $tour->params[0]['adelanto'];
+                $cotizacion['adelanto']['ru'] += $tour->params[0]['adelanto'];
+
+                $cotizacion['items'][$i]['cmu'] += $cotizacion['items'][$i]['servicios'][0]['cmu'] = $tour->params[0]['comision'];
+                $cotizacion['items'][$i]['servicios'][0]['comision'] = $cotizacion['items'][$i]['servicios'][0]['cmu'] * $this->nro_paxs;
+                $cotizacion['paquete']['cmu'] += $tour->params[0]['comision'];
+                $cotizacion['comision']['cmu'] += $tour->params[0]['comision'];
+
+                $hotel = Servicio::find($item['hotel']);
+                if(isset($hotel)){  
+                    $cotizacion['items'][$i]['servicios'][1]['nombre'] = $hotel->nombre;
+                    $cotizacion['items'][$i]['servicios'][1]['nro_paxs'] = $this->n10;
+                    $cotizacion['items'][$i]['pu'] += $cotizacion['items'][$i]['servicios'][1]['pu'] = $hotel->precios[0][$this->n10];
+                    $cotizacion['items'][$i]['servicios'][1]['precio'] = $cotizacion['items'][$i]['servicios'][1]['pu'] * $this->nro_paxs;
+                    $cotizacion['paquete']['pu'] += $hotel->precios[0][$this->n10];
+
+                    $cotizacion['items'][$i]['ru'] += $cotizacion['items'][$i]['servicios'][1]['ru'] = $hotel->params[0]['adelanto'];
+                    $cotizacion['items'][$i]['servicios'][1]['reserva'] = $cotizacion['items'][$i]['servicios'][1]['ru'] * $this->nro_paxs;
+                    $cotizacion['paquete']['ru'] += $hotel->params[0]['adelanto'];
+                    $cotizacion['adelanto']['ru'] += $hotel->params[0]['adelanto'];
+
+                    $cotizacion['items'][$i]['cmu'] += $cotizacion['items'][$i]['servicios'][1]['cmu'] = $hotel->params[0]['comision'];
+                    $cotizacion['items'][$i]['servicios'][1]['comision'] = $cotizacion['items'][$i]['servicios'][1]['cmu'] * $this->nro_paxs;
+                    $cotizacion['paquete']['cmu'] += $hotel->params[0]['comision'];
+                    $cotizacion['comision']['cmu'] += $hotel->params[0]['comision'];
+                }
+
+                $cotizacion['paquete']['precio'] += $cotizacion['items'][$i]['precio'] = $cotizacion['items'][$i]['pu'] * $this->nro_paxs;
+                $cotizacion['paquete']['reserva'] = $cotizacion['adelanto']['reserva'] += $cotizacion['items'][$i]['reserva'] = $cotizacion['items'][$i]['ru'] * $this->nro_paxs;
+                $cotizacion['paquete']['comision'] = $cotizacion['comision']['comision'] += $cotizacion['items'][$i]['comision'] = $cotizacion['items'][$i]['cmu'] * $this->nro_paxs;
+            }
+            if($item['_group'] == 'adicional'){
+                $actividad = Servicio::find($item['actividad']);
+                $cotizacion['adicionales'][$i]['nombre'] = $actividad->nombre;
+                $cotizacion['adicionales'][$i]['_group'] = 'adicional';
+                $cotizacion['adicionales'][$i]['dia'] = $item['dia'];
+                $cotizacion['adicionales'][$i]['fecha'] = $item['fecha'];
+                $cotizacion['adicionales'][$i]['nro_paxs'] = $item['nro_paxs'];                
+                $cotizacion['adicionales'][$i]['pu'] = $actividad->precios[0][$item['nro_paxs']];
+                $cotizacion['adicionales'][$i]['precio'] = $cotizacion['adicionales'][$i]['pu'] * $item['nro_paxs'];
+                $cotizacion['adicionales'][$i]['ru'] = $actividad->params[0]['adelanto'];
+                $cotizacion['adicionales'][$i]['reserva'] = $cotizacion['adicionales'][$i]['ru'] * $item['nro_paxs'];
+                $cotizacion['adicionales'][$i]['cmu'] = $actividad->params[0]['comision'];
+                $cotizacion['adicionales'][$i]['comision'] = $cotizacion['adicionales'][$i]['cmu'] * $item['nro_paxs'];
+
+                $cotizacion['comision']['cmu'] += $actividad->params[0]['comision'];
+                $cotizacion['comision']['comision'] += $cotizacion['adicionales'][$i]['cmu'] * $this->nro_paxs;
+            }
+            if($item['_group'] == 'precio')
+                continue;
+        }
+        
+        $this->cotizacion = $cotizacion;
+
+        //Artificio: para mostrar el precio total del paquete para compatibilidad con al version anterior
+        $precios = [[0 => 'TOTAL', 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0, 8 => 0, 9 => 0, 10 => 0]];
+        $precios[0][$this->n10] = $cotizacion['paquete']['pu'];
+        $this->precios = $precios;
+    }
    
     private function formatearName(){
         $name = 'Nueva Reserva';
         
-        $name = isset($this->fecha_inicio) ? date('Y-m-d', strtotime($this->fecha_inicio)) : 'Abierto';
-        $name .= ' -- '.(isset($this->lider) ? $this->lider->fullname : 'Grupo de '.$this->user->fullname);
-        $name .= ' x'.$this->nro_paxs;
-        $name .= ' - '.(isset($this->servicio) ? $this->servicio->nombre : 'Paquete Personalizado '.count($this->itinerario).'D' );
-        $name .= ' - '.$this->rid;
+        if($this->exists){
+            $name = isset($this->fecha_inicio) ? date('Y-m-d', strtotime($this->fecha_inicio)) : 'Abierto';
+            $name .= ' -- '.(isset($this->lider) ? $this->lider->fullname : 'Grupo de '.$this->user->fullname);
+            $name .= ' x'.$this->nro_paxs;
+            $name .= ' - '.(isset($this->servicio) ? $this->servicio->nombre : $this->paquete );
+            $name .= ' - '.$this->rid;
+        }
         
         $this->name = $name;
     }
@@ -673,10 +881,10 @@ class Reserva extends Model
 
     /*---------- Scopes -------------*/
 
-    public function scopePorRangoFechas($query, $inicio, $fin)
-    {
+    public function scopePorRangoFechas($query, $inicio, $fin){
         $query->where('fecha_inicio', '<=', $fin)
-              ->where('fecha_fin', '>=', $inicio);
+              ->where('fecha_fin', '>=', $inicio)
+              ->whereIn('estado', ['Abierto','Confirmado']);
 
         return $query;
     }

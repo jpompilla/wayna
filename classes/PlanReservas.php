@@ -47,7 +47,7 @@ class PlanReservas
     /* -------------Metodos Publicos ------------- */
     public function agregar($servicio_id, $fecha)
     {
-        $servicio = Servicio::find($servicio_id);
+        $servicio = Servicio::find($servicio_id); //Servicio de proveedor
         $tipo = $servicio->tipo;
         $negocio_id = $servicio->negocio->id;
         $negocio = $servicio->negocio->nombre;
@@ -91,20 +91,20 @@ class PlanReservas
         };
     }
     private function toFila($fecha, $servicio_id, $nro_paxs, $capacidad, $costos){
-        if($fecha === null)
+        if($fecha === null) //Hotel
             return [
                 'cantidad' => ceil($nro_paxs / $capacidad),
                 'concepto' => $servicio_id,
-                'cu' => $costos[$nro_paxs>10 ? 10 : $nro_paxs] / ceil($nro_paxs / $capacidad),
-                'costo' => $costos[$nro_paxs>10 ? 10 : $nro_paxs],
+                'cu' => $costos[1],
+                'costo' => $costos[1] * ceil($nro_paxs / $capacidad),
             ];
-        else
+        else //Otros servicios
             return [
                 'fecha' => date('d/m/Y', strtotime($fecha)),
                 'cantidad' => ceil($nro_paxs / $capacidad),
                 'concepto' => $servicio_id,
-                'cu' => $costos[$nro_paxs>10 ? 10 : $nro_paxs] / ceil($nro_paxs / $capacidad),
-                'costo' => $costos[$nro_paxs>10 ? 10 : $nro_paxs],
+                'cu' => $costos[1],
+                'costo' => $costos[1] * ceil($nro_paxs / $capacidad),
             ];
     }
     private function toEstados($contacto){
@@ -124,7 +124,6 @@ class PlanReservas
                 'nombre' => 0,],
         ];
     }
-
     private function formatearEstados(){
         foreach($this->plan as $t => $tipo){
             $nombre = mb_substr($tipo['nombre'], 5);
@@ -134,7 +133,6 @@ class PlanReservas
 
         $this->reserva->avance = $this->avanceReserva();
     }
-
     private function avanceReserva(){
         $rpta = '';
         $mapi = '';
@@ -213,9 +211,8 @@ class PlanReservas
                     $cantidad = $servicio['cantidad'];
                     $pu = empty($servicio['pu']) ? 0 : $servicio['pu'];
                     
-                    //$this->plan[$t]['proveedores'][$p]['servicios'][$s]['cantidad'] = $cantidad;
-                    $this->plan[$t]['proveedores'][$p]['servicios'][$s]['cu'] = $costos[$nro_paxs>10 ? 10 : $nro_paxs] / ceil($nro_paxs / $capacidad);
-                    $this->plan[$t]['proveedores'][$p]['servicios'][$s]['costo'] = $costos[$nro_paxs>10 ? 10 : $nro_paxs];
+                    $this->plan[$t]['proveedores'][$p]['servicios'][$s]['cu'] = $costos[1];
+                    $this->plan[$t]['proveedores'][$p]['servicios'][$s]['costo'] = $costos[1] * $cantidad;
                     if(!empty($servicio['pu']))
                         if(array_key_exists('tc', $servicio) && !empty($servicio['tc']) && is_numeric($servicio['tc']) && $servicio['tc'] > 0)
                             $this->plan[$t]['proveedores'][$p]['servicios'][$s]['pago'] = round($pu * $cantidad / $servicio['tc'],2);

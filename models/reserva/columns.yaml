@@ -31,11 +31,15 @@ columns:
         label: Avance
         type: text
         width: 100px
+        permissions: 
+            - manage_reservas
     facturacion:
         label: Factura
         type: text
         width: 85px
         sortable: false
+        permissions: 
+            - manage_reservas
     updated_at:
         label: updated_at
         type: datetime

@@ -31,7 +31,8 @@ class Proveedor extends Model
      */
     public $jsonable = [
         'contactos',
-        'evaluaciones'
+        'evaluaciones',
+        'content'
     ];
     
     public $belongsTo = [        

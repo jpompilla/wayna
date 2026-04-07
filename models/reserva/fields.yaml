@@ -27,11 +27,10 @@ fields:
         cssClass: col-md-3
         type: dropdown
         required: true
-        default: Abierto
+        default: Cotizacion
         options:
-            Abierto: Abierto
             Cotizacion: Cotizacion
-            Cotizado: Cotizado
+            Abierto: Abierto
             Confirmado: Confirmado
             Liquidado: Liquidado
             Anulado: Anulado
@@ -67,7 +66,7 @@ tabs:
             type: repeater
             label: 'Itinerario'
             tab: Servicios
-            prompt: 'Agregar servicio'
+            prompt: 'Agregar...'
             style: collapsed
             span: left
             titleFrom: nombre
@@ -75,8 +74,8 @@ tabs:
                 - update
             groups:
                 paquete:
-                    name: Paquete
-                    description: Paquete de varios dias
+                    name: Dia de itinerario
+                    description: Incluye dia y hotel (opcional)
                     icon: icon-cubes
                     fields:
                         nombre:
@@ -103,7 +102,7 @@ tabs:
                             label: Tour
                             nameFrom: nombre
                             descriptionFrom: description
-                            placeholder: '-- Seleccion un servicio --'
+                            placeholder: '-- Selecciona un servicio --'
                             showSearch: true
                             readOnly: 0
                             span: left
@@ -112,61 +111,61 @@ tabs:
                             label: Hotel
                             nameFrom: nombre
                             descriptionFrom: description
-                            placeholder: '-- Seleccion un alojamiento --'
+                            placeholder: '-- Selecciona un hotel --'
                             showSearch: true
                             readOnly: 0
                             span: right
                             type: dropdown
-                tour:
-                    name: Dia adicional
-                    description: Día completo con/sin hotel
+                #tour:
+                #    name: Dia adicional
+                #    description: Día completo con/sin hotel
+                #    icon: icon-cube
+                #    fields:
+                #        nombre:
+                #            span: full
+                #            readOnly: 1
+                #            label: Dia
+                #            default: Nuevo dia
+                #            type: text
+                #        dia:
+                #            span: auto
+                #            readOnly: 1
+                #            label: Dia
+                #            default: 1
+                #            type: number
+                #        fecha:
+                #            span: auto
+                #            readOnly: 1
+                #            label: Fecha
+                #            mode: date
+                #            format: d/m/Y
+                #            ignoreTimezone: true
+                #            type: datepicker
+                #        tour:
+                #            label: Tour
+                #            nameFrom: name
+                #            descriptionFrom: description
+                #            placeholder: '-- Seleccion un servicio --'
+                #            showSearch: true
+                #            span: left
+                #            type: dropdown
+                #        hotel:
+                #            label: Hotel
+                #            nameFrom: name
+                #            descriptionFrom: description
+                #            placeholder: '-- Seleccion un alojamiento --'
+                #            showSearch: true
+                #            span: right
+                #            type: dropdown
+                adicional:
+                    name: Servicio Adicional
+                    description: Servicios, bonos y upgrades
                     icon: icon-cube
                     fields:
                         nombre:
                             span: full
                             readOnly: 1
-                            label: Dia
-                            default: Nuevo dia
-                            type: text
-                        dia:
-                            span: auto
-                            readOnly: 1
-                            label: Dia
-                            default: 1
-                            type: number
-                        fecha:
-                            span: auto
-                            readOnly: 1
-                            label: Fecha
-                            mode: date
-                            format: d/m/Y
-                            ignoreTimezone: true
-                            type: datepicker
-                        tour:
-                            label: Tour
-                            nameFrom: name
-                            descriptionFrom: description
-                            placeholder: '-- Seleccion un servicio --'
-                            showSearch: true
-                            span: left
-                            type: dropdown
-                        hotel:
-                            label: Hotel
-                            nameFrom: name
-                            descriptionFrom: description
-                            placeholder: '-- Seleccion un alojamiento --'
-                            showSearch: true
-                            span: right
-                            type: dropdown
-                adicional:
-                    name: Servicio Adicional
-                    description: Servicios adicionales
-                    icon: icon-bed
-                    fields:
-                        nombre:
-                            span: full
-                            readOnly: 1
-                            label: Dia
+                            label: Nombre
                             default: Nuevo adicional
                             type: text
                         dia:
@@ -187,20 +186,65 @@ tabs:
                             label: Actividad
                             nameFrom: name
                             descriptionFrom: description
-                            placeholder: '-- Seleccion una actividad --'
+                            placeholder: '-- Selecciona una actividad --'
                             showSearch: true
-                            span: full
+                            span: auto
                             type: dropdown
-                personalizado:
-                    name: Dia personalizado
-                    description: Día con/sin hotel a cotizar
+                        nro_paxs:
+                            label: 'Nro pasajeros'
+                            span: auto
+                            type: number
+                #personalizado:
+                #    name: Dia personalizado
+                #    description: Día con/sin hotel a cotizar
+                #    icon: icon-cube
+                #    fields:
+                #        nombre:
+                #            span: full
+                #            readOnly: 1
+                #            label: Dia
+                #            default: Nuevo dia a cotizar
+                #            type: text
+                #        dia:
+                #            span: auto
+                #            readOnly: 1
+                #            label: Dia
+                #            default: 1
+                #            type: number
+                #        fecha:
+                #            span: auto
+                #            readOnly: 1
+                #            label: Fecha
+                #            mode: date
+                #            format: d/m/Y
+                #            ignoreTimezone: true
+                #            type: datepicker
+                #        tour:
+                #            label: Tour
+                #            nameFrom: name
+                #            descriptionFrom: description
+                #            placeholder: '-- Seleccion un servicio --'
+                #            showSearch: true
+                #            span: left
+                #            type: dropdown
+                #        hotel:
+                #            label: Hotel
+                #            nameFrom: name
+                #            descriptionFrom: description
+                #            placeholder: '-- Seleccion un alojamiento --'
+                #            showSearch: true
+                #            span: right
+                #            type: dropdown
+                precio:
+                    name: Ajuste de precio
+                    description: Incremento o Descuento
                     icon: icon-cube
                     fields:
                         nombre:
                             span: full
                             readOnly: 1
-                            label: Dia
-                            default: Nuevo dia a cotizar
+                            label: Nombre
+                            default: Nuevo adicional
                             type: text
                         dia:
                             span: auto
@@ -216,22 +260,35 @@ tabs:
                             format: d/m/Y
                             ignoreTimezone: true
                             type: datepicker
-                        tour:
-                            label: Tour
+                        ajuste:
+                            label: Tipo de Ajuste
                             nameFrom: name
                             descriptionFrom: description
-                            placeholder: '-- Seleccion un servicio --'
+                            placeholder: '-- Selecciona un ajuste --'
                             showSearch: true
-                            span: left
+                            span: full
                             type: dropdown
-                        hotel:
-                            label: Hotel
-                            nameFrom: name
-                            descriptionFrom: description
-                            placeholder: '-- Seleccion un alojamiento --'
-                            showSearch: true
-                            span: right
-                            type: dropdown
+                        cantidad:
+                            label: 'Cantidad'
+                            span: auto
+                            default: 1
+                            type: number
+                        monto:
+                            label: 'Monto'
+                            span: auto
+                            default: 0
+                            type: number
+        cotizacion:
+            label: Cotizacion (_cotizacion.htm)
+            comment: "*: Valores prorateados entre el numero de pasajeros"
+            commentAbove: true
+            span: right
+            type: partial
+            context:
+                - update
+            tab: Servicios
+            permissions: 
+                - enter_reservas
         params:
             label: Parametros
             type: datatable
@@ -263,6 +320,8 @@ tabs:
                 - update
             height: false
             tab: Servicios
+            permissions: 
+                - manage_reservas
         precios:
             type: datatable
             adding: false
@@ -309,24 +368,31 @@ tabs:
             context:
                 - update
             tab: Servicios
-        resumen:
-            type: partial
-            span: right
-            context:
-                - update
-            tab: Servicios
-        cotizacion:
-            span: right
-            type: partial
-            context:
-                - update
-            tab: Servicios
-        costos:
+            permissions: 
+                - manage_reservas
+        calculos:
+            label: Cotización (_calculos.htm)
             type: partial
             span: full
             context:
                 - update
             tab: Servicios
+            permissions: 
+                - manage_reservas
+        #resumen:
+        #    type: partial
+        #    span: right
+        #    context:
+        #        - update
+        #    tab: Servicios
+        #    permissions: 
+        #        - manage_reservas        
+        #costos:
+        #    type: partial
+        #    span: full
+        #    context:
+        #        - update
+        #    tab: Servicios
         paxs:
             label: Pasajeros
             span: full
@@ -447,6 +513,8 @@ tabs:
             context:
                 - update
             tab: Plan de Reservas
+            permissions: 
+                - manage_reservas
             form:
                 fields:
                     nombre:
@@ -1324,6 +1392,8 @@ tabs:
             context:
                 - update
             tab: Plan de Reservas
+            permissions: 
+                - manage_reservas
         facturacion:
             type: partial
             label: Facturacion
@@ -1332,3 +1402,5 @@ tabs:
             context:
                 - update
             tab: Plan de Reservas
+            permissions: 
+                - manage_reservas

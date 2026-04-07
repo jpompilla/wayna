@@ -1,0 +1,9 @@
+<?php if($value == 'Privado'): ?>
+<span class="btn btn-default btn-xs" style="background-color:#656565;">
+<?php elseif ($value == 'Interno'): ?>
+<span class="btn btn-default btn-xs" style="background-color:#8bc34a;">
+<?php else: ?>
+<span>
+<?php endif ?>
+<?= $value ?>
+</span>

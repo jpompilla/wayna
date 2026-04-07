@@ -1,64 +1,58 @@
 <div id="preciosList">    
     <!--?php if (isset($model->margen)): ?-->
+    <!--?= dd($model->cotizacion) ?-->
         <div class="list-preview list-flush">
             <div class="control-list">
                 <table class="table data" data-control="rowlink">
                     <thead>
                         <tr>
                             <th class="center"><span>Precios x paxs (USD)</span></th>
-                            <th class="center"><span>1P</span></th>
-                            <th class="center"><span>2P</span></th>
-                            <th class="center"><span>3P</span></th>
-                            <th class="center"><span>4P+</span></th>
+                            <th class="center"><span>Unidad</span></th>
+                            <th class="center"><span>Cantidad</span></th>
+                            <th class="center"><span>Unitario</span></th>
+                            <th class="center"><span>Total</span></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $limite = 4; $precios = $model->precios[0]; ?>
                         <tr>
-                            <td><span><?= $model->servicio? $model->servicio->nombre : 'Paquete personalizado '.count($model->itinerario).'D' ?></span></td>
-                            <?php for($i=1; $i <= $limite; $i++): ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($precios[$i], 0) ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
-                            <?php endfor ?>
+                            <td><span><?= $model->cotizacion['paquete']['nombre'] ?></span></td>
+                            <td class="center">Por persona</td>
+                            <td class="center"><?= number_format($model->cotizacion['paquete']['nro_paxs'],0) ?></td>
+                            <td class="right"><?= number_format($model->cotizacion['paquete']['pu'],2) ?></td>
+                            <td class="right"><?= number_format($model->cotizacion['paquete']['precio'],2) ?></td>
                         </tr>
-                        
-                        <?php if(isset($model->adicionales)): ?>
-                        <?php foreach($model->adicionales as $adicional): ?>
+                        <?php if(isset($model->cotizacion['adicionales'])): ?>
+                        <?php foreach($model->cotizacion['adicionales'] as $a => $adicional): ?>
                         <tr>
-                            <td><span><?= $adicional['nombre'] ?></span></td>
-                            <?php for($i=1; $i <= $limite; $i++): ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($adicional[$i], 0) ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
-                            <?php endfor ?>
+                            <td><span>↳ <?= $adicional['nombre'] ?></span></td>
+                            <td class="center">Por persona</td>
+                            <td class="center"><?= number_format($adicional['nro_paxs'],0) ?></td>
+                            <td class="right"><?= number_format($adicional['pu'],2) ?></td>
+                            <td class="right"><?= number_format($adicional['precio'],2) ?></td>
                         </tr>
                         <?php endforeach ?>
                         <?php endif ?>
-                        
+
                         <tr>
-                            <th><span>PRECIO TOTAL (por pax)</span></th>
-                            <?php for($i=1; $i <= $limite; $i++): ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($model->precioTotal($i), 0) ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
-                            <?php endfor ?>
+                            <th><span>PRECIO TOTAL</span></th>
+                            <th class="center">Por persona</th>
+                            <th class="center"><?= $model->nro_paxs ?>*</th>
+                            <th class="right"><?= number_format($model->total / $model->nro_paxs,2) ?>*</th>
+                            <th class="right"><?= number_format($model->total,2) ?></th>
                         </tr>
                         <tr>
-                            <th><span>ADELANTO (por pax)</span></th>
-                            <?php for($i=1; $i <= $limite; $i++): ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($model->params[0]['adelanto'], 0) ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
-                            <?php endfor ?>
+                            <th><span>RESERVA</span></th>
+                            <th class="center">Por persona</th>
+                            <th class="center"><?= number_format($model->cotizacion['adelanto']['nro_paxs'],0) ?></th>
+                            <th class="right"><?= number_format($model->cotizacion['adelanto']['ru'],2) ?></th>
+                            <th class="right"><?= number_format($model->cotizacion['adelanto']['reserva'],2) ?></th>
                         </tr>
                         <tr>
-                            <th><span>COMISION (por pax)</span></th>
-                            <?php for($i=1; $i <= $limite; $i++): ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($model->params[0]['comision'], 0) ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
-                            <?php endfor ?>
+                            <th><span>COMISION</span></th>
+                            <th class="center">Por persona</th>
+                            <th class="center"><?= number_format($model->cotizacion['comision']['nro_paxs'],0) ?></th>
+                            <th class="right"><?= number_format($model->cotizacion['comision']['cmu'],2) ?></th>
+                            <th class="right"><?= number_format($model->cotizacion['comision']['comision'],2) ?></th>
                         </tr>
                     </tbody>
                 </table>

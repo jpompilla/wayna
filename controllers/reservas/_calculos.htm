@@ -1,0 +1,122 @@
+<div id="preciosList">    
+    <!--?php if (isset($model->margen)): ?-->
+        <div class="list-preview list-flush">
+            <div class="control-list">
+                <!--?= dd($model->cotizacion) ?-->
+                <table class="table data" data-control="rowlink">
+                    <thead>
+                        <tr>
+                            <th class="center"><span>Precios x paxs (USD)</span></th>
+                            <th class="center"><span>Unidad</span></th>
+                            <th class="center"><span>Cantidad</span></th>
+                            <th class="center precio"><span>PU</span></th>
+                            <th class="center precio"><span>Precio</span></th>
+                            <th class="center reserva"><span>RU</span></th>
+                            <th class="center reserva"><span>Reserva</span></th>
+                            <th class="center comision"><span>CU</span></th>
+                            <th class="center comision"><span>Comision</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th><span><?= $model->cotizacion['paquete']['nombre'] ?></span></th>
+                            <th class="center">Por persona</th>
+                            <th class="center"><?= number_format($model->cotizacion['paquete']['nro_paxs'],0) ?></th>
+                            <th class="right precio"><?= number_format($model->cotizacion['paquete']['pu'],2) ?></th>
+                            <th class="right precio"><?= number_format($model->cotizacion['paquete']['precio'],2) ?></th>
+                            <th class="right reserva"><?= number_format($model->cotizacion['paquete']['ru'],2) ?></th>
+                            <th class="right reserva"><?= number_format($model->cotizacion['paquete']['reserva'],2) ?></th>
+                            <th class="right comision"><?= number_format($model->cotizacion['paquete']['cmu'],2) ?></th>
+                            <th class="right comision"><?= number_format($model->cotizacion['paquete']['comision'],2) ?></th>
+                        </tr>
+                        <?php if(isset($model->cotizacion['items'])): ?>
+                        <?php foreach($model->cotizacion['items'] as $i => $item): ?>
+                        <tr>
+                            <td><span>↳ <?= $item['nombre'] ?></span></td>
+                            <td class="center">Por persona</td>
+                            <td class="center"><?= number_format($model->nro_paxs,0) ?></td>
+                            <td class="right precio"><?= number_format($item['pu'],2) ?></td>
+                            <td class="right precio"><?= number_format($item['precio'],2) ?></td>
+                            <td class="right reserva"><?= number_format($item['ru'],2) ?></td>
+                            <td class="right reserva"><?= number_format($item['reserva'],2) ?></td>
+                            <td class="right comision"><?= number_format($item['cmu'],2) ?></td>
+                            <td class="right comision"><?= number_format($item['comision'],2) ?></td>
+                        </tr>
+                            <?php foreach($item['servicios'] as $s => $servicio): ?>
+                            <tr class="inner">
+                                <td><span>--- <?= $servicio['nombre'] ?></span></td>
+                                <td class="center">Por persona</td>
+                                <td class="center"><?= number_format($servicio['nro_paxs'],0) ?></td>
+                                <td class="right precio"><?= number_format($servicio['pu'],2) ?></td>
+                                <td class="right precio"><?= number_format($servicio['precio'],2) ?></td>
+                                <td class="right reserva"><?= number_format($servicio['ru'],2) ?></td>
+                                <td class="right reserva"><?= number_format($servicio['reserva'],2) ?></td>
+                                <td class="right comision"><?= number_format($servicio['cmu'],2) ?></td>
+                                <td class="right comision"><?= number_format($servicio['comision'],2) ?></td>
+                            </tr>
+                            <?php endforeach ?>
+                        <?php endforeach ?>
+                        <?php endif ?>
+                        <tr>
+                            <th><span>Adicionales</span></th>
+                            <th class="center"></th>
+                            <th class="center"></th>
+                            <th class="right precio"></th>
+                            <th class="right precio"></th>
+                            <th class="right reserva"></th>
+                            <th class="right reserva"></th>
+                            <th class="right comision"></th>
+                            <th class="right comision"></th>
+                        </tr>
+                        <?php if(isset($model->cotizacion['adicionales'])): ?>
+                        <?php foreach($model->cotizacion['adicionales'] as $a => $adicional): ?>
+                        <tr>
+                            <td><span>↳ <?= $adicional['nombre'] ?></span></td>
+                            <td class="center">Por persona</td>
+                            <td class="center"><?= number_format($adicional['nro_paxs'],0) ?></td>
+                            <td class="right precio"><?= number_format($adicional['pu'],2) ?></td>
+                            <td class="right precio"><?= number_format($adicional['precio'],2) ?></td>
+                            <td class="right reserva"><?= number_format($adicional['ru'],2) ?></td>
+                            <td class="right reserva"><?= number_format($adicional['reserva'],2) ?></td>
+                            <td class="right comision"><?= number_format($adicional['cmu'],2) ?></td>
+                            <td class="right comision"><?= number_format($adicional['comision'],2) ?></td>
+                        </tr>
+                        <?php endforeach ?>
+                        <?php endif ?>
+                        <tr>
+                            <th><span>PRECIO TOTAL / RESERVA / COMISION</span></th>
+                            <th class="center">Por persona</th>
+                            <th class="center"><?= number_format($model->nro_paxs,0) ?>*</th>
+                            <th class="right precio"><?= number_format($model->total / $model->nro_paxs,2) ?>*</th>
+                            <th class="right precio"><?= number_format($model->total,2) ?></th>
+                            <th class="right reserva"><?= number_format($model->cotizacion['adelanto']['ru'],2) ?></th>
+                            <th class="right reserva"><?= number_format($model->cotizacion['adelanto']['reserva'],2) ?></th>
+                            <th class="right comision"><?= number_format($model->cotizacion['comision']['cmu'],2) ?></th>
+                            <th class="right comision"><?= number_format($model->cotizacion['comision']['comision'],2) ?></th>
+                        </tr>
+                    </tbody>   
+                </table>
+
+            </div>
+        </div>
+    <!--?php endif ?-->
+</div>
+<style>
+    td.right, th.right{
+        text-align: right;
+    }
+    
+    td.center, th.center{
+        text-align: center;
+    }
+    tr.inner td{
+        color:#999 !important;
+        font-style: italic;
+    }
+    td.precio, th.precio, td.comision, th.comision{
+        background-color: #dc573b20 !important;
+    }
+    td.reserva, th.reserva{
+        background-color: #dc573b10 !important;
+    }
+</style>

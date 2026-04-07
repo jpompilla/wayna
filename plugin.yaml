@@ -38,6 +38,12 @@ permissions:
     enter_reservas:
         tab: 'soroche.wayna::lang.plugin.name'
         label: 'Ingresar Reservas'
+    manage_reservas:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Administrar Reservas'
+    view_biblia:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Ver seguimientode de Reservas (Biblia)'
 navigation:
     menu-wayna:
         label: Wayna
@@ -116,3 +122,5 @@ navigation:
         label: Seguimiento
         url: soroche/wayna/reservas/biblia
         icon: icon-calendar
+        permissions:
+            - view_biblia

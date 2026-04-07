@@ -2,23 +2,20 @@ fields:
     nombre:
         label: Nombre
         span: auto
-        required: 1
+        required: true
         type: text
     tipo:
         label: 'Tipo de Servicio'
         span: auto
         type: dropdown
-        required: 1
+        required: true
         default: Tour
-        readOnly: true
+        readOnly: false
         options:
-            Alojamiento: Alojamiento
-            Alimentacion: Alimentación
-            Traslado: Traslado
-            Guiado: Guiado
-            Entradas: Entradas
-            Tour: 'Tour o Actividad'
-            Paquete: Paquete
+            Tour: 'Tour (Actividad)'
+            Hotel: Hotel
+            Bono: Bono
+            Otro: Otro
         tab: Informacion
 tabs:
     fields:
@@ -262,3 +259,11 @@ tabs:
                                         mode: image
                                         imageWidth: 100 
                                         imageHeight: 100
+                        brochure:
+                            label: Brochure PDF
+                            type: mediafinder
+                            span: auto
+                            mode: image
+                            imageWidth: 400 
+                            imageHeight: 6000
+                            tab: PDF

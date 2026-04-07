@@ -34,10 +34,11 @@
                     <?= e(trans('backend::lang.form.save_and_close')) ?>
                 </button>
                 
+                <a class="btn btn-default" target="_blank" data-hotkey="ctrl+l, cmd+l" href="<?= Backend::url('soroche/wayna/reservas/brochure/'.$this->params[0]) ?>">Brochure</a>
                 <a class="btn btn-default" target="_blank" data-hotkey="ctrl+n, cmd+n" href="<?= Backend::url('soroche/wayna/reservas/invoice/'.$this->params[0]) ?>">Invoice</a>
                 <a class="btn btn-default" target="_blank" data-hotkey="ctrl+m, cmd+m" href="<?= Backend::url('soroche/wayna/reservas/estado/'.$this->params[0]) ?>">Estado</a>
+                <?php if ($this->user->hasAccess('soroche.wayna.manage_reservas')): ?>
                 <a class="btn btn-default" target="_blank" data-hotkey="ctrl+m, cmd+m" href="<?= Backend::url('soroche/wayna/reservas/liquidacion/'.$this->params[0]) ?>">Liquidación</a>
-                
                 <button
                     type="button"
                     class="wn-icon-trash-o btn-icon danger pull-right"
@@ -45,7 +46,8 @@
                     data-load-indicator="<?= e(trans('backend::lang.form.deleting')) ?>"
                     data-request-confirm="<?= e(trans('backend::lang.form.confirm_delete')) ?>">
                 </button>
-
+                <?php endif ?>
+                
                 <span class="btn-text">
                     <?= e(trans('backend::lang.form.or')) ?> <a href="<?= Backend::url('soroche/wayna/reservas') ?>"><?= e(trans('backend::lang.form.cancel')) ?></a>
                 </span>
@@ -59,6 +61,7 @@
 <?php endif ?>
 
 <style>
+    /*
     .control-popover .control-filelist a[data-request-data="_repeater_group: 'paquete'"]{
         display:none;
     }
@@ -72,7 +75,7 @@
     #Repeater-formItems-items-items li[data-collapse-title="Fullday"] .field-repeater-add-item{
         display:none;
     }
-    
+    */
     /*
     #Repeater-formPlan-items-plan .field-repeater .field-repeater .field-repeater-add-item,
     #Repeater-formPlan-items-plan .field-repeater .field-repeater .repeater-item-remove{

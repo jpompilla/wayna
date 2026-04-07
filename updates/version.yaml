@@ -54,3 +54,9 @@
 1.0.19:
     - 'Update fecha_fin on Reservas table'
     - migration1019.php
+1.0.20:
+    - 'Add content column to table soroche_wayna_negocios'
+    - builder_table_update_soroche_wayna_negocios_2.php
+1.0.21:
+    - 'Add cotizacion field to table soroche_wayna_reservas'
+    - builder_table_update_soroche_wayna_reservas_5.php

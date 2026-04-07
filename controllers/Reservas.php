@@ -4,6 +4,8 @@ use Backend\Classes\Controller;
 use BackendMenu;
 use Soroche\Wayna\Models\Reserva;
 use Dompdf\Dompdf;
+use BackendAuth;
+use System\Classes\MediaManager;
 
 class Reservas extends Controller
 {
@@ -18,13 +20,21 @@ class Reservas extends Controller
     public $relationConfig = 'config_relation.yaml';
 
     public $requiredPermissions = [
-        'enter_reservas' 
+        'enter_reservas', 'manage_reservas'
     ];
 
     public function __construct()
     {
         parent::__construct();
         BackendMenu::setContext('Soroche.Wayna', 'menu-reservas');
+    }
+
+    public function listExtendQuery($query)
+    {
+        $user = BackendAuth::getUser();
+        if(!$user->hasAccess('soroche.wayna.manage_reservas')){
+            $query->where('user_id', $user->id);
+        }
     }
     
     public function update($recordId, $context = null)
@@ -85,6 +95,22 @@ class Reservas extends Controller
         $dompdf->render();
 
         return $dompdf->stream($reserva->name.' (liquidacion).pdf', array("Attachment" => false));
+
+    }
+
+    public function brochure($recordId)
+    {
+        $reserva = Reserva::find($recordId);
+        
+        $html = $this->makePartial('brochurepdf', ['reserva' => $reserva]);
+
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        
+        $dompdf->render();
+
+        return $dompdf->stream($reserva->name.' (brochure).pdf', array("Attachment" => false));
 
     }
     
