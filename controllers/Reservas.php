@@ -87,6 +87,22 @@ class Reservas extends Controller
         return $dompdf->stream($reserva->name.' (liquidacion).pdf', array("Attachment" => false));
 
     }
+
+    public function comprobante($recordId)
+    {
+        $reserva = Reserva::find($recordId);
+        
+        $html = $this->makePartial('comprobante', ['reserva' => $reserva]);
+
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        
+        $dompdf->render();
+
+        return $dompdf->stream($reserva->name.' (comprobante).pdf', array("Attachment" => false));
+
+    }
     
     public function biblia(){
         $this->pageTitle = 'Seguimiento de Reservas (Biblia)';
