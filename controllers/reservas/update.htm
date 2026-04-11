@@ -39,6 +39,19 @@
                 <a class="btn btn-default" target="_blank" data-hotkey="ctrl+m, cmd+m" href="<?= Backend::url('soroche/wayna/reservas/estado/'.$this->params[0]) ?>">Estado</a>
                 <?php if ($this->user->hasAccess('soroche.wayna.manage_reservas')): ?>
                 <a class="btn btn-default" target="_blank" data-hotkey="ctrl+m, cmd+m" href="<?= Backend::url('soroche/wayna/reservas/liquidacion/'.$this->params[0]) ?>">Liquidación</a>
+                
+                <div class="dropdown dropup pull-none" style="display:inline-block">
+                    <a href="#" data-toggle="dropdown" class="btn btn-default wn-icon-angle-up">Documentos...</a>
+
+                    <ul class="dropdown-menu" role="menu" data-dropdown-title="Elige un documento">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" target="_blank" href="<?= Backend::url('soroche/wayna/reservas/brochure/'.$this->params[0]) ?>" class="wn-icon-image">Brochure</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" target="_blank" href="<?= Backend::url('soroche/wayna/reservas/comprobante/'.$this->params[0]) ?>" class="wn-icon-file-invoice-dollar">Comprobantes de pago</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" target="_blank" href="<?= Backend::url('soroche/wayna/reservas/invoice/'.$this->params[0]) ?>" class="wn-icon-copy">Invoice de confirmación</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" target="_blank" href="<?= Backend::url('soroche/wayna/reservas/estado/'.$this->params[0]) ?>" class="wn-icon-file-circle-check">Estado de reserva</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" target="_blank" href="<?= Backend::url('soroche/wayna/reservas/liquidacion/'.$this->params[0]) ?>" class="wn-icon-dollar">Liquidación de reserva</a></li>
+                    </ul>
+                </div>
+
                 <button
                     type="button"
                     class="wn-icon-trash-o btn-icon danger pull-right"
