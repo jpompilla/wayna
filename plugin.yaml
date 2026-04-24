@@ -64,6 +64,13 @@ navigation:
         permissions:
             - manage_entrenamientos
             - attend_entrenamientos
+        sideMenu:
+            menu-cursos:
+                label: Cursos
+                url: soroche/wayna/cursos
+                icon: icon-book
+                permissions:
+                    - manage_entrenamientos
     menu-pagos:
         label: Pagos
         url: soroche/wayna/pagos

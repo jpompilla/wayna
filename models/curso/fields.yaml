@@ -36,9 +36,57 @@ fields:
                         fields:
                             titulo:
                                 label: Titulo
-                                span: auto
+                                span: full
                                 type: text
                             video:
                                 label: 'Video URL'
                                 span: auto
                                 type: text
+                            duracion:
+                                label: 'Duracion (mm:ss)'
+                                span: auto
+                                type: text
+                            resumen:
+                                label: Resumen
+                                size: ''
+                                span: full
+                                type: textarea
+                            recursos:
+                                label: Recursos
+                                nameFrom: nombre
+                                descriptionFrom: descripcion
+                                span: full
+                                type: repeater
+                                form:
+                                    fields:
+                                        tipo:
+                                            label: Tipo
+                                            span: storm
+                                            cssClass: col-md-3
+                                            type: dropdown
+                                            options:
+                                                download: Download
+                                                link: Link
+                                        titulo:
+                                            label: Titulo
+                                            span: storm
+                                            cssClass: col-md-9
+                                            type: text
+                                        url:
+                                            label: URL
+                                            span: storm
+                                            cssClass: col-md-12
+                                            type: text
+                                            trigger:
+                                                action: show
+                                                field: tipo
+                                                condition: value[link]
+                                        documento:
+                                            label: Download
+                                            span: storm
+                                            cssClass: col-md-12
+                                            type: mediafinder
+                                            trigger:
+                                                action: show
+                                                field: tipo
+                                                condition: value[download]

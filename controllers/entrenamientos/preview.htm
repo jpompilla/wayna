@@ -1,134 +1,576 @@
-<?php Block::put('breadcrumb') ?>
-    <ul>
-        <li><a href="<?= Backend::url('soroche/wayna/entrenamientos') ?>">Entrenamientos</a></li>
-        <li><strong><?= $formModel->curso->nombre ?></strong></li>
-    </ul>    
-<?php Block::endPut() ?>
-
 <?php if (!$this->fatalError): ?>
-
-    <div class="row">
-    <div class="col-md-8 actividad">
-        
-        <div class="responsive-iframe-container">
-          <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<?= $formModel->contenido[($unidad?$unidad:0)]['actividades'][($actividad?$actividad:0)]['video'] ?>?si=OSMUT90TaqUVtUQN&amp;controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <small><?= $formModel->contenido[($unidad?$unidad:0)]['unidad'] ?></small>
-        <h1><?= $formModel->contenido[($unidad?$unidad:0)]['actividades'][($actividad?$actividad:0)]['titulo'] ?></h1>
-        
-    </div>
-    <div class="col-md-4 sitebar">
-        
-        <ul class="nav nav-sidebar">
-        <?php foreach($formModel->contenido as $u=>$unit): ?>
-        <!-- Menú Nivel 1 - Item 1 -->
-        <li>
-          <a href="#" class="toggle-menu">
-            <?= $unit['unidad']?> <span class="caret icon-caret"></span>
-          </a>
-          <ul class="nav sub-menu">
-          <?php foreach($unit['actividades'] as $i=>$actividad): ?>
-            <li><a class="<?= ($codigo?'':($u==0 && $i==0?'active':''))?> <?= ($codigo==($u+1).'.'.($i+1)?'active':'')?>" href="<?= Backend::url('soroche/wayna/entrenamientos') ?>/preview/<?= $formModel->id ?>/<?= ($u+1).'.'.($i+1)?>"><?= $actividad['titulo']?></a></li>
-            <?php endforeach ?>
-          </ul>
-        </li>
-        <?php endforeach ?>
-        </ul>
-        
-    </div>
-    </div>
+<div class="page-container">
+	<!-- Main Content (Video & Lesson) -->
+	<main class="main-content">
+		<div class="content-wrapper">
+			<!-- Breadcrumbs -->
+			<nav>
+				<ul class="breadcrumbs">
+					<li class="breadcrumb-item">Entrenamiento</li>
+					<li class="breadcrumb-item"><?= $formModel->curso->nombre ?></li>
+					<li class="breadcrumb-item active"><?= $formModel->contenido[$unidad]['unidad'] ?></li>
+				</ul>
+			</nav>
+			<!-- Video Player Container -->
+			<div class="video-wrapper">
+				<!-- Functional YouTube Embed (Machu Picchu Travel Guide) -->
+				<iframe
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					allowfullscreen="" src="https://www.youtube.com/embed/<?= $formModel->contenido[$unidad]['actividades'][$actividad]['video'] ?>"
+					title="Travel to Machu Picchu"></iframe>
+			</div>
+			<!-- Lesson Info Section -->
+			<section class="lesson-header">
+				<h1 class="lesson-title"><?= $formModel->contenido[$unidad]['actividades'][$actividad]['titulo'] ?></h1>
+				<div class="lesson-meta">
+					<div class="lesson-text">
+						<p class="lesson-description">
+							<?= $formModel->contenido[$unidad]['actividades'][$actividad]['resumen'] ?>
+						</p>
+						<div class="button-group">
+							<?php if(count($formModel->contenido[$unidad]['actividades'][$actividad]['recursos']) > 0): ?>
+								<?php 
+								$tipoRecurso = $formModel->contenido[$unidad]['actividades'][$actividad]['recursos'][0]['tipo'];
+								if($tipoRecurso == 'link')
+									$url = $formModel->contenido[$unidad]['actividades'][$actividad]['recursos'][0]['url'];
+								elseif($tipoRecurso == 'download')
+									$url = "/storage/app/media/".$formModel->contenido[$unidad]['actividades'][$actividad]['recursos'][0]['documento'];
+								?>
+							<a target="_blank" class="btn btn-primary" href="<?= $url ?>">
+								<span class="material-symbols-outlined" style="margin-right: 8px; font-size: 1.2rem;"><?= $formModel->contenido[$unidad]['actividades'][$actividad]['recursos'][0]['tipo'] ?></span>
+								<?= $formModel->contenido[$unidad]['actividades'][$actividad]['recursos'][0]['titulo'] ?>
+							</a>	
+							<?php endif ?>
+							<button class="btn btn-outline">
+								Marcar como completado
+							</button>
+						</div>
+					</div>
+					<!-- Resources Sidebar (under video in mobile, side in wide column) -->
+					<div class="resource-card">
+						<h3>Recursos de la sesión</h3>
+						<?php if(count($formModel->contenido[$unidad]['actividades'][$actividad]['recursos']) > 1): ?>
+						<div class="resource-list">
+							<?php foreach($formModel->contenido[$unidad]['actividades'][$actividad]['recursos'] as $i => $recurso ): ?>
+							<?php if($i == 0) continue; ?>
+							<?php 
+								$tipoRecurso = $recurso['tipo'];
+								if($tipoRecurso == 'link')
+									$url = $recurso['url'];
+								elseif($tipoRecurso == 'download')
+									$url = "/storage/app/media/".$recurso['documento'];
+							?>
+							<a target="_blank" class="resource-item" href="<?= $url ?>">
+								<span class="material-symbols-outlined icon"><?= $recurso['tipo'] ?></span>
+								<span><?= $recurso['titulo'] ?></span>
+							</a>
+							<?php endforeach ?>
+						</div>
+						<?php else: ?>
+							<p>0 recursos adicionales.</p>
+						<?php endif ?>
+					</div>
+				</div>
+			</section>
+		</div>
+	</main>
+	<!-- Sidebar Navigation (Course Content) -->
+	<aside class="sidebar">
+		<div class="course-progress-header">
+			<div class="progress-meta">
+				<div class="course-icon">
+					<span class="material-symbols-outlined">map</span>
+				</div>
+				<div>
+					<h4 style="font-weight: 700;">Contenido del Curso</h4>
+					<small style="color: var(--text-muted);">Progreso: 15% completado</small>
+				</div>
+			</div>
+			<div class="progress-bar-container">
+				<div class="progress-bar-fill"></div>
+			</div>
+		</div>
+		<!-- Course Syllabus Units -->
+		<?php foreach($formModel->contenido as $u=>$unit): ?>
+        <div class="unit-section" style="opacity: <?= $u == $unidad?'1':'0.5' ?>;">
+			<div class="unit-header">
+				<span><?= $unit['unidad']?></span>
+				<span class="material-symbols-outlined"><?= $u == $unidad?'expand_less':'expand_more'?></span>
+			</div>
+			<div class="activity-list" style="<?= $u == $unidad?'':'display:none'?>;">
+				<!-- Active Activity -->
+				<?php foreach($unit['actividades'] as $i=>$activity): ?>
+				<a class="activity-item <?= $u==$unidad && $i==$actividad?'active':'' ?>" href="<?= Backend::url('soroche/wayna/entrenamientos') ?>/preview/<?= $formModel->id ?>/<?= ($u+1).'.'.($i+1)?>">
+					<div class="activity-label">
+						<span class="material-symbols-outlined">play_circle</span>
+						<span style="font-weight: 700;"><?= $activity['titulo']?></span>
+					</div>
+					<?php if($u==$unidad && $i==$actividad): ?>
+					<span class="badge-viewing">Viendo</span>	
+					<?php else: ?>
+					<span style="font-weight: 700; font-size: 0.9rem;"><?= $activity['duracion']?></span>
+					<?php endif ?>
+				</a>
+				<?php endforeach ?>
+				<!--a class="activity-item active" href="#">
+					<div class="activity-label">
+						<span class="material-symbols-outlined">play_circle</span>
+						<span style="font-weight: 700;">1. Primera actividad</span>
+					</div>
+					<span class="badge-viewing">Viendo</span>
+				</a>
+				<a class="activity-item" href="#">
+					<div class="activity-label">
+						<span class="material-symbols-outlined">play_circle</span>
+						<span style="font-weight: 600;">2. Segunda Actividad</span>
+					</div>
+					<span style="font-weight: 700; font-size: 0.9rem;">15:30</span>
+				</a>
+				<a class="activity-item" href="#">
+					<div class="activity-label">
+						<span class="material-symbols-outlined">menu_book</span>
+						<span style="font-weight: 600;">3. Lectura Complementaria</span>
+					</div>
+					<span class="material-symbols-outlined filled"
+						style="color: #009fbd; font-size: 1.4rem;">verified</span>
+				</a-->
+			</div>
+		</div>
+        <?php endforeach ?>	
+		<!--div class="unit-section">
+			<div class="unit-header">
+				<span>Unidad 1: Introducción</span>
+				<span class="material-symbols-outlined">expand_less</span>
+			</div>
+			<div class="activity-list">
+				<a class="activity-item active" href="#">
+					<div class="activity-label">
+						<span class="material-symbols-outlined">play_circle</span>
+						<span style="font-weight: 700;">1. Primera actividad</span>
+					</div>
+					<span class="badge-viewing">Viendo</span>
+				</a>
+				<a class="activity-item" href="#">
+					<div class="activity-label">
+						<span class="material-symbols-outlined">play_circle</span>
+						<span style="font-weight: 600;">2. Segunda Actividad</span>
+					</div>
+					<span style="font-weight: 700; font-size: 0.9rem;">15:30</span>
+				</a>
+				<a class="activity-item" href="#">
+					<div class="activity-label">
+						<span class="material-symbols-outlined">menu_book</span>
+						<span style="font-weight: 600;">3. Lectura Complementaria</span>
+					</div>
+					<span class="material-symbols-outlined filled"
+						style="color: #009fbd; font-size: 1.4rem;">verified</span>
+				</a>
+			</div>
+		</div
+		<div class="unit-section" style="opacity: 0.5;">
+			<div class="unit-header">
+				<span>Unidad 2: Metodología</span>
+				<span class="material-symbols-outlined">expand_more</span>
+			</div>
+			<div class="activity-list" style="display: none;">
+				<a class="activity-item" href="#">
+					<div class="activity-label">
+						<span class="material-symbols-outlined">play_circle</span>
+						<span style="font-weight: 700;">1. Primera actividad</span>
+					</div>
+					<span class="badge-viewing">Viendo</span>
+				</a>
+				<a class="activity-item" href="#">
+					<div class="activity-label">
+						<span class="material-symbols-outlined">play_circle</span>
+						<span style="font-weight: 600;">2. Segunda Actividad</span>
+					</div>
+					<span style="font-weight: 700; font-size: 0.9rem;">15:30</span>
+				</a>
+				<a class="activity-item" href="#">
+					<div class="activity-label">
+						<span class="material-symbols-outlined">menu_book</span>
+						<span style="font-weight: 600;">3. Lectura Complementaria</span>
+					</div>
+					<span class="material-symbols-outlined filled"
+						style="color: #009fbd; font-size: 1.4rem;">verified</span>
+				</a>
+			</div>
+		</div-->
+		<a href="<?= Backend::url('soroche/wayna/entrenamientos') ?>" class="btn btn-back">
+			<span class="material-symbols-outlined" style="margin-right: 8px;">arrow_back</span>
+			Volver a la lista
+		</a>
+	</aside>
+</div>
 
 <?php else: ?>
-    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+<p class="flash-message static error">
+	<?= e($this->fatalError) ?>
+</p>
 <?php endif ?>
 
-<p>
-    <a href="<?= Backend::url('soroche/wayna/entrenamientos') ?>" class="btn btn-default wn-icon-chevron-left">
-        <?= e(trans('backend::lang.form.return_to_list')) ?>
-    </a>
-</p>
-
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
-    .control-breadcrumb {
-        margin-bottom: 0px;
-    }
-    .responsive-iframe-container {
-      position: relative;
-      overflow: hidden;
-      padding-top: 56.25%; /* 16:9 Aspect Ratio */
-    }    
-    .responsive-iframe-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-    .actividad {
-        & small{
-            background-color:#333;
-            color: #fff;
-            font-weight: bold;
-            padding:5px 10px;
-            line-height:50px;
-            border-radius: 5px;
-        }
-        & h1{
-            margin-top:5px;
-            margin-bottom:20px;
-        }
-    }
-    
-    .sitebar{
-        height:600px;
-    }
-    .nav-sidebar > li > a {
-      padding: 10px 15px;
-      font-size: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #666;
-      color: #fff;
-    }
-    .nav-sidebar > li > a:hover {
-      background-color: #dc573b;
-    }
-    .nav-sidebar .sub-menu {
-      /*padding-left: 20px;*/
-      background-color: #fff;
-    }
-    .nav-sidebar .sub-menu a{
-      color: #333;
-    }
-    .nav-sidebar .sub-menu a:hover, .nav-sidebar .sub-menu a.active{
-        background-color: #dc573b;
-        color: #fff;
-    }
-    .icon-caret {
-      transition: transform 0.3s ease;
-    }
-    .icon-caret.rotate {
-      transform: rotate(90deg); /* Rotar el caret 90 grados cuando el menú esté abierto */
-    }
+	/* CSS Variables for design tokens */
+	:root {
+		--primary: #b72301;
+		--primary-gradient: linear-gradient(135deg, #b72301 0%, #ff5733 100%);
+		--bg-body: #fcf9f8;
+		--bg-sidebar: #f6f3f2;
+		--text-main: #1c1b1b;
+		--text-muted: rgba(28, 27, 27, 0.6);
+		--border-color: rgba(0, 0, 0, 0.05);
+		--border-radius: 12px;
+		--transition: all 0.2s ease;
+	}
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+	#layout-body{
+		padding: 0;
+	}
+
+	/* Main Layout */
+	.page-container {
+		display: grid;
+		grid-template-columns: 1fr 350px;
+		min-height: calc(100vh - var(--nav-height));
+	}
+
+	/* Sidebar Content */
+	.sidebar {
+		background-color: var(--bg-sidebar);
+		border-left: 1px solid var(--border-color);
+		padding: 2.5rem 1.5rem;
+		position: sticky;
+		top: var(--nav-height);
+		height: calc(100vh - var(--nav-height));
+		overflow-y: auto;
+	}
+
+	/* Content Area */
+	.main-content {
+		padding: 2.5rem;
+		display: flex;
+		justify-content: center;
+	}
+
+	.content-wrapper {
+		max-width: 1000px;
+		width: 100%;
+	}
+
+	/* Breadcrumbs */
+	.breadcrumbs {
+		display: flex;
+		gap: 0.5rem;
+		list-style: none;
+		color: var(--text-muted);
+		margin-bottom: 2rem;
+	}
+
+	.breadcrumb-item:not(:last-child)::after {
+		content: "/";
+		margin-left: 0.5rem;
+	}
+
+	.breadcrumb-item.active {
+		color: var(--text-main);
+		font-weight: 700;
+	}
+
+	/* Video Section */
+	.video-wrapper {
+		position: relative;
+		width: 100%;
+		padding-top: 56.25%; /* 16:9 Aspect Ratio */
+		background: #000;
+		border-radius: var(--border-radius);
+		overflow: hidden;
+		box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+		margin-bottom: 2.5rem;
+	}
+
+	.video-wrapper iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+
+	/* Lesson Header & Info */
+	.lesson-header {
+		margin-bottom: 2.5rem;
+	}
+
+	.lesson-title {
+		font-size: 2.5rem;
+		font-weight: 800;
+		letter-spacing: -1px;
+		margin-bottom: 1.5rem;
+	}
+
+	.lesson-description {
+		color: var(--text-muted);
+		margin-bottom: 2.5rem;
+		max-width: 800px;
+	}
+
+	.lesson-meta {
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		gap: 2rem;
+		align-items: start;
+	}
+
+	/* Buttons */
+	.button-group {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 12px 24px;
+		border-radius: 8px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		cursor: pointer;
+		transition: var(--transition);
+		border: none;
+		text-decoration: none;
+	}
+
+	.btn-primary {
+		background: var(--primary-gradient);
+		color: white;
+		box-shadow: 0 10px 20px rgba(183, 35, 1, 0.2);
+	}
+
+	.btn-primary:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 12px 24px rgba(183, 35, 1, 0.3);
+	}
+
+	.btn-outline {
+		background: transparent;
+		border: 1px solid #e4beb6;
+		color: var(--primary);
+	}
+
+	.btn-outline:hover {
+		background-color: #fff1ef;
+	}
+
+	/* Resource Card */
+	.resource-card {
+		background-color: #f6f3f2;
+		border-radius: var(--border-radius);
+		padding: 1.5rem;
+	}
+
+	.resource-card h3 {
+		font-size: 1.3rem;
+		font-weight: 700;
+		margin-bottom: 1.25rem;
+	}
+
+	.resource-list {
+		list-style: none;
+	}
+
+	.resource-item {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 1rem;
+		color: var(--text-muted);
+		text-decoration: none;
+		font-size: 1.1rem;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	.resource-item span.icon {
+		color: var(--primary);
+	}
+
+	/* Sidebar Course Content */
+	.course-progress-header {
+		margin-bottom: 2rem;
+	}
+
+	.progress-meta {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.course-icon {
+		background: var(--primary);
+		color: white;
+		width: 48px;
+		height: 48px;
+		border-radius: 8px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.progress-bar-container {
+		background: #eae7e7;
+		height: 6px;
+		border-radius: 3px;
+		width: 100%;
+	}
+
+	.progress-bar-fill {
+		background: #009fbd;
+		height: 100%;
+		border-radius: 3px;
+		width: 15%;
+	}
+
+	.unit-section {
+		margin-bottom: 1.5rem;
+	}
+
+	.unit-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.75rem 0;
+		text-transform: uppercase;
+		font-size: 1.2rem;
+		font-weight: 800;
+		letter-spacing: 1px;
+		cursor: pointer;
+	}
+
+	.activity-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.activity-item {
+		padding: 1rem;
+		border-radius: 8px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		text-decoration: none;
+		color: var(--text-muted);
+		font-size: 1.15rem;
+		transition: var(--transition);
+	}
+
+	.activity-item:hover {
+		background: #eae7e7;
+		color: var(--text-main);
+		text-decoration: none;
+	}
+
+	.activity-item.active {
+		background: var(--primary-gradient);
+		color: white;
+		box-shadow: 0 8px 16px rgba(183, 35, 1, 0.2);
+	}
+
+	.activity-label {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.badge-viewing {
+		background: rgba(255,255,255,0.2);
+		padding: 2px 8px;
+		border-radius: 4px;
+		font-size: 0.9rem;
+		font-weight: 800;
+		text-transform: uppercase;
+	}
+
+	.btn-back {
+		width: 100%;
+		margin-top: 2rem;
+		background: #eae7e7;
+		color: var(--text-main);
+	}
+
+	/* Icons Helper */
+	.material-symbols-outlined {
+		font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+	}
+	
+	.active .material-symbols-outlined,
+	.filled .material-symbols-outlined {
+		font-variation-settings: 'FILL' 1;
+	}
+
+	/* Responsive */
+	@media (max-width: 1100px) {
+		.page-container {
+			grid-template-columns: 1fr;
+		}
+		.sidebar {
+			position: static;
+			height: auto;
+			border-left: none;
+			border-top: 1px solid var(--border-color);
+		}
+		.lesson-meta {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.navbar {
+			padding: 0 1rem;
+		}
+		.nav-links {
+			display: none;
+		}
+		.main-content {
+			padding: 1.5rem;
+		}
+		.lesson-title {
+			font-size: 2rem;
+		}
+	}
 </style>
 <script>
-    $(document).ready(function(){
-      $('.toggle-menu').click(function(e){
-        e.preventDefault();
-        
-        var subMenu = $(this).next('.sub-menu');
-        var caret = $(this).find('.icon-caret');
-        
-        // Cierra otros submenús abiertos y resetea sus carets
-        $('.sub-menu').not(subMenu).slideUp();
-        $('.icon-caret').not(caret).removeClass('rotate');
-        
-        // Alterna el submenú y rota el ícono
-        subMenu.slideToggle();
-        caret.toggleClass('rotate');
-      });
-    });
-    </script>
+	$(document).ready(function () {
+		$('.unit-header').click(function (e) {
+			e.preventDefault();
+		
+			var subMenu = $(this).next('.activity-list');
+			var caret = $(this).find('.material-symbols-outlined');
+
+			// Cierra otros submenús abiertos y resetea sus carets
+			$('.activity-list').not(subMenu).slideUp();
+			$('.unit-header .material-symbols-outlined').not(caret).text('expand_more');
+
+			// Alterna el submenú y cambia el ícono
+			subMenu.slideToggle(400, function() {
+				if ($(this).is(':visible')) {
+					caret.text('expand_less');
+				} else {
+					caret.text('expand_more');
+				}
+			});
+		});
+	});
 </script>
