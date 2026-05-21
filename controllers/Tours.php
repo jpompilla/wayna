@@ -28,7 +28,7 @@ class Tours extends Controller
         //$rpta = 
             $query
                 ->where('negocio_id', $user->negocio_id)
-                ->whereIn('tipo', ['Tour', 'Hotel', 'Bono', 'Otro'])
+                ->whereIn('tipo', ['Tour', 'Hotel', 'Bono', 'Otro', 'Incremento', 'Descuento'])
                 ;
                 //->get();
         //dd($rpta);

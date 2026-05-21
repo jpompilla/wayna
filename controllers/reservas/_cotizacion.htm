@@ -1,6 +1,38 @@
 <div id="preciosList">    
+    
+    <div id="copys">
+        <div class="layout control-toolbar editor-toolbar">
+            <div class="layout-cell toolbar-item">
+                <div data-control="toolbar">
+                    <button 
+                        type="button" 
+                        class="btn"
+                        title="Copiar itinerario"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body"
+                        onclick="javascript:copiarItinerario()">
+                        <i class="icon-list-ol"></i>
+                    </button>
+                    <button 
+                        type="button" 
+                        class="btn"
+                        title="Copiar precios"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body"
+                        onclick="javascript:copiarPrecio()">
+                        <i class="icon-dollar-sign"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!--?php if (isset($model->margen)): ?-->
     <!--?= dd($model->cotizacion) ?-->
+    
         <div class="list-preview list-flush">
             <div class="control-list">
                 <table class="table data" data-control="rowlink">
@@ -17,10 +49,23 @@
                         <tr>
                             <td><span><?= $model->cotizacion['paquete']['nombre'] ?></span></td>
                             <td class="center">Por persona</td>
-                            <td class="center"><?= number_format($model->cotizacion['paquete']['nro_paxs'],0) ?></td>
+                            <td id="nro" class="center"><?= number_format($model->cotizacion['paquete']['nro_paxs'],0) ?></td>
                             <td class="right"><?= number_format($model->cotizacion['paquete']['pu'],2) ?></td>
                             <td class="right"><?= number_format($model->cotizacion['paquete']['precio'],2) ?></td>
                         </tr>
+                        
+                        <?php if(isset($model->cotizacion['ajustes'])): ?>
+                        <?php foreach($model->cotizacion['ajustes'] as $a => $ajuste): ?>
+                        <tr>
+                            <td><span>*** <?= $ajuste['nombre'] ?></span></td>
+                            <td class="center">Por persona</td>
+                            <td class="center"><?= number_format($ajuste['nro_paxs'],0) ?></td>
+                            <td class="right"><?= number_format($ajuste['pu'],2) ?></td>
+                            <td class="right"><?= number_format($ajuste['precio'],2) ?></td>
+                        </tr>
+                        <?php endforeach ?>
+                        <?php endif ?>
+
                         <?php if(isset($model->cotizacion['adicionales'])): ?>
                         <?php foreach($model->cotizacion['adicionales'] as $a => $adicional): ?>
                         <tr>
@@ -37,21 +82,21 @@
                             <th><span>PRECIO TOTAL</span></th>
                             <th class="center">Por persona</th>
                             <th class="center"><?= $model->nro_paxs ?>*</th>
-                            <th class="right"><?= number_format($model->total / $model->nro_paxs,2) ?>*</th>
-                            <th class="right"><?= number_format($model->total,2) ?></th>
+                            <th id="pu" class="right"><?= number_format($model->total / $model->nro_paxs,2) ?>*</th>
+                            <th id="precio" class="right"><?= number_format($model->total,2) ?></th>
                         </tr>
                         <tr>
                             <th><span>RESERVA</span></th>
                             <th class="center">Por persona</th>
-                            <th class="center"><?= number_format($model->cotizacion['adelanto']['nro_paxs'],0) ?></th>
-                            <th class="right"><?= number_format($model->cotizacion['adelanto']['ru'],2) ?></th>
-                            <th class="right"><?= number_format($model->cotizacion['adelanto']['reserva'],2) ?></th>
+                            <th class="center"><?= number_format($model->cotizacion['adelanto']['nro_paxs'],0) ?>*</th>
+                            <th id="ru" class="right"><?= number_format($model->cotizacion['adelanto']['reserva'] / $model->nro_paxs,2) ?>*</th>
+                            <th id="reserva" class="right"><?= number_format($model->cotizacion['adelanto']['reserva'],2) ?></th>
                         </tr>
                         <tr>
                             <th><span>COMISION</span></th>
                             <th class="center">Por persona</th>
-                            <th class="center"><?= number_format($model->cotizacion['comision']['nro_paxs'],0) ?></th>
-                            <th class="right"><?= number_format($model->cotizacion['comision']['cmu'],2) ?></th>
+                            <th class="center"><?= number_format($model->cotizacion['comision']['nro_paxs'],0) ?>*</th>
+                            <th class="right"><?= number_format($model->cotizacion['comision']['comision'] / $model->nro_paxs,2) ?>*</th>
                             <th class="right"><?= number_format($model->cotizacion['comision']['comision'],2) ?></th>
                         </tr>
                     </tbody>
@@ -69,3 +114,88 @@
         text-align: center;
     }
 </style>
+<script>
+    function copyToClipboard(text) {
+        if (window.clipboardData && window.clipboardData.setData) {
+            // Internet Explorer-specific code path to prevent textarea being shown while dialog is visible.
+            return clipboardData.setData("Text", text);
+
+        } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+            var textarea = document.createElement("textarea");
+            textarea.textContent = text;
+            textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+            } catch (ex) {
+                console.warn("Copy to clipboard failed.", ex);
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+    }
+
+    function copiarItinerario() {
+        copyToClipboard(itinearioToWA());
+        $.wn.flashMsg({text: 'Itinerario copiado.', 'class': 'success', 'interval': 2});
+    }
+
+    function copiarPrecio() {
+        copyToClipboard(precioToWA());
+        $.wn.flashMsg({text: 'Precios copiados.', 'class': 'success', 'interval': 2});
+    }
+
+    function itinearioToWA() {
+        var filtro = '#Repeater-formItems-items-items li[data-collapse-title="Dia de itinerario"] .repeater-item-collapsed-title, ' +
+                     '#Repeater-formItems-items-items li[data-collapse-title="Servicio Adicional"] .repeater-item-collapsed-title';
+        var rpta = '';
+        
+        //Titulo
+        rpta += $('#Form-field-Reserva-name').map(function() {
+            var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
+            var texto = $(this).val().trim();
+            return texto.replace(regex, "*$2 | $1 persona(s) | Hotel $3 estrellas ($4)*");
+        }).get().join('\n') + '\n';
+
+        rpta += '----------\n\n';
+        
+        //Itinerario
+        rpta += '📆 *ITINERARIO*\n\n';
+        rpta += $(filtro).map(function() {
+            var texto = $(this).text().trim();
+            return texto
+                .replace(/(Dia \d+\.)/, '*$1*')
+                .replace(/↳/g, '> -->');
+        }).get().join('\n') + '\n\n';
+
+        //Precio
+        rpta += precioToWA();
+
+        return rpta;
+    }
+
+    function precioToWA(){
+        var pu = $('#pu').text().slice(0, -1);
+        var precio = $('#precio').text();
+        var ru = $('#ru').text().slice(0, -1);
+        var reserva = $('#reserva').text();
+        var nro = $('#nro').text();
+        var normal =  (parseFloat(pu.replace(',',''))/0.8).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        var rpta = '';
+
+        rpta += '💰 *PRECIOS POR PERSONA*\n';
+        rpta += '_Promoción valida hasta cierre de quincena_\n\n';
+        rpta += `- *Precio normal:* ~US\$${normal} dolares por persona~\n`;
+        rpta += `- *Precio Promocional:* US\$${pu} dolares por persona\n`;
+        rpta += `- *Monto de reserva:* US\$${ru} dolares por persona (pagan el saldo pendiente a su llegada a Perú el dia 1 en EFECTIVO en dolares).\n\n`;
+        
+        rpta += '💰 *PRECIO TOTAL*\n\n';
+        rpta += `- *Total:* US\$${pu} x ${nro} persona(s) = US\$${precio} dolares\n`;
+        rpta += `- *Monto de reserva:* USD\$${ru} x ${nro} persona(s) = US\$${reserva} dolares (el saldo total lo pagan en efectivo en dolares al llegar a Perú)\n`;
+
+        return rpta;
+    }
+</script>

@@ -23,7 +23,9 @@
                         <tr>
                             <td><strong>B. COSTOS</strong></td>
                             <?php for ($i = 1; $i <= 6; $i++): ?>
-                            <td class="right"><strong><?= number_format($model->costos['total'][$i],2) ?></strong></td>
+                            <?php if(isset($model->costos['total'])): ?>
+                                <td class="right"><strong><?= number_format($model->costos['total'][$i],2) ?></strong></td>
+                            <?php endif ?>
                             <?php endfor ?>
                         </tr>
                         <tr>

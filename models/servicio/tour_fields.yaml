@@ -16,6 +16,8 @@ fields:
             Hotel: Hotel
             Bono: Bono
             Otro: Otro
+            Incremento: Incremento
+            Descuento: Descuento
         tab: Informacion
 tabs:
     fields:

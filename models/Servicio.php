@@ -182,7 +182,9 @@ class Servicio extends Model
         }
         else{
             //-------Name
-            $name = sprintf(
+            if(!$this->negocio_id)
+                $this->negocio_id = $user->negocio_id;
+            $name = sprintf(            
                 //'%s %s - %s x%d: USD %.2f',
                 '%s %s - %s x%d',
                 $this->negocio->nombre,
@@ -219,7 +221,10 @@ class Servicio extends Model
         $costos = [];
         $costos[0][0] = $this->nombre;
         for($i=1; $i<=10; $i++){
-            $costos[0][strval($i)] = (intdiv($i-1, $this->capacidad)+1)*$this->costo;
+            if($this->capacidad > 0)
+                $costos[0][strval($i)] = (intdiv($i-1, $this->capacidad)+1)*$this->costo;
+            else
+                $costos[0][strval($i)] = 0;
         } 
         $this->costos = $costos;
     }

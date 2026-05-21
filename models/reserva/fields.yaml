@@ -38,11 +38,11 @@ fields:
 tabs:
     fields:
         servicio:
-            label: 'Paquete'
+            label: 'Paquete Inicial'
             span: storm
             cssClass: col-md-6
             type: dropdown
-            placeholder: '-- Paquete personalizado --'
+            placeholder: '-- Sin Paquete --'
             required: true
             tab: Servicios
         nro_paxs:
@@ -274,7 +274,7 @@ tabs:
                             default: 1
                             type: number
                         monto:
-                            label: 'Monto'
+                            label: 'Monto (USD)'
                             span: auto
                             default: 0
                             type: number

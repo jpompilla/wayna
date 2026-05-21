@@ -215,6 +215,10 @@ class Reserva extends Model
 
         return $rpta;
     }
+
+    public function getTieneCotizacionAttribute(){
+        return isset($this->cotizacion);
+    }
     
     /*---------- Combos -------------*/
     public function getServicioOptions(){    
@@ -237,7 +241,6 @@ class Reserva extends Model
         $user = BackendAuth::getUser();
         
         $rpta = Servicio::where('negocio_id', $user->negocio_id)
-                //->whereIn('tipo', ['Paquete','Tour'])
                 ->whereIn('tipo', ['Tour'])
                 //->whereIn('estado', ['Interno','Publicado'])
                 ->get()->lists('nombre', 'id');
@@ -251,7 +254,6 @@ class Reserva extends Model
         $user = BackendAuth::getUser();
         
         $rpta = Servicio::where('negocio_id', $user->negocio_id)
-                //->whereIn('tipo', ['Paquete','Tour'])
                 ->whereIn('tipo', ['Hotel'])
                 //->whereIn('estado', ['Interno','Publicado'])
                 ->get()->lists('nombre', 'id');
@@ -264,7 +266,6 @@ class Reserva extends Model
         $user = BackendAuth::getUser();
         
         $rpta = Servicio::where('negocio_id', $user->negocio_id)
-                //->whereIn('tipo', ['Paquete','Tour'])
                 ->whereIn('tipo', ['Bono', 'Otro'])
                 //->whereIn('estado', ['Interno','Publicado'])
                 ->get()->lists('nombre', 'id');
@@ -277,8 +278,7 @@ class Reserva extends Model
         $user = BackendAuth::getUser();
         
         $rpta = Servicio::where('negocio_id', $user->negocio_id)
-                //->whereIn('tipo', ['Paquete','Tour'])
-                ->whereIn('tipo', ['Bono', 'Otro'])
+                ->whereIn('tipo', ['Incremento', 'Descuento'])
                 //->whereIn('estado', ['Interno','Publicado'])
                 ->get()->lists('nombre', 'id');
         
@@ -555,21 +555,30 @@ class Reserva extends Model
         
         for($i=0; $i < count($items); $i++){
             $item = $items[$i];
-            $tour = Servicio::find($item['_group'] == 'adicional' ? $item['actividad'] : $item['tour']);
+
+            $tour_id = 0;
+            if($item['_group'] == 'paquete')
+                $tour_id = $item['tour'];
+            if($item['_group'] == 'adicional')
+                $tour_id = $item['actividad'];
+            if($item['_group'] == 'precio')
+                $tour_id = $item['ajuste'];
+
+            $tour = Servicio::find($tour_id);
             $hotel = isset($item['hotel']) ? Servicio::find($item['hotel']) : null;
                         
             if($item['_group'] == 'paquete'){
                 $dia++;
-                $items[$i] = $this->formatearItem($item['_group'], $tour, $hotel, $dia);
+                $items[$i] = $this->formatearItem('paquete', $tour, $hotel, $dia);
             }
             if($item['_group'] == 'tour'){
                 $dia++;
-                $items[$i] = $this->formatearItem($item['_group'], $tour, $hotel, $dia);
+                $items[$i] = $this->formatearItem('tour', $tour, $hotel, $dia);
                 $adicionales[] = $this->formatearAdicional($tour, $hotel, $dia);
             }
             if($item['_group'] == 'personalizado'){
                 $dia++;
-                $items[$i] = $this->formatearItem($item['_group'], $tour, $hotel, $dia);
+                $items[$i] = $this->formatearItem('personalizado', $tour, $hotel, $dia);
                 $costos['servicios'][] = $this->formatearCostos($tour, $hotel, $dia, $costos);
             }
             if($item['_group'] == 'adicional'){
@@ -577,6 +586,13 @@ class Reserva extends Model
                 $items[$i] = $this->formatearItem('adicional', $tour, null, $dia);
                 $items[$i]['nro_paxs'] = $nro_paxs;
                 $adicionales[] = $this->formatearAdicional($tour, null, $dia);
+            }
+            if($item['_group'] == 'precio'){
+                $nro_paxs = $item['nro_paxs'] ?? $this->nro_paxs;
+                $monto = $item['monto'];
+                $items[$i] = $this->formatearItem('precio', $tour, null, $dia);
+                $items[$i]['cantidad'] = $nro_paxs;
+                $items[$i]['monto'] = $monto;
             }
         }
         $this->items = $items;
@@ -618,18 +634,10 @@ class Reserva extends Model
     
     private function formatearItem($tipo, $tour, $hotel, $dia){
         $index = $dia - 1;
-        $fecha = isset($this->fecha_inicio) ? date('Y-m-d', strtotime($this->fecha_inicio. " + $index days")) : null;     
-        $nombre = $tipo == 'adicional' ? "↳ $tour->nombre" : 'Dia '.($dia).'. '.(isset($fecha)? date('(d/m): ', strtotime($fecha)) : ' ').$tour->nombre. (isset($hotel) ? " + $hotel->nombre" : '');
-        
-        if($tipo == 'adicional')
-            return [
-                '_group' => $tipo,
-                'nombre' => $nombre,
-                'dia' => $dia,
-                'fecha' => $fecha,
-                'actividad' => $tour->id,
-            ];
-        else
+        $fecha = isset($this->fecha_inicio) ? date('Y-m-d', strtotime($this->fecha_inicio. " + $index days")) : null;
+        $nombre = '';
+        if($tipo == 'paquete'){
+            $nombre = 'Dia '.($dia).'. '.(isset($fecha)? date('(d/m): ', strtotime($fecha)):' ').$tour->nombre.(isset($hotel)? " + $hotel->nombre" : '');
             return [
                 '_group' => $tipo,
                 'nombre' => $nombre,
@@ -638,6 +646,27 @@ class Reserva extends Model
                 'tour' => $tour->id,
                 'hotel' => (isset($hotel) ? $hotel->id : null)
             ];
+        }
+        if($tipo == 'adicional'){
+            $nombre = "↳ $tour->nombre";
+            return [
+                '_group' => $tipo,
+                'nombre' => $nombre,
+                'dia' => $dia,
+                'fecha' => $fecha,
+                'actividad' => $tour->id,
+            ];
+        }
+        if($tipo == 'precio'){
+            $nombre = "*** $tour->nombre";
+            return [
+                '_group' => $tipo,
+                'nombre' => $nombre,
+                'dia' => $dia,
+                'fecha' => $fecha,
+                'ajuste' => $tour->id,
+            ];
+        }
     }
     
     private function generarItinerario(){
@@ -734,17 +763,18 @@ class Reserva extends Model
                 $cotizacion['items'][$i]['servicios'][0]['nombre'] = $tour->nombre;
                 $cotizacion['items'][$i]['servicios'][0]['nro_paxs'] = $this->n10;
                 $cotizacion['items'][$i]['pu'] += $cotizacion['items'][$i]['servicios'][0]['pu'] = $tour->precios[0][$this->n10];
-                $cotizacion['items'][$i]['servicios'][0]['precio'] = $cotizacion['items'][$i]['servicios'][0]['pu'] * $this->nro_paxs;
+                $cotizacion['items'][$i]['servicios'][0]['precio'] = $tour->precios[0][$this->n10] * $this->nro_paxs;
                 $cotizacion['paquete']['pu'] += $tour->precios[0][$this->n10];
 
                 $cotizacion['items'][$i]['ru'] += $cotizacion['items'][$i]['servicios'][0]['ru'] = $tour->params[0]['adelanto'];
-                $cotizacion['items'][$i]['servicios'][0]['reserva'] = $cotizacion['items'][$i]['servicios'][0]['ru'] * $this->nro_paxs;
+                $cotizacion['items'][$i]['servicios'][0]['reserva'] = $tour->params[0]['adelanto'] * $this->nro_paxs;
                 $cotizacion['paquete']['ru'] += $tour->params[0]['adelanto'];
-                $cotizacion['adelanto']['ru'] += $tour->params[0]['adelanto'];
+                $cotizacion['adelanto']['ru'] += $tour->params[0]['adelanto'];                
+                
 
                 $cotizacion['items'][$i]['cmu'] += $cotizacion['items'][$i]['servicios'][0]['cmu'] = $tour->params[0]['comision'];
-                $cotizacion['items'][$i]['servicios'][0]['comision'] = $cotizacion['items'][$i]['servicios'][0]['cmu'] * $this->nro_paxs;
-                $cotizacion['paquete']['cmu'] += $tour->params[0]['comision'];
+                $cotizacion['items'][$i]['servicios'][0]['comision'] = $tour->params[0]['comision'] * $this->nro_paxs;
+                $cotizacion['paquete']['cmu'] += $tour->params[0]['comision'];                
                 $cotizacion['comision']['cmu'] += $tour->params[0]['comision'];
 
                 $hotel = Servicio::find($item['hotel']);
@@ -752,23 +782,28 @@ class Reserva extends Model
                     $cotizacion['items'][$i]['servicios'][1]['nombre'] = $hotel->nombre;
                     $cotizacion['items'][$i]['servicios'][1]['nro_paxs'] = $this->n10;
                     $cotizacion['items'][$i]['pu'] += $cotizacion['items'][$i]['servicios'][1]['pu'] = $hotel->precios[0][$this->n10];
-                    $cotizacion['items'][$i]['servicios'][1]['precio'] = $cotizacion['items'][$i]['servicios'][1]['pu'] * $this->nro_paxs;
+                    $cotizacion['items'][$i]['servicios'][1]['precio'] = $hotel->precios[0][$this->n10] * $this->nro_paxs;
                     $cotizacion['paquete']['pu'] += $hotel->precios[0][$this->n10];
 
                     $cotizacion['items'][$i]['ru'] += $cotizacion['items'][$i]['servicios'][1]['ru'] = $hotel->params[0]['adelanto'];
-                    $cotizacion['items'][$i]['servicios'][1]['reserva'] = $cotizacion['items'][$i]['servicios'][1]['ru'] * $this->nro_paxs;
+                    $cotizacion['items'][$i]['servicios'][1]['reserva'] = $hotel->params[0]['adelanto'] * $this->nro_paxs;
                     $cotizacion['paquete']['ru'] += $hotel->params[0]['adelanto'];
                     $cotizacion['adelanto']['ru'] += $hotel->params[0]['adelanto'];
 
                     $cotizacion['items'][$i]['cmu'] += $cotizacion['items'][$i]['servicios'][1]['cmu'] = $hotel->params[0]['comision'];
-                    $cotizacion['items'][$i]['servicios'][1]['comision'] = $cotizacion['items'][$i]['servicios'][1]['cmu'] * $this->nro_paxs;
+                    $cotizacion['items'][$i]['servicios'][1]['comision'] = $hotel->params[0]['comision'] * $this->nro_paxs;
                     $cotizacion['paquete']['cmu'] += $hotel->params[0]['comision'];
                     $cotizacion['comision']['cmu'] += $hotel->params[0]['comision'];
                 }
 
                 $cotizacion['paquete']['precio'] += $cotizacion['items'][$i]['precio'] = $cotizacion['items'][$i]['pu'] * $this->nro_paxs;
-                $cotizacion['paquete']['reserva'] = $cotizacion['adelanto']['reserva'] += $cotizacion['items'][$i]['reserva'] = $cotizacion['items'][$i]['ru'] * $this->nro_paxs;
-                $cotizacion['paquete']['comision'] = $cotizacion['comision']['comision'] += $cotizacion['items'][$i]['comision'] = $cotizacion['items'][$i]['cmu'] * $this->nro_paxs;
+                //$cotizacion['paquete']['reserva'] = $cotizacion['adelanto']['reserva'] += $cotizacion['items'][$i]['reserva'] = $cotizacion['items'][$i]['ru'] * $this->nro_paxs;
+                //$cotizacion['paquete']['comision'] = $cotizacion['comision']['comision'] += $cotizacion['items'][$i]['comision'] = $cotizacion['items'][$i]['cmu'] * $this->nro_paxs;
+                $cotizacion['paquete']['reserva'] += $cotizacion['items'][$i]['reserva'] = $cotizacion['items'][$i]['ru'] * $this->nro_paxs;
+                $cotizacion['paquete']['comision'] += $cotizacion['items'][$i]['comision'] = $cotizacion['items'][$i]['cmu'] * $this->nro_paxs;
+
+                $cotizacion['adelanto']['reserva'] += $cotizacion['items'][$i]['reserva'];
+                $cotizacion['comision']['comision'] += $cotizacion['items'][$i]['comision'];
             }
             if($item['_group'] == 'adicional'){
                 $actividad = Servicio::find($item['actividad']);
@@ -784,11 +819,33 @@ class Reserva extends Model
                 $cotizacion['adicionales'][$i]['cmu'] = $actividad->params[0]['comision'];
                 $cotizacion['adicionales'][$i]['comision'] = $cotizacion['adicionales'][$i]['cmu'] * $item['nro_paxs'];
 
+                $cotizacion['adelanto']['ru'] += $actividad->params[0]['adelanto'];
+                $cotizacion['adelanto']['reserva'] += $actividad->params[0]['adelanto'] * $item['nro_paxs'];
+
                 $cotizacion['comision']['cmu'] += $actividad->params[0]['comision'];
-                $cotizacion['comision']['comision'] += $cotizacion['adicionales'][$i]['cmu'] * $this->nro_paxs;
+                $cotizacion['comision']['comision'] += $actividad->params[0]['comision'] * $item['nro_paxs'];
             }
-            if($item['_group'] == 'precio')
-                continue;
+            if($item['_group'] == 'precio'){
+                $ajuste = Servicio::find($item['ajuste']);
+                $cotizacion['ajustes'][$i]['nombre'] = $ajuste->nombre;
+                $cotizacion['ajustes'][$i]['_group'] = 'precio';
+                $cotizacion['ajustes'][$i]['dia'] = $item['dia'];
+                $cotizacion['ajustes'][$i]['fecha'] = $item['fecha'];
+                $cotizacion['ajustes'][$i]['nro_paxs'] = $item['cantidad'];                
+                $cotizacion['ajustes'][$i]['pu'] = $ajuste->precios[0][$item['cantidad']] * $item['monto'];
+                $cotizacion['ajustes'][$i]['precio'] = $ajuste->precios[0][$item['cantidad']] * $item['monto'] * $item['cantidad'];
+                $cotizacion['ajustes'][$i]['ru'] = 0;
+                $cotizacion['ajustes'][$i]['reserva'] = 0;
+                $cotizacion['ajustes'][$i]['cmu'] = $ajuste->params[0]['comision'] * $item['monto'];
+                $cotizacion['ajustes'][$i]['comision'] = $ajuste->params[0]['comision'] * $item['monto'] * $item['cantidad'];
+
+                $cotizacion['adelanto']['ru'] += 0;
+                $cotizacion['adelanto']['reserva'] += 0;
+
+                $cotizacion['comision']['cmu'] += $ajuste->params[0]['comision'] * $item['monto'];
+                $cotizacion['comision']['comision'] += $ajuste->params[0]['comision'] * $item['monto'] * $item['cantidad'];
+
+            }
         }
         
         $this->cotizacion = $cotizacion;
@@ -797,6 +854,12 @@ class Reserva extends Model
         $precios = [[0 => 'TOTAL', 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0, 8 => 0, 9 => 0, 10 => 0]];
         $precios[0][$this->n10] = $cotizacion['paquete']['pu'];
         $this->precios = $precios;
+
+        $params = $this->params;
+        $params[0]['adelanto'] = $cotizacion['adelanto']['reserva'] / $this->nro_paxs;
+        $params[0]['facturable'] = $cotizacion['adelanto']['reserva'] / $this->nro_paxs;
+        $params[0]['comision'] = $cotizacion['comision']['comision'] / $this->nro_paxs;
+        $this->params = $params;
     }
    
     private function formatearName(){
@@ -806,7 +869,8 @@ class Reserva extends Model
             $name = isset($this->fecha_inicio) ? date('Y-m-d', strtotime($this->fecha_inicio)) : 'Abierto';
             $name .= ' -- '.(isset($this->lider) ? $this->lider->fullname : 'Grupo de '.$this->user->fullname);
             $name .= ' x'.$this->nro_paxs;
-            $name .= ' - '.(isset($this->servicio) ? $this->servicio->nombre : $this->paquete );
+            //$name .= ' - '.(isset($this->servicio) ? $this->servicio->nombre : $this->paquete );
+            $name .= ' - '.$this->paquete;
             $name .= ' - '.$this->rid;
         }
         
@@ -845,8 +909,17 @@ class Reserva extends Model
     
     private function calcularTotales(){
         $pagos = 0;
-        $total = $this->precioTotal($this->nro_paxs > 10 ? 10 : $this->nro_paxs) * $this->nro_paxs;
-        $comision = $this->params[0]['comision'] * $this->nro_paxs;
+        if($this->TieneCotizacion){
+            $total = $this->cotizacion['paquete']['precio'];
+            foreach($this->cotizacion['adicionales'] as $adicional)
+                $total += $adicional['precio'];
+            foreach($this->cotizacion['ajustes'] as $ajuste)
+                $total += $ajuste['precio'];
+        }
+        if(!$this->TieneCotizacion){
+            $total = $this->precioTotal($this->nro_paxs > 10 ? 10 : $this->nro_paxs) * $this->nro_paxs;
+        }
+        $comision = $this->params[0]['comision'] * $this->nro_paxs; // pasar a los 2 escenarios
         foreach($this->pagos as $pago){
             $pagos += $pago->monto;
         }

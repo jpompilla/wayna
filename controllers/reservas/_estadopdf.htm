@@ -97,7 +97,7 @@
         <caption>A. Datos de Reserva</caption>
         <tr class="form">
             <th>Paquete</th>
-            <td colspan="3"><?= $reserva->servicio->nombre ?></td>
+            <td colspan="3"><?= $reserva->paquete ?></td>
             <th>Codigo</th>
             <td><?= $reserva->codigo ?></td>
         </tr>
@@ -169,6 +169,7 @@
     <table>
         <caption>D. Datos de los Pasajeros</caption>
         <tr>
+            <th>#</th>
             <th>Nombre</th>
             <th>Apellidos</th>
             <th>Nacionalidad</th>
@@ -177,13 +178,14 @@
             <th>Acomodacion</th>
         </tr>
         <?php if(count($reserva->paxs)): ?>
-        <?php foreach($reserva->paxs as $pax): ?>
+        <?php foreach($reserva->paxs as $p=>$pax): ?>
         <tr>
+            <td class="center"><?= $p + 1 ?></td>
             <td><?= $pax->nombres ?></td>
             <td><?= $pax->apellidos ?></td>
             <td class="center"><?= $pax->nacionalidad ?></td>
             <td class="center"><?= $pax->pasaporte_nro ?></td>
-            <td class="center"><?= date('d/m/Y', strtotime($pax->fecha_nacimiento)) ?></td>
+            <td class="center"><?= date('d/m/Y', strtotime($pax->fecha_nacimiento)) ?> (<?= $pax->edad ?>)</td>
             <td class="center"><?= $pax->acomodacion ?></td>
         </tr>
         <?php endforeach ?>
@@ -271,7 +273,7 @@
         </tr>
         <?php $paquete = $reserva->precios[0] ?>
         <tr>
-            <td><?= $reserva->servicio? $reserva->servicio->nombre : 'Paquete personalizado '.count($reserva->itinerario).'D' ?></td>
+            <td><?= $reserva->paquete ?></td>
             <td class="center"><?= isset($reserva->fecha_inicio)? date('d/m/Y', strtotime($reserva->fecha_inicio)) : 'Abierta' ?></td>
             <td>Por persona</td>
             <td class="center"><?= $reserva->nro_paxs ?></td>

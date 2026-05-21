@@ -57,6 +57,34 @@
                             <?php endforeach ?>
                         <?php endforeach ?>
                         <?php endif ?>
+
+                        <?php if(isset($model->cotizacion['ajustes'])): ?>
+                        <tr>
+                            <th><span>Ajustes de precio</span></th>
+                            <th class="center"></th>
+                            <th class="center"></th>
+                            <th class="right precio"></th>
+                            <th class="right precio"></th>
+                            <th class="right reserva"></th>
+                            <th class="right reserva"></th>
+                            <th class="right comision"></th>
+                            <th class="right comision"></th>
+                        </tr>
+                        <?php foreach($model->cotizacion['ajustes'] as $a => $ajuste): ?>
+                        <tr>
+                            <td><span>*** <?= $ajuste['nombre'] ?></span></td>
+                            <td class="center">Por persona</td>
+                            <td class="center"><?= number_format($ajuste['nro_paxs'],0) ?></td>
+                            <td class="right precio"><?= number_format($ajuste['pu'],2) ?></td>
+                            <td class="right precio"><?= number_format($ajuste['precio'],2) ?></td>
+                            <td class="right reserva"><?= number_format($ajuste['ru'],2) ?></td>
+                            <td class="right reserva"><?= number_format($ajuste['reserva'],2) ?></td>
+                            <td class="right comision"><?= number_format($ajuste['cmu'],2) ?></td>
+                            <td class="right comision"><?= number_format($ajuste['comision'],2) ?></td>
+                        </tr>
+                        <?php endforeach ?>
+                        <?php endif ?>
+                        
                         <tr>
                             <th><span>Adicionales</span></th>
                             <th class="center"></th>
@@ -83,15 +111,16 @@
                         </tr>
                         <?php endforeach ?>
                         <?php endif ?>
+                        
                         <tr>
                             <th><span>PRECIO TOTAL / RESERVA / COMISION</span></th>
                             <th class="center">Por persona</th>
                             <th class="center"><?= number_format($model->nro_paxs,0) ?>*</th>
                             <th class="right precio"><?= number_format($model->total / $model->nro_paxs,2) ?>*</th>
                             <th class="right precio"><?= number_format($model->total,2) ?></th>
-                            <th class="right reserva"><?= number_format($model->cotizacion['adelanto']['ru'],2) ?></th>
+                            <th class="right reserva"><?= number_format($model->cotizacion['adelanto']['reserva'] / $model->nro_paxs,2) ?>*</th>
                             <th class="right reserva"><?= number_format($model->cotizacion['adelanto']['reserva'],2) ?></th>
-                            <th class="right comision"><?= number_format($model->cotizacion['comision']['cmu'],2) ?></th>
+                            <th class="right comision"><?= number_format($model->cotizacion['comision']['comision'] / $model->nro_paxs,2) ?>*</th>
                             <th class="right comision"><?= number_format($model->cotizacion['comision']['comision'],2) ?></th>
                         </tr>
                     </tbody>   

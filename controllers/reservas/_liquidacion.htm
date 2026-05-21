@@ -208,7 +208,7 @@
         </tr>
         <?php $paquete = $reserva->precios[0] ?>
         <tr class="size8">
-            <td><?= $reserva->servicio? $reserva->servicio->nombre : 'Paquete personalizado '.count($reserva->itinerario).'D' ?></td>
+            <td><?= $reserva->paquete ?></td>
             <td class="center"><?= isset($reserva->fecha_inicio)? date('d/m/Y', strtotime($reserva->fecha_inicio)) : 'Abierta' ?></td>
             <td>Por persona</td>
             <td class="center"><?= $reserva->nro_paxs ?></td>
