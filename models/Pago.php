@@ -81,6 +81,10 @@ class Pago extends Model
         }
         return $rpta;
     }
+
+    public function getCpidAttribute(){
+        return (isset($this->id)? sprintf('CP%04d-%s', $this->id, date('Y',strtotime($this->created_at))): '');
+    }
     
     public function getPagableIdOptions(){
         $rpta = [];
