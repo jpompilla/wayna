@@ -253,8 +253,14 @@ class Reserva extends Model
         
         $user = BackendAuth::getUser();
         
-        $rpta = Servicio::where('negocio_id', $user->negocio_id)
+        if($this->tieneCotizacion)
+            $rpta = Servicio::where('negocio_id', $user->negocio_id)
                 ->whereIn('tipo', ['Hotel'])
+                //->whereIn('estado', ['Interno','Publicado'])
+                ->get()->lists('nombre', 'id');
+        if(!$this->tieneCotizacion)
+            $rpta = Servicio::where('negocio_id', $user->negocio_id)
+                ->whereIn('tipo', ['Tour','Hotel','Bono','Otro'])
                 //->whereIn('estado', ['Interno','Publicado'])
                 ->get()->lists('nombre', 'id');
         
@@ -265,8 +271,15 @@ class Reserva extends Model
         
         $user = BackendAuth::getUser();
         
-        $rpta = Servicio::where('negocio_id', $user->negocio_id)
+        if($this->tieneCotizacion)
+            $rpta = Servicio::where('negocio_id', $user->negocio_id)
                 ->whereIn('tipo', ['Bono', 'Otro'])
+                //->whereIn('estado', ['Interno','Publicado'])
+                ->get()->lists('nombre', 'id');
+        
+        if(!$this->tieneCotizacion)
+            $rpta = Servicio::where('negocio_id', $user->negocio_id)
+                ->whereIn('tipo', ['Tour','Hotel','Bono','Otro'])
                 //->whereIn('estado', ['Interno','Publicado'])
                 ->get()->lists('nombre', 'id');
         
@@ -394,6 +407,11 @@ class Reserva extends Model
         }
         if ($context == 'update'){
             $fields->servicio->readOnly = true;
+            
+            $fields->cotizacion->hidden = !isset($this->cotizacion);
+            $fields->calculos->hidden = !isset($this->cotizacion);
+            $fields->resumen->hidden = isset($this->cotizacion);
+            
             /*
             if($this->personalizado){
                 $fields->cotizacion->hidden = true;
@@ -869,8 +887,10 @@ class Reserva extends Model
             $name = isset($this->fecha_inicio) ? date('Y-m-d', strtotime($this->fecha_inicio)) : 'Abierto';
             $name .= ' -- '.(isset($this->lider) ? $this->lider->fullname : 'Grupo de '.$this->user->fullname);
             $name .= ' x'.$this->nro_paxs;
-            //$name .= ' - '.(isset($this->servicio) ? $this->servicio->nombre : $this->paquete );
-            $name .= ' - '.$this->paquete;
+            if($this->tieneCotizacion)
+                $name .= ' - '.$this->paquete;
+            if(!$this->tieneCotizacion)
+                $name .= ' - '.(isset($this->servicio) ? $this->servicio->nombre : $this->paquete );
             $name .= ' - '.$this->rid;
         }
         
@@ -911,8 +931,10 @@ class Reserva extends Model
         $pagos = 0;
         if($this->TieneCotizacion){
             $total = $this->cotizacion['paquete']['precio'];
+            if(array_key_exists('adicionales', $this->cotizacion))
             foreach($this->cotizacion['adicionales'] as $adicional)
                 $total += $adicional['precio'];
+            if(array_key_exists('ajustes', $this->cotizacion))
             foreach($this->cotizacion['ajustes'] as $ajuste)
                 $total += $ajuste['precio'];
         }

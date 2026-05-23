@@ -1,5 +1,5 @@
-<div id="preciosList">    
-    
+<?php if(isset($model->cotizacion)): ?>
+<div id="preciosList">
     <div id="copys">
         <div class="layout control-toolbar editor-toolbar">
             <div class="layout-cell toolbar-item">
@@ -28,8 +28,6 @@
             </div>
         </div>
     </div>
-
-
     <!--?php if (isset($model->margen)): ?-->
     <!--?= dd($model->cotizacion) ?-->
     
@@ -199,3 +197,4 @@
         return rpta;
     }
 </script>
+<?php endif ?>

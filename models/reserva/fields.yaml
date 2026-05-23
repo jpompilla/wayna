@@ -370,6 +370,12 @@ tabs:
             tab: Servicios
             permissions: 
                 - manage_reservas
+        resumen:
+            type: partial
+            span: right
+            context:
+                - update
+            tab: Servicios
         calculos:
             label: Cotización (_calculos.htm)
             type: partial
@@ -379,14 +385,6 @@ tabs:
             tab: Servicios
             permissions: 
                 - manage_reservas
-        #resumen:
-        #    type: partial
-        #    span: right
-        #    context:
-        #        - update
-        #    tab: Servicios
-        #    permissions: 
-        #        - manage_reservas        
         #costos:
         #    type: partial
         #    span: full
