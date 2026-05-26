@@ -606,7 +606,7 @@ class Reserva extends Model
                 $adicionales[] = $this->formatearAdicional($tour, null, $dia);
             }
             if($item['_group'] == 'precio'){
-                $nro_paxs = $item['nro_paxs'] ?? $this->nro_paxs;
+                $nro_paxs = $item['cantidad'] ?? $this->nro_paxs;
                 $monto = $item['monto'];
                 $items[$i] = $this->formatearItem('precio', $tour, null, $dia);
                 $items[$i]['cantidad'] = $nro_paxs;
@@ -763,6 +763,13 @@ class Reserva extends Model
         $cotizacion['comision']['cmu'] = 0;
         $cotizacion['comision']['comision'] = 0;
 
+        $cotizacion['ajuste']['pu'] = 0;
+        $cotizacion['ajuste']['precio'] = 0;
+        $cotizacion['ajuste']['ru'] = 0;
+        $cotizacion['ajuste']['reserva'] = 0;
+        $cotizacion['ajuste']['cmu'] = 0;
+        $cotizacion['ajuste']['comision'] = 0;
+
         if(isset($this->items))
         foreach($this->items as $i => $item){
             if($item['_group'] == 'paquete'){
@@ -849,13 +856,20 @@ class Reserva extends Model
                 $cotizacion['ajustes'][$i]['_group'] = 'precio';
                 $cotizacion['ajustes'][$i]['dia'] = $item['dia'];
                 $cotizacion['ajustes'][$i]['fecha'] = $item['fecha'];
-                $cotizacion['ajustes'][$i]['nro_paxs'] = $item['cantidad'];                
+                $cotizacion['ajustes'][$i]['nro_paxs'] = $item['cantidad'];              
                 $cotizacion['ajustes'][$i]['pu'] = $ajuste->precios[0][$item['cantidad']] * $item['monto'];
                 $cotizacion['ajustes'][$i]['precio'] = $ajuste->precios[0][$item['cantidad']] * $item['monto'] * $item['cantidad'];
                 $cotizacion['ajustes'][$i]['ru'] = 0;
                 $cotizacion['ajustes'][$i]['reserva'] = 0;
                 $cotizacion['ajustes'][$i]['cmu'] = $ajuste->params[0]['comision'] * $item['monto'];
                 $cotizacion['ajustes'][$i]['comision'] = $ajuste->params[0]['comision'] * $item['monto'] * $item['cantidad'];
+
+                $cotizacion['ajuste']['pu'] += $ajuste->precios[0][$item['cantidad']] * $item['monto'];
+                $cotizacion['ajuste']['precio'] += $ajuste->precios[0][$item['cantidad']] * $item['monto'] * $item['cantidad'];
+                $cotizacion['ajuste']['ru'] += 0;
+                $cotizacion['ajuste']['reserva'] += 0;
+                $cotizacion['ajuste']['cmu'] += $ajuste->params[0]['comision'] * $item['monto'];
+                $cotizacion['ajuste']['comision'] += $ajuste->params[0]['comision'] * $item['monto'] * $item['cantidad'];
 
                 $cotizacion['adelanto']['ru'] += 0;
                 $cotizacion['adelanto']['reserva'] += 0;

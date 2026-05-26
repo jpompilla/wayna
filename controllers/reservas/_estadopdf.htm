@@ -190,7 +190,7 @@
         </tr>
         <?php endforeach ?>
         <?php else: ?>
-        <tr><td colspan="6" class="pendiente">Pendiente</td></tr>
+        <tr><td colspan="7" class="pendiente">Pendiente</td></tr>
         <?php endif ?>
     </table>
     
@@ -271,6 +271,8 @@
             <th>Costo</th>
             <th>Pagos</th>
         </tr>
+        
+        <?php if(!$reserva->tieneCotizacion): ?>
         <?php $paquete = $reserva->precios[0] ?>
         <tr>
             <td><?= $reserva->paquete ?></td>
@@ -281,7 +283,34 @@
             <td class="right">$ <?= number_format($paquete[$reserva->nro_paxs > 10 ? 10 : $reserva->nro_paxs] * $reserva->nro_paxs, 2) ?></td>
             <td></td>
         </tr>
-        <?php if(isset($reserva->adicionales)): ?>
+        <?php endif ?>
+        <?php if($reserva->tieneCotizacion): ?>
+        <tr>
+            <td><?= $reserva->paquete ?></td>
+            <td class="center"><?= isset($reserva->fecha_inicio)? date('d/m/Y', strtotime($reserva->fecha_inicio)) : 'Abierta' ?></td>
+            <td>Por persona</td>
+            <td class="center"><?= $reserva->cotizacion['paquete']['nro_paxs'] ?></td>
+            <td class="right">$ <?= number_format(($reserva->cotizacion['paquete']['precio'] + $reserva->cotizacion['ajuste']['precio']) / $reserva->cotizacion['paquete']['nro_paxs'], 2) ?></td>
+            <td class="right">$ <?= number_format($reserva->cotizacion['paquete']['precio'] + $reserva->cotizacion['ajuste']['precio'], 2) ?></td>
+            <td></td>
+        </tr>
+        <?php endif ?>
+
+        <?php if($reserva->tieneCotizacion && isset($reserva->cotizacion['adicionales'])): ?>
+        <?php foreach($reserva->cotizacion['adicionales'] as $adicional): ?>
+        <tr>
+            <td><?= $adicional['nombre'] ?></td>
+            <td class="center"><?= isset($adicional['fecha'])? date('d/m/Y', strtotime($adicional['fecha'])) : 'Abierta' ?></td>
+            <td>Por persona</td>
+            <td class="center"><?= $adicional['nro_paxs'] ?></td>
+            <td class="right">$ <?= number_format($adicional['pu'], 2) ?></td>
+            <td class="right">$ <?= number_format($adicional['pu'] * $adicional['nro_paxs'], 2) ?></td>
+            <td></td>
+        </tr>
+        <?php endforeach ?>
+        <?php endif ?>
+
+        <?php if(!$reserva->tieneCotizacion && isset($reserva->adicionales)): ?>
         <?php foreach($reserva->adicionales as $adicional): ?>
         <tr>
             <td><?= $adicional['nombre'] ?></td>

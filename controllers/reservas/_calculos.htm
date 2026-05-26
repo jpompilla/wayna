@@ -62,14 +62,14 @@
                         <?php if(isset($model->cotizacion['ajustes'])): ?>
                         <tr>
                             <th><span>Ajustes de precio</span></th>
-                            <th class="center"></th>
-                            <th class="center"></th>
-                            <th class="right precio"></th>
-                            <th class="right precio"></th>
-                            <th class="right reserva"></th>
-                            <th class="right reserva"></th>
-                            <th class="right comision"></th>
-                            <th class="right comision"></th>
+                            <th class="center">Por persona</th>
+                            <th class="center"><?= number_format($model->cotizacion['paquete']['nro_paxs'],0) ?></th>
+                            <th class="right precio"><?= number_format($model->cotizacion['ajuste']['pu'],0) ?></th>
+                            <th class="right precio"><?= number_format($model->cotizacion['ajuste']['precio'],0) ?></th>
+                            <th class="right reserva"><?= number_format($model->cotizacion['ajuste']['ru'],0) ?></th>
+                            <th class="right reserva"><?= number_format($model->cotizacion['ajuste']['reserva'],0) ?></th>
+                            <th class="right comision"><?= number_format($model->cotizacion['ajuste']['cmu'],0) ?></th>
+                            <th class="right comision"><?= number_format($model->cotizacion['ajuste']['comision'],0) ?></th>
                         </tr>
                         <?php foreach($model->cotizacion['ajustes'] as $a => $ajuste): ?>
                         <tr>

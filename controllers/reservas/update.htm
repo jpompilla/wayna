@@ -15,6 +15,8 @@
 
         <div class="form-buttons">
             <div class="loading-indicator-container">
+
+                <?php if(!in_array($formModel->estado, ['Anulado', 'Liquidado'])): ?>
                 <button
                     type="submit"
                     data-request="onSave"
@@ -33,6 +35,7 @@
                     class="btn btn-default">
                     <?= e(trans('backend::lang.form.save_and_close')) ?>
                 </button>
+                <?php endif ?>
 
                 <div class="dropdown dropup pull-none" style="display:inline-block">
                     <a href="#" data-toggle="dropdown" class="btn btn-default wn-icon-angle-up">Documentos...</a>
