@@ -409,7 +409,8 @@ class Reserva extends Model
             $fields->servicio->readOnly = true;
             
             $fields->cotizacion->hidden = !isset($this->cotizacion);
-            $fields->calculos->hidden = !isset($this->cotizacion);
+            if (isset($fields->calculos))
+                $fields->calculos->hidden = !isset($this->cotizacion);
             $fields->resumen->hidden = isset($this->cotizacion);
             
             /*

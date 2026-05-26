@@ -32,9 +32,8 @@ class Reservas extends Controller
     public function listExtendQuery($query)
     {
         $user = BackendAuth::getUser();
-        if(!$user->hasAccess('soroche.wayna.manage_reservas')){
+        if(!$user->hasAccess('manage_reservas'))
             $query->where('user_id', $user->id);
-        }
     }
     
     public function update($recordId, $context = null)
