@@ -412,17 +412,6 @@ class Reserva extends Model
             if (isset($fields->calculos))
                 $fields->calculos->hidden = !isset($this->cotizacion);
             $fields->resumen->hidden = isset($this->cotizacion);
-            
-            /*
-            if($this->personalizado){
-                $fields->cotizacion->hidden = true;
-            }
-            */
-            if(!$this->personalizado){
-                //$fields->costos->hidden = true;
-                //$fields->resumen->hidden = true;
-                //$fields->params->readOnly = true;
-            }
         }
     }
     
