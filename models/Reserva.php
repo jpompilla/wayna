@@ -567,6 +567,8 @@ class Reserva extends Model
             $tour_id = 0;
             if($item['_group'] == 'paquete')
                 $tour_id = $item['tour'];
+            if($item['_group'] == 'tour')
+                $tour_id = $item['tour'];
             if($item['_group'] == 'adicional')
                 $tour_id = $item['actividad'];
             if($item['_group'] == 'precio')
@@ -644,7 +646,7 @@ class Reserva extends Model
         $index = $dia - 1;
         $fecha = isset($this->fecha_inicio) ? date('Y-m-d', strtotime($this->fecha_inicio. " + $index days")) : null;
         $nombre = '';
-        if($tipo == 'paquete'){
+        if($tipo == 'paquete' || $tipo == 'tour' || $tipo == 'personalizado'){
             $nombre = 'Dia '.($dia).'. '.(isset($fecha)? date('(d/m): ', strtotime($fecha)):' ').$tour->nombre.(isset($hotel)? " + $hotel->nombre" : '');
             return [
                 '_group' => $tipo,
@@ -655,6 +657,7 @@ class Reserva extends Model
                 'hotel' => (isset($hotel) ? $hotel->id : null)
             ];
         }
+        
         if($tipo == 'adicional'){
             $nombre = "↳ $tour->nombre";
             return [
@@ -679,7 +682,6 @@ class Reserva extends Model
     
     private function generarItinerario(){
         $itinerario = [];
-        
         foreach($this->items as $item){
             if($item['_group'] == 'paquete' || $item['_group'] == 'tour' || $item['_group'] == 'personalizado'){
                 $itinerario[$item['dia']]['nombre'] = $item['nombre'];

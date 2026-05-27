@@ -116,47 +116,47 @@ tabs:
                             readOnly: 0
                             span: right
                             type: dropdown
-                #tour:
-                #    name: Dia adicional
-                #    description: Día completo con/sin hotel
-                #    icon: icon-cube
-                #    fields:
-                #        nombre:
-                #            span: full
-                #            readOnly: 1
-                #            label: Dia
-                #            default: Nuevo dia
-                #            type: text
-                #        dia:
-                #            span: auto
-                #            readOnly: 1
-                #            label: Dia
-                #            default: 1
-                #            type: number
-                #        fecha:
-                #            span: auto
-                #            readOnly: 1
-                #            label: Fecha
-                #            mode: date
-                #            format: d/m/Y
-                #            ignoreTimezone: true
-                #            type: datepicker
-                #        tour:
-                #            label: Tour
-                #            nameFrom: name
-                #            descriptionFrom: description
-                #            placeholder: '-- Seleccion un servicio --'
-                #            showSearch: true
-                #            span: left
-                #            type: dropdown
-                #        hotel:
-                #            label: Hotel
-                #            nameFrom: name
-                #            descriptionFrom: description
-                #            placeholder: '-- Seleccion un alojamiento --'
-                #            showSearch: true
-                #            span: right
-                #            type: dropdown
+                tour:
+                    name: Dia adicional (deprecado)
+                    description: Solo se usa reservas de la versión anterior
+                    icon: icon-cube
+                    fields:
+                        nombre:
+                            span: full
+                            readOnly: 1
+                            label: Dia
+                            default: Nuevo dia
+                            type: text
+                        dia:
+                            span: auto
+                            readOnly: 1
+                            label: Dia
+                            default: 1
+                            type: number
+                        fecha:
+                            span: auto
+                            readOnly: 1
+                            label: Fecha
+                            mode: date
+                            format: d/m/Y
+                            ignoreTimezone: true
+                            type: datepicker
+                        tour:
+                            label: Tour
+                            nameFrom: name
+                            descriptionFrom: description
+                            placeholder: '-- Seleccion un servicio --'
+                            showSearch: true
+                            span: left
+                            type: dropdown
+                        hotel:
+                            label: Hotel
+                            nameFrom: name
+                            descriptionFrom: description
+                            placeholder: '-- Seleccion un alojamiento --'
+                            showSearch: true
+                            span: right
+                            type: dropdown
                 adicional:
                     name: Servicio Adicional
                     description: Servicios, bonos y upgrades
