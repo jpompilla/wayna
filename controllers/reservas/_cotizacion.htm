@@ -157,6 +157,7 @@
         var filtro = '#Repeater-formItems-items-items li[data-collapse-title="Dia de itinerario"] .repeater-item-collapsed-title, ' +
                      '#Repeater-formItems-items-items li[data-collapse-title="Servicio Adicional"] .repeater-item-collapsed-title';
         var rpta = '';
+        var itinerario = '';
         
         //Titulo
         rpta += $('#Form-field-Reserva-name').map(function() {
@@ -169,15 +170,50 @@
         
         //Itinerario
         rpta += '📆 *ITINERARIO*\n\n';
-        rpta += $(filtro).map(function() {
+        itinerario = $(filtro).map(function() {
             var texto = $(this).text().trim();
             return texto
                 .replace(/(Dia \d+\.)/, '*$1*')
                 .replace(/↳/g, '> -->');
         }).get().join('\n') + '\n\n';
+        rpta += itinerario;
+        
+        //Incluye, No incluye
+        rpta += incluyeNoIncluyeToWA(itinerario);
 
         //Precio
         rpta += precioToWA();
+
+        return rpta;
+    }
+
+    function incluyeNoIncluyeToWA(itinerario){
+        var rpta = '';
+        var hoteles = itinerario.match(/Hotel/gi);
+        var noches = hoteles ? hoteles.length : 0;
+        var hotel = $('#Form-field-Reserva-name').map(function() {
+            var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
+            var texto = $(this).val().trim();
+            return texto.replace(regex, " hotel $3 estrellas");
+        }).get().join('\n');
+        
+        rpta += '✅ *INCLUYE*\n\n';
+        rpta += `- ${noches} noches en`+ `${hotel}\n`;
+        rpta += '- Habitaciones dobles o triples, según disponibilidad y numero final de viajeros\n';
+        rpta += `- ${noches} desayunos buffet en los hoteles\n`;
+        rpta += '- *X* almuerzos buffet los días *X* y *X*\n';
+        rpta += '- Todas las entradas a parques arqueológicos y sitios turisticos\n';
+        rpta += '- Traslados aeropuerto hotel aeropuerto\n';
+        rpta += '- Entradas a Machupicchu en circuito 3\n';
+        rpta += '- Tren turístico panorámico de ida\n';
+        rpta += '- Tren turístico panorámico superior con show en vivo para el retorno.\n';
+        rpta += '- Guías profesionales\n';
+        rpta += '- Asistencia 24/7\n\n';        
+        rpta += '❌ *NO INCLUYE*\n\n';
+        rpta += '- Vuelos Internacionales\n';
+        rpta += '- Vuelos Nacionales\n';
+        rpta += '- Propinas\n';
+        rpta += '- No indicanos en el paquete.\n\n';
 
         return rpta;
     }
