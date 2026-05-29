@@ -60,3 +60,6 @@
 1.0.21:
     - 'Add cotizacion field to table soroche_wayna_reservas'
     - builder_table_update_soroche_wayna_reservas_5.php
+1.0.22:
+    - 'Create store procedure sp_flujo_proyectado()'
+    - migration1022.php

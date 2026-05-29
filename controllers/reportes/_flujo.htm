@@ -1,0 +1,159 @@
+<html>
+<head>
+    <title>Flujo de Caja Proyectado</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+        body {
+            font-family: 'Roboto', Arial;
+            font-size: 9pt;
+        }
+        .logo{
+            text-align: center;
+            margin-bottom: 0px;
+        }
+        .logo img{
+            height: 40px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 15pt;
+            font-weight: bold;
+            margin-top: 0px;
+        }
+        
+        table {
+            width: 100%;
+            /*border: 1px solid #ccc;*/
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        caption{
+            font-size: 10pt;
+            text-align: left;
+            padding: 2px 8px;
+            background-color: #ddd;
+            font-weight: bold;
+            /*border-left: 10px solid #dc573b;*/
+        }
+        th{
+            font-size: 10pt;
+            background-color: #eee;
+            font-weight: bold;
+            border: 1px solid #ccc;
+        }
+        td{
+            border: 1px solid #ccc;
+        }
+        td, tr.form th{
+            padding-left: 5px;
+            padding-right: 5px;
+            text-align: left;
+        }
+        td.pendiente{
+            background-color: yellow;
+        }
+        td.center{
+            text-align: center;
+        }
+        td.right{
+            text-align: right;
+        }
+        td.vacio{
+            border:0px;
+        }
+        tr.list{
+            vertical-align: top;
+        }
+        tr.sumatorio{
+             background-color: #f5f5f5;
+            font-weight: bold;
+        }
+        tr.terms{
+            font-size: 8pt;
+        }
+        tr.terms ol { 
+            counter-reset: item;
+            padding-left: 0px;
+        }
+        tr.terms ol>li{
+            display: block;
+            padding-left: 0;
+            margin-left: 10px;
+        }
+        tr.terms ol>li:before {
+            content: counters(item, ".") ". ";
+            counter-increment: item;
+        }
+        p.nota{
+            font-size: 7pt;
+        }
+    </style>
+</head>
+<body>
+    <p class="logo">
+        <img src="<?= $negocio->logo->path ?>" alt="">
+    </p>
+    
+    <h1>FLUJO DE CAJA PROYECTADO</h1>
+    <!--?= dd($data) ?-->
+
+    <table>
+        <caption>Flujo de caja proyectado en dólares americanos</caption>
+        <tr>
+            <th width="250px">Concepto</th>
+            <?php foreach($data as $m=>$mes): ?>
+            <th><?= $m ?></th>
+            <?php endforeach ?>
+        </tr>
+        <tr class="sumatorio">
+            <td>A. Ingresos</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['ingresos'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr>
+            <td>-- Grupos ejecutados</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['ingresos.ejecutados'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr class="sumatorio">
+            <td>B. Egresos</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['egresos'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr>
+            <td>-- Costos Operativos</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['egresos.operativo'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr>
+            <td>-- Comisiones (Asesores)</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['egresos.comisiones'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr>
+            <td>-- Pasarela de pagos</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['egresos.pasarela'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr>
+            <td>-- Impuestos</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['egresos.impuestos'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr class="sumatorio">
+            <td>C. Margen operativo</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['utilidades'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+    </table>
+</body>
+</html>

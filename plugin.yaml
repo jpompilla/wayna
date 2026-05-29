@@ -124,3 +124,13 @@ navigation:
         icon: icon-calendar
         permissions:
             - view_biblia
+    menu-reportes:
+        label: Reportes
+        url: soroche/wayna/reportes
+        icon: icon-files-o
+        sideMenu:
+            menu-flujo-proyectado:
+                label: 'Flujo Proyectado'
+                url: soroche/wayna/reportes/proyectado
+                icon: icon-area-chart
+                attributes: {  }
