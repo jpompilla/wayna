@@ -97,7 +97,7 @@
         <caption>A. Datos de Reserva</caption>
         <tr class="form">
             <th>Paquete</th>
-            <td colspan="3"><?= $reserva->paquete ?></td>
+            <td colspan="3"><?= $reserva->TieneCotizacion ? $reserva->paquete : $reserva->servicio->nombre ?></td>
             <th>Codigo</th>
             <td><?= $reserva->codigo ?></td>
         </tr>
@@ -241,7 +241,7 @@
         <?php if(!$reserva->tieneCotizacion): ?>
         <?php $paquete = $reserva->precios[0] ?>
         <tr>
-            <td><?= $reserva->paquete ?></td>
+            <td><?= $reserva->servicio->nombre ?></td>
             <td class="center"><?= isset($reserva->fecha_inicio)? date('d/m/Y', strtotime($reserva->fecha_inicio)) : 'Abierta' ?></td>
             <td>Por persona</td>
             <td class="center"><?= $reserva->nro_paxs ?></td>

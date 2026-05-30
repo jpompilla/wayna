@@ -210,7 +210,7 @@
         <?php if(!$reserva->tieneCotizacion): ?>
         <?php $paquete = $reserva->precios[0] ?>
         <tr class="size8">
-            <td><?= $reserva->paquete ?></td>
+            <td><?= $reserva->servicio->nombre ?></td>
             <td class="center"><?= isset($reserva->fecha_inicio)? date('d/m/Y', strtotime($reserva->fecha_inicio)) : 'Abierta' ?></td>
             <td>Por persona</td>
             <td class="center"><?= $reserva->nro_paxs ?></td>
