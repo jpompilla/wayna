@@ -184,7 +184,7 @@ class Reserva extends Model
         
         $dias = 0;
         $ciudades = [];
-        $estrellas = 0;
+        $estrellas = 3;
         $patron = '/Hotel\s+(.+?)\s*\(([^)]+)\)/';
         
         foreach($this->items as $item)
@@ -196,16 +196,18 @@ class Reserva extends Model
                     $ciudades[] = $matches[2];
                 }
             }
+
+        $ciudades = array_map(function($c) {
+            return ($c === 'Valle Sagrado' || $c === 'Aguas Calientes') ? 'Cusco' : $c;
+        }, $ciudades);
+
         $ciudades = array_unique($ciudades);
-        $ciudades = array_filter($ciudades, function($c) {
-            return $c != 'Valle Sagrado' && $c != 'Aguas Calientes';
-        });
 
         $lugares = '';
         if(count($ciudades) == 0)
             $lugares = '';
         if(count($ciudades) == 1)
-            $lugares = $ciudades[0];
+            $lugares = reset($ciudades);
         if(count($ciudades) > 1){
             $ciudad = array_pop($ciudades);
             $lugares = implode(', ', $ciudades) . ' y ' . $ciudad;
