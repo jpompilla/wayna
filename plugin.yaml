@@ -44,6 +44,9 @@ permissions:
     view_biblia:
         tab: 'soroche.wayna::lang.plugin.name'
         label: 'Ver seguimientode de Reservas (Biblia)'
+    view_reportes_estrategicos:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Ver Reportes Estratégicos'
 navigation:
     menu-wayna:
         label: Wayna
@@ -128,9 +131,13 @@ navigation:
         label: Reportes
         url: soroche/wayna/reportes
         icon: icon-files-o
+        permissions:
+            - view_reportes_estrategicos
         sideMenu:
             menu-flujo-proyectado:
                 label: 'Flujo Proyectado'
                 url: soroche/wayna/reportes/proyectado
                 icon: icon-area-chart
                 attributes: {  }
+                permissions:
+                    - view_reportes_estrategicos

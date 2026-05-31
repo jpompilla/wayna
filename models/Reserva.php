@@ -402,7 +402,7 @@ class Reserva extends Model
         $user = BackendAuth::getUser();
         
         if(isset($fields->user))
-            $fields->user->readOnly = !$user->hasAccess('soroche.wayna.manage_reservas');
+            $fields->user->readOnly = !$user->hasAccess('manage_reservas');
 
         if($context == 'create'){
             $fields->user->value = $user->id;
