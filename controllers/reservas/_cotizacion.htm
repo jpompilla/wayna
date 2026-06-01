@@ -232,11 +232,12 @@
         rpta += '_Promoción valida hasta cierre de quincena_\n\n';
         rpta += `- *Precio normal:* ~US\$${normal} dolares por persona~\n`;
         rpta += `- *Precio Promocional:* US\$${pu} dolares por persona\n`;
-        rpta += `- *Monto de reserva:* US\$${ru} dolares por persona (pagan el saldo pendiente a su llegada a Perú el dia 1 en EFECTIVO en dolares).\n\n`;
+        rpta += `- *Monto de reserva:* US\$${ru} dolares por persona. (el saldo total lo pagan en efectivo en dolares al llegar a Perú)\n\n`;        
         
         rpta += '💰 *PRECIO TOTAL*\n\n';
         rpta += `- *Total:* US\$${pu} x ${nro} persona(s) = US\$${precio} dolares\n`;
-        rpta += `- *Monto de reserva:* USD\$${ru} x ${nro} persona(s) = US\$${reserva} dolares (el saldo total lo pagan en efectivo en dolares al llegar a Perú)\n`;
+        rpta += `- *Monto de reserva:* USD\$${ru} x ${nro} persona(s) = US\$${reserva} dolares \n`;
+        rpta += `_(el saldo pendiente se liquida el día 1 a su llegada a Cusco en EFECTIVO en dólares, en caso se liquide con liga de pago, se añadirá +8%)._\n\n`;
 
         return rpta;
     }

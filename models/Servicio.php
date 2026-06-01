@@ -170,7 +170,7 @@ class Servicio extends Model
             $this->calcularPrecios();            
             $this->calcularMargen();
         }
-        elseif($this->tipo == 'Tour'){
+        elseif($this->tipo == 'Tour' || $this->tipo == 'Hotel' || $this->tipo == 'Bono' || $this->tipo == 'Otro' || $this->tipo == 'Descuento' || $this->tipo == 'Incremento'){
             if(!$this->negocio_id)
                 $this->negocio_id = $user->negocio_id;
             
