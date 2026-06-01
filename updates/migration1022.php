@@ -55,7 +55,7 @@ class Migration1022 extends Migration
                 		)
                 	) AS c
                 WHERE
-                	r.estado IN ('Confirmado')
+                	(r.estado IN ('Confirmado') OR (r.estado IN ('Abierto') AND r.fecha_inicio IS NOT NULL))
                 	AND r.deleted_at IS NULL
                 GROUP BY
                 	SUBSTRING(r.fecha_fin,1,7)

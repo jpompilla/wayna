@@ -118,6 +118,18 @@
             <td class="right"><?= number_format($mes['ingresos.ejecutados'],2) ?></td>
             <?php endforeach ?>
         </tr>
+        <tr>
+            <td>-- Nro de Grupos</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['ingresos.nro_grupos'],0) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr>
+            <td>-- Nro de Pasajeros</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['ingresos.nro_paxs'],0) ?></td>
+            <?php endforeach ?>
+        </tr>
         <tr class="sumatorio">
             <td>B. Egresos</td>
             <?php foreach($data as $m=>$mes): ?>

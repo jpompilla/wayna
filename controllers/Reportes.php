@@ -31,6 +31,8 @@ class Reportes extends Controller
         $data = [];
         foreach ($rpta as $row) {
             $data[$row->mes]['ingresos.ejecutados'] = 0;
+            $data[$row->mes]['ingresos.nro_grupos'] = 0; 
+            $data[$row->mes]['ingresos.nro_paxs'] = 0; 
             $data[$row->mes]['ingresos'] = 0;
             $data[$row->mes]['egresos.operativo'] = 0;
             $data[$row->mes]['egresos.comisiones'] = 0;
@@ -41,6 +43,8 @@ class Reportes extends Controller
         }
         foreach ($rpta as $row) {
             $data[$row->mes]['ingresos.ejecutados'] += $row->ingresos; 
+            $data[$row->mes]['ingresos.nro_grupos'] += 1; 
+            $data[$row->mes]['ingresos.nro_paxs'] += $row->nro_paxs; 
             $data[$row->mes]['ingresos'] += $row->ingresos;
             $data[$row->mes]['egresos.operativo'] += $row->costo_operativo; 
             $data[$row->mes]['egresos.comisiones'] += $row->comision; 
