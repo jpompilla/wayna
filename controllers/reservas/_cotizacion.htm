@@ -189,7 +189,7 @@
 
     function incluyeNoIncluyeToWA(itinerario){
         var rpta = '';
-        var hoteles = itinerario.match(/Hotel/gi);
+        var hoteles = itinerario.match(/(?<=\+.*)hotel/gi);
         var noches = hoteles ? hoteles.length : 0;
         var hotel = $('#Form-field-Reserva-name').map(function() {
             var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
