@@ -136,7 +136,7 @@ class Servicio extends Model
                 $this->calcularCostosPaquete();
                 $this->calcularMargen();
             }
-            elseif($this->tipo == 'Tour'){
+            elseif($this->tipo == 'Tour' || $this->tipo == 'Hotel' || $this->tipo == 'Bono' || $this->tipo == 'Otro' || $this->tipo == 'Descuento' || $this->tipo == 'Incremento'){
                 $this->formatearName();
                 $this->calcularCostosTour();
                 $this->calcularMargen();
