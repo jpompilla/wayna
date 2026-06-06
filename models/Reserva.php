@@ -230,7 +230,8 @@ class Reserva extends Model
         
         $rpta = Servicio::where('negocio_id', $user->negocio_id)
                 ->whereIn('tipo', ['Paquete'])
-                ->whereIn('estado', ['Interno'])
+                ->whereIn('estado', ['Interno', 'Publicado'])
+                ->orWhere('id', $this->servicio_id ?? 0)
                 ->orderBy('nombre', 'asc')
                 ->get()->lists('nombre', 'id');
         
