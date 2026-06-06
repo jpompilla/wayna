@@ -241,10 +241,16 @@ class Reserva extends Model
         $rpta = [];
         
         $user = BackendAuth::getUser();
+
+        $tours = [];
+        foreach($this->items as $item)
+            if($item['_group'] == 'paquete' || $item['_group'] == 'tour' || $item['_group'] == 'personalizado')
+                $tours[] += $item['tour'];
         
         $rpta = Servicio::where('negocio_id', $user->negocio_id)
                 ->whereIn('tipo', ['Tour'])
-                //->whereIn('estado', ['Interno','Publicado'])
+                ->whereIn('estado', ['Interno','Publicado'])
+                ->orWhereIn('id', $tours)
                 ->get()->lists('nombre', 'id');
         
         return $rpta;
@@ -254,16 +260,23 @@ class Reserva extends Model
         $rpta = [];
         
         $user = BackendAuth::getUser();
+
+        $hoteles = [];
+        foreach($this->items as $item)
+            if($item['_group'] == 'paquete' || $item['_group'] == 'tour' || $item['_group'] == 'personalizado')
+                $hoteles[] += $item['hotel'];
         
         if($this->tieneCotizacion)
             $rpta = Servicio::where('negocio_id', $user->negocio_id)
                 ->whereIn('tipo', ['Hotel'])
-                //->whereIn('estado', ['Interno','Publicado'])
+                ->whereIn('estado', ['Interno','Publicado'])
+                ->orWhereIn('id', $hoteles)
                 ->get()->lists('nombre', 'id');
         if(!$this->tieneCotizacion)
             $rpta = Servicio::where('negocio_id', $user->negocio_id)
                 ->whereIn('tipo', ['Tour','Hotel','Bono','Otro'])
-                //->whereIn('estado', ['Interno','Publicado'])
+                ->whereIn('estado', ['Interno','Publicado'])
+                ->orWhereIn('id', $hoteles)
                 ->get()->lists('nombre', 'id');
         
         return $rpta;
@@ -272,17 +285,24 @@ class Reserva extends Model
         $rpta = [];
         
         $user = BackendAuth::getUser();
+
+        $adicionales = [];
+        foreach($this->items as $item)
+            if($item['_group'] == 'adicional')
+                $adicionales[] += $item['actividad'];
         
         if($this->tieneCotizacion)
             $rpta = Servicio::where('negocio_id', $user->negocio_id)
                 ->whereIn('tipo', ['Bono', 'Otro'])
-                //->whereIn('estado', ['Interno','Publicado'])
+                ->whereIn('estado', ['Interno','Publicado'])
+                ->orWhereIn('id', $adicionales)
                 ->get()->lists('nombre', 'id');
         
         if(!$this->tieneCotizacion)
             $rpta = Servicio::where('negocio_id', $user->negocio_id)
                 ->whereIn('tipo', ['Tour','Hotel','Bono','Otro'])
-                //->whereIn('estado', ['Interno','Publicado'])
+                ->whereIn('estado', ['Interno','Publicado'])
+                ->orWhereIn('id', $adicionales)
                 ->get()->lists('nombre', 'id');
         
         return $rpta;
@@ -291,10 +311,16 @@ class Reserva extends Model
         $rpta = [];
         
         $user = BackendAuth::getUser();
+
+        $ajustes = [];
+        foreach($this->items as $item)
+            if($item['_group'] == 'precio')
+                $ajustes[] += $item['ajuste'];
         
         $rpta = Servicio::where('negocio_id', $user->negocio_id)
                 ->whereIn('tipo', ['Incremento', 'Descuento'])
-                //->whereIn('estado', ['Interno','Publicado'])
+                ->whereIn('estado', ['Interno','Publicado'])
+                ->orWhereIn('id', $ajustes)
                 ->get()->lists('nombre', 'id');
         
         return $rpta;
