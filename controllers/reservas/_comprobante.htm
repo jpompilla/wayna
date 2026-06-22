@@ -266,7 +266,7 @@
             <tr>
                 <td>
                     <strong><?= $pago->asiento->nombre ?> [<?= $p + 1 ?>/<?= count($reserva->pagos) ?>]</strong> <br>
-                    <span class="size7 italic"><?= $reserva->rid ?> - <?= $reserva->servicio->nombre ?></span> <br>
+                    <span class="size7 italic"><?= $reserva->rid ?> - <?= $reserva->TieneCotizacion ? $reserva->paquete : $reserva->servicio->nombre ?></span> <br>
                     <span class="size7"><?= $reserva->lider->fullname ?></span>
                 </td>
                 <td>Pago grupal</td>
