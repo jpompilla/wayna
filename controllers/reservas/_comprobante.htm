@@ -192,7 +192,7 @@
             <caption>Datos de Reserva</caption>
             <tr class="form">
                 <th>Paquete</th>
-                <td colspan="3"><?= $reserva->servicio->nombre ?></td>
+                <td colspan="3"><?= $reserva->TieneCotizacion ? $reserva->paquete : $reserva->servicio->nombre ?></td>
                 <th>Codigo</th>
                 <td><?= $reserva->rid ?></td>
             </tr>
