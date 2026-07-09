@@ -107,7 +107,7 @@
             <?php endforeach ?>
         </tr>
         <tr class="sumatorio">
-            <td>A. Ingresos</td>
+            <td width="250px">A. Ingresos</td>
             <?php foreach($data as $m=>$mes): ?>
             <td class="right"><?= number_format($mes['ingresos'],2) ?></td>
             <?php endforeach ?>
@@ -160,12 +160,52 @@
             <td class="right"><?= number_format($mes['egresos.impuestos'],2) ?></td>
             <?php endforeach ?>
         </tr>
-        <tr class="sumatorio">
-            <td>C. Margen operativo</td>
+        <tr class="sumatorio" style="background-color: #dddddd;">
+            <td>C. Margen operativo variable</td>
             <?php foreach($data as $m=>$mes): ?>
-            <td class="right"><?= number_format($mes['utilidades'],2) ?></td>
+            <td class="right"><?= number_format($mes['margen.operativo'],2) ?></td>
             <?php endforeach ?>
         </tr>
+        
+        <tr class="sumatorio">
+            <td>D. Costos fijos proyectado</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['fijo'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr>
+            <td>-- Gastos Administrativos</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['fijo.administrativo'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr>
+            <td>-- Planilla</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['fijo.personal'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr>
+            <td>-- Publicidad Cuentas / Embajadores</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['fijo.cuentas'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr>
+            <td>-- Publicidad Clientes</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right"><?= number_format($mes['fijo.clientes'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+        <tr class="sumatorio" style="background-color: #dddddd;">
+            <td>E. Utilidades</td>
+            <?php foreach($data as $m=>$mes): ?>
+            <td class="right" <?= ($mes['utilidades'] < 0 ? 'style="background-color: #ff000033;"':'') ?>><?= number_format($mes['utilidades'],2) ?></td>
+            <?php endforeach ?>
+        </tr>
+    </table>
+    <table>
+        
     </table>
 </body>
 </html>
