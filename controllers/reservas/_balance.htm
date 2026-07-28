@@ -46,6 +46,7 @@
                             <th class="right"><?= number_format($model->cotizacion['paquete']['nro_paxs'],0) ?>*</th>
                             <th class="right">USD <?= number_format(($model->cotizacion['paquete']['precio'] + $model->cotizacion['ajuste']['precio']) / $model->cotizacion['paquete']['nro_paxs'],2) ?></th>
                             <th class="right">USD <?= number_format($model->cotizacion['paquete']['precio'] + $model->cotizacion['ajuste']['precio'],2) ?></th>
+                            <td></td>
                         </tr>
 
                         <?php endif ?>
