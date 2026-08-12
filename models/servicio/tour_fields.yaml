@@ -262,11 +262,36 @@ tabs:
                                         mode: image
                                         imageWidth: 100 
                                         imageHeight: 100
+                        resumen:
+                            label: Resumen
+                            size: small
+                            span: left
+                            type: textarea
+                            tab: PDF
+                        horario:
+                            label: Horario
+                            size: small
+                            span: right
+                            type: text
+                            tab: PDF
+                        bono:
+                            label: Incluye bono regalo
+                            span: right
+                            type: checkbox
+                            tab: PDF
                         brochure:
                             label: Brochure PDF
                             type: mediafinder
                             span: auto
                             mode: image
                             imageWidth: 400 
-                            imageHeight: 6000
+                            imageHeight: 600
+                            tab: PDF
+                        resumen_image:
+                            label: Imagen resumen PDF
+                            type: mediafinder
+                            span: auto
+                            mode: image
+                            imageWidth: 600 
+                            imageHeight: 400
                             tab: PDF

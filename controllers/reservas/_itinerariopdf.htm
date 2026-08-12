@@ -191,16 +191,6 @@
     </style>
 </head>
 <body>
-    <div class="pagina portada" style="background-image: url('<?= url('/storage/app/media/bg-portada.jpg') ?>')">
-        <div class="title">
-            <h1>Paquete turístico <span><?= $reserva->nroDias ?> dias / <?= $reserva->nroDias - 1 ?> noches</span></h1>
-            <h2>Descubre la magia de <?= $reserva->lugares ?></h2>
-        </div>
-    </div>
-
-    <div class="pagina" style="background-image: url('<?= url('/storage/app/media/bg-legal.jpg') ?>')">
-    </div>
-
     <div class="pagina resumen" style="background-image: url('<?= url('/storage/app/media/bg-resumen.jpg') ?>')">
         <div class="title">
             <h1><?= $reserva->nroDias ?> días</h1>
@@ -269,42 +259,6 @@
             <?php endif ?>
             <?php endforeach ?>
         </table>
-    </div>
-
-    <?php 
-        $mostrado = [];
-    ?>
-    <?php foreach($reserva->brochure as $i => $item): ?>
-        <?php 
-            $url = $item['tour']->page_content['brochure'] ?? null;
-            $url = '/storage/app/media'.$url;
-            $url = url($url);
-        ?>
-        <div class="pagina dia" style="background-image: url('<?= $url ?>')">
-            <p><?= str_pad($item['dia'],2,'0', STR_PAD_LEFT) ?></p>
-        </div>
-
-        <?php if(isset($item['hotel']) && !in_array($item['hotel']->id, $mostrado)): ?>
-            <?php
-                $url = $item['hotel']->content['brochure'] ?? null;
-                $url = '/storage/app/media'.$url;
-                $url = url($url);
-            ?>
-            <div class="pagina" style="background-image: url('<?= $url ?>')">
-            </div>
-            <?php 
-                $mostrado[] = $item['hotel']->id;
-            ?>    
-        <?php endif ?>
-    <?php endforeach ?>
-
-    <div class="pagina social" style="background-image: url('<?= url('/storage/app/media/bg-social.jpg') ?>')">
-        <div class="links">
-            <a target="_blank" href="https://www.youtube.com/@machupicchuplus">www.youtube.com/@machupicchuplus</a>
-            <a target="_blank" href="https://www.facebook.com/machupicchu.plus">www.facebook.com/machupicchu.plus</a>
-            <a target="_blank" href="https://www.instagram.com/machupicchu.mas">www.instagram.com/machupicchu.mas</a>
-            <a target="_blank" href="https://www.tiktok.com/@machupicchu.plus">www.tiktok.com/@machupicchu.plus</a>
-        </div>   
     </div>
 </body>
 </html>

@@ -158,10 +158,21 @@ class Reserva extends Model
                 $rpta[$i]['nombre'] = $item['nombre'];
                 $rpta[$i]['dia'] = $item['dia'];
                 $rpta[$i]['fecha'] = $item['fecha'];
+                
                 $rpta[$i]['tour'] = Servicio::find($item['tour']);
-                $itemHotel = Servicio::find($item['hotel']);
-                $servicio = Servicio::find($itemHotel?->items[0]['servicio']);
-                $rpta[$i]['hotel'] = $servicio?->negocio;
+                
+                if(isset($item['hotel']) && !empty($item['hotel'])){
+                    $itemHotel = Servicio::find($item['hotel']);
+                    $servicio = Servicio::find($itemHotel?->items[0]['servicio']);
+                    $rpta[$i]['hotel_nombre'] = $itemHotel['nombre'];
+                    $patron = '/(?:(\d+).*?)?\(([^)]+)\)/';
+                    preg_match($patron, $itemHotel['nombre'], $m);
+                    $rpta[$i]['hotel_estrellas'] = (empty($m[1]) ? 0 : (int)$m[1]);
+                    $rpta[$i]['hotel_lugar'] = $m[2] ?? '';
+                    $rpta[$i]['hotel'] = $servicio?->negocio;
+                }
+                else
+                    $rpta[$i]['hotel'] = null;
             }
         }
 
@@ -174,6 +185,7 @@ class Reserva extends Model
                 $rpta++;
         return $rpta;
     }
+
     public function getPaqueteAttribute(){
         $rpta = 'No definido';
 
@@ -214,7 +226,44 @@ class Reserva extends Model
         }
 
         $rpta = "Paquete $dias"."D $lugares ($estrellas estrellas)";
+        
+        return $rpta;
+    }
 
+    public function getLugaresAttribute(){
+        $rpta = 'No definido';
+
+        if(!isset($this->items))
+            return $rpta;
+        if(count($this->items) == 0)
+            return $rpta;
+                
+        $ciudades = [];
+        $patron = '/Hotel\s+(.+?)\s*\(([^)]+)\)/';
+        
+        foreach($this->items as $item)
+            if($item['_group'] == 'paquete' || $item['_group'] == 'tour' || $item['_group'] == 'personalizado'){
+                if (preg_match($patron, $item['nombre'], $matches)) {
+                    $ciudades[] = $matches[2];
+                }
+            }
+
+        $ciudades = array_map(function($c) {
+            return ($c === 'Valle Sagrado' || $c === 'Aguas Calientes') ? 'Cusco' : $c;
+        }, $ciudades);
+
+        $ciudades = array_unique($ciudades);
+
+        $rpta = '';
+        if(count($ciudades) == 0)
+            $rpta = '';
+        if(count($ciudades) == 1)
+            $rpta = reset($ciudades);
+        if(count($ciudades) > 1){
+            $ciudad = array_pop($ciudades);
+            $rpta = implode(', ', $ciudades) . ' y ' . $ciudad;
+        }
+        
         return $rpta;
     }
 

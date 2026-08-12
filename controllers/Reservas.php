@@ -113,6 +113,22 @@ class Reservas extends Controller
 
     }
 
+    public function itinerario($recordId)
+    {
+        $reserva = Reserva::find($recordId);
+        
+        $html = $this->makePartial('itinerariopdf', ['reserva' => $reserva]);
+
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        
+        $dompdf->render();
+
+        return $dompdf->stream($reserva->name.' (itinerario).pdf', array("Attachment" => false));
+
+    }
+
     public function comprobante($recordId)
     {
         $reserva = Reserva::find($recordId);

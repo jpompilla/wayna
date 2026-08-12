@@ -24,6 +24,26 @@
                         onclick="javascript:copiarPrecio()">
                         <i class="icon-dollar-sign"></i>
                     </button>
+                    <a
+                        class="btn"
+                        target="_blank"
+                        href="<?= Backend::url('soroche/wayna/reservas/brochure/'.$this->params[0]) ?>"
+                        title="Brochure en PDF"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body">
+                        <i class="icon-file-lines"></i>
+                    </a>
+                    <a
+                        class="btn"
+                        target="_blank"
+                        href="<?= Backend::url('soroche/wayna/reservas/itinerario/'.$this->params[0]) ?>"
+                        title="Itinerario en PDF"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body">
+                        <i class="icon-file-invoice"></i>
+                    </a>
                 </div>
             </div>
         </div>

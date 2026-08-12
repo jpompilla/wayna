@@ -90,6 +90,9 @@ tabs:
                 Doble 5: Doble 5
                 Doble 6: Doble 6
                 Doble 7: Doble 7
+                Doble 8: Doble 8
+                Doble 9: Doble 9
+                Doble 10: Doble 10
             type: dropdown
             tab: Datos Personales
         contacto:

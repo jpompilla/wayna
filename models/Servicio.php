@@ -127,6 +127,17 @@ class Servicio extends Model
     public function getDurationAttribute(){
         return count($this->items);
     }
+
+    public function getIncluyeAlmuerzoAttribute(){
+        $rpta = false;
+        foreach($this->items as $item){
+            foreach($item['incluye'] as $incluye){
+                if($incluye['tipo'] == 'Almuerzo')
+                    return true;
+            }
+        }
+        return $rpta;
+    }
     
     public function beforeSave(){        
         if($this->exists){ //UPDATE
