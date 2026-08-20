@@ -101,7 +101,7 @@ class Reservas extends Controller
     {
         $reserva = Reserva::find($recordId);
         
-        $html = $this->makePartial('brochurepdf', ['reserva' => $reserva]);
+        $html = $this->makePartial('brochurepdf', ['reserva' => $reserva, 'formato' => 'brochure', 'publico' => 'cliente']);
 
         $dompdf = new Dompdf(array('enable_remote' => true));
         $dompdf->loadHtml($html);
@@ -117,7 +117,39 @@ class Reservas extends Controller
     {
         $reserva = Reserva::find($recordId);
         
-        $html = $this->makePartial('itinerariopdf', ['reserva' => $reserva]);
+        $html = $this->makePartial('brochurepdf', ['reserva' => $reserva, 'formato' => 'itinerario', 'publico' => 'cliente']);
+
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        
+        $dompdf->render();
+
+        return $dompdf->stream($reserva->name.' (itinerario).pdf', array("Attachment" => false));
+
+    }
+
+    public function brochurecuenta($recordId)
+    {
+        $reserva = Reserva::find($recordId);
+        
+        $html = $this->makePartial('brochurepdf', ['reserva' => $reserva, 'formato' => 'brochure', 'publico' => 'cuenta']);
+
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        
+        $dompdf->render();
+
+        return $dompdf->stream($reserva->name.' (brochure).pdf', array("Attachment" => false));
+
+    }
+
+    public function itinerariocuenta($recordId)
+    {
+        $reserva = Reserva::find($recordId);
+        
+        $html = $this->makePartial('brochurepdf', ['reserva' => $reserva, 'formato' => 'itinerario', 'publico' => 'cuenta']);
 
         $dompdf = new Dompdf(array('enable_remote' => true));
         $dompdf->loadHtml($html);
