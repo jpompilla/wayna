@@ -218,6 +218,7 @@
     </div>
     <?php endif ?>
 
+    <?php foreach (array_chunk($reserva->brochure, 10) as $brochureItems): ?>
     <div class="pagina resumen" style="background-image: url('<?= url('/storage/app/media/bg-resumen.jpg') ?>')">
         <div class="title">
             <h1><?= $reserva->nroDias ?> días</h1>
@@ -231,7 +232,7 @@
                 <th>Actividades</th>
                 <th>Hotel</th>
             </tr-->
-            <?php foreach($reserva->brochure as $item): ?>
+            <?php foreach($brochureItems as $item): ?>
             <?php if(array_key_exists('dia', $item)): ?>
             <tr>
                 <td class="dia">
@@ -292,6 +293,7 @@
         </div>
         <?php endif ?>
     </div>
+    <?php endforeach ?>
     
     <?php if($formato == 'brochure'): ?>
     <?php 
