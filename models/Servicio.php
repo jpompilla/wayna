@@ -297,7 +297,7 @@ class Servicio extends Model
             $costos['total'][$i] = 0;
             $costos['operativo'][$i] = 0;            
             $costos['pasarela'][$i] = $this->params[0]['adelanto']*$this->params[0]['pasarela'];
-            $costos['igv'][$i] = round($this->params[0]['adelanto']-$this->params[0]['adelanto']/(1+$this->params[0]['igv']));
+            $costos['igv'][$i] = round($this->params[0]['adelanto'] - ($this->params[0]['adelanto']/(1+$this->params[0]['igv'])));
             $costos['ir'][$i] = ($this->params[0]['adelanto']-$this->params[0]['facturable'])*$this->params[0]['ir'];
             $costos['comision'][$i] = $this->params[0]['comision'];
         }

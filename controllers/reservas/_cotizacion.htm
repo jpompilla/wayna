@@ -64,6 +64,16 @@
                         data-container="body">
                         <i class="icon-file-invoice"></i>
                     </a>
+                    <button 
+                        type="button" 
+                        class="btn"
+                        title="Copiar link de pago"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body"
+                        onclick="javascript:copiarLinkPago()">
+                        <i class="icon-link"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -193,6 +203,11 @@
         $.wn.flashMsg({text: 'Precios copiados.', 'class': 'success', 'interval': 2});
     }
 
+    function copiarLinkPago() {
+        copyToClipboard(linkPagoToWA());
+        $.wn.flashMsg({text: 'Link de pago copiado.', 'class': 'success', 'interval': 2});
+    }
+
     function itinearioToWA() {
         var filtro = '#Repeater-formItems-items-items li[data-collapse-title="Dia de itinerario"] .repeater-item-collapsed-title, ' +
                      '#Repeater-formItems-items-items li[data-collapse-title="Servicio Adicional"] .repeater-item-collapsed-title';
@@ -278,6 +293,33 @@
         rpta += `- *Total:* US\$${pu} x ${nro} persona(s) = US\$${precio} dolares\n`;
         rpta += `- *Monto de reserva:* USD\$${ru} x ${nro} persona(s) = US\$${reserva} dolares \n`;
         rpta += `_(el saldo pendiente se liquida el día 1 a su llegada a Cusco en EFECTIVO en dólares, en caso se liquide con liga de pago, se añadirá +8%)._\n\n`;
+
+        return rpta;
+    }
+
+    function linkPagoToWA(){
+        var rpta = '';
+        rpta += '🔗 *LINK DE PAGO*\n';
+        rpta += '----------\n';
+        //Titulo
+        rpta += $('#Form-field-Reserva-name').map(function() {
+            var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
+            var texto = $(this).val().trim();
+            return texto.replace(regex, "$2 | $1 persona(s) | Hotel $3 estrellas ($4)");
+        }).get().join('\n') + '\n';
+        //Precio y link
+        var reserva = $('#reserva').text();        
+        rpta += `*US\$${reserva}*\n`;
+        rpta += '👇👇👇\n';
+        
+        var referencia = $('#Form-field-Reserva-name').map(function() {
+            var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
+            var texto = $(this).val().trim();
+            return texto.replace(regex, "$2 x $1 personas - $4");
+        }).get().join(' - ').replaceAll(" ", "%20").replaceAll(",", "");
+
+        reserva = reserva.replaceAll(",", "");
+        rpta += `https://secure.micuentaweb.pe/vads-site/IZI_MACHUPICCHU_PLUS?lck_vads_order_id=${referencia}&lck_vads_amount=${reserva}`;
 
         return rpta;
     }
