@@ -6,6 +6,7 @@ use Soroche\Wayna\Models\Reserva;
 use Dompdf\Dompdf;
 use BackendAuth;
 use System\Classes\MediaManager;
+use Mail;
 
 class Reservas extends Controller
 {
@@ -199,5 +200,25 @@ class Reservas extends Controller
         BackendMenu::setContext('Soroche.Wayna', 'menu-seguimiento');
 
         return $this->makePartial('biblia', ['fechas' => $fechas, 'reservas' => $reservas, 'hoy' => $hoy, 'mañana' => $mañana]);
+    }
+
+    public function onEnviarLinkPago()
+    {
+        $email = post('email');
+        $concepto = post('concepto');
+        $referencia = post('referencia');
+        $reserva = post('reserva');
+        $monto = post('monto');
+        
+        Mail::sendTo($email, 'link_pago', [
+            'concepto'=> $concepto,
+            'referencia'=> $referencia,
+            'reserva'=> $reserva,
+            'monto'=> $monto
+        ]);
+        
+        return [
+            'rpta' => $email
+        ];
     }
 }

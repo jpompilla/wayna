@@ -74,6 +74,16 @@
                         onclick="javascript:copiarLinkPago()">
                         <i class="icon-link"></i>
                     </button>
+                    <button 
+                        type="button" 
+                        class="btn"
+                        title="Enviar email con link de pago"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body"
+                        onclick="javascript:enviarLinkPago()">
+                        <i class="icon-envelope"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -206,6 +216,41 @@
     function copiarLinkPago() {
         copyToClipboard(linkPagoToWA());
         $.wn.flashMsg({text: 'Link de pago copiado.', 'class': 'success', 'interval': 2});
+    }
+
+    function enviarLinkPago() {
+        var email = window.prompt("Ingrese el correo electrónico del cliente:", "");
+
+        var concepto = $('#Form-field-Reserva-name').map(function() {
+            var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
+            var texto = $(this).val().trim();
+            return texto.replace(regex, "$2 | $1 persona(s) | Hotel $3 estrellas ($4)");
+        }).get().join('\n');
+
+        var referencia = $('#Form-field-Reserva-name').map(function() {
+            var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
+            var texto = $(this).val().trim();
+            return texto.replace(regex, "$2 x $1 personas - $4");
+        }).get().join(' - ').replaceAll(" ", "%20").replaceAll(",", "");
+
+        var reserva = $('#reserva').text();
+        var monto = reserva.replaceAll(",", "");
+
+        $.request('onEnviarLinkPago', {
+            data: { 
+                email: email,
+                concepto: concepto,
+                referencia: referencia,
+                reserva: reserva,
+                monto: monto
+            },
+            success: function(data) {
+                $.wn.flashMsg({text: 'Link de pago enviado a: ' + data.rpta, 'class': 'success', 'interval': 4});                
+            },
+            error: function(data) {
+                $.wn.flashMsg({text: 'Error al enviar el link de pago.', 'class': 'error', 'interval': 4});
+            }
+        });
     }
 
     function itinearioToWA() {
