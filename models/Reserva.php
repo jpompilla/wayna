@@ -931,20 +931,20 @@ class Reserva extends Model
                 $cotizacion['ajustes'][$i]['nro_paxs'] = $item['cantidad'];      
                 $cotizacion['ajustes'][$i]['pu'] = $ajuste->precios[0][$n10] * $item['monto'];
                 $cotizacion['ajustes'][$i]['precio'] = $ajuste->precios[0][$n10] * $item['monto'] * $item['cantidad'];
-                $cotizacion['ajustes'][$i]['ru'] = 0;
-                $cotizacion['ajustes'][$i]['reserva'] = 0;
+                $cotizacion['ajustes'][$i]['ru'] = $ajuste->params[0]['adelanto'] * $item['monto'];
+                $cotizacion['ajustes'][$i]['reserva'] = $ajuste->params[0]['adelanto'] * $item['monto'] * $item['cantidad'];
                 $cotizacion['ajustes'][$i]['cmu'] = $ajuste->params[0]['comision'] * $item['monto'];
                 $cotizacion['ajustes'][$i]['comision'] = $ajuste->params[0]['comision'] * $item['monto'] * $item['cantidad'];
 
                 $cotizacion['ajuste']['pu'] += $ajuste->precios[0][$n10] * $item['monto'];
                 $cotizacion['ajuste']['precio'] += $ajuste->precios[0][$n10] * $item['monto'] * $item['cantidad'];
-                $cotizacion['ajuste']['ru'] += 0;
-                $cotizacion['ajuste']['reserva'] += 0;
+                $cotizacion['ajuste']['ru'] += $ajuste->params[0]['adelanto'] * $item['monto'];
+                $cotizacion['ajuste']['reserva'] += $ajuste->params[0]['adelanto'] * $item['monto'] * $item['cantidad'];
                 $cotizacion['ajuste']['cmu'] += $ajuste->params[0]['comision'] * $item['monto'];
                 $cotizacion['ajuste']['comision'] += $ajuste->params[0]['comision'] * $item['monto'] * $item['cantidad'];
 
-                $cotizacion['adelanto']['ru'] += 0;
-                $cotizacion['adelanto']['reserva'] += 0;
+                $cotizacion['adelanto']['ru'] += $ajuste->params[0]['adelanto'] * $item['monto'];
+                $cotizacion['adelanto']['reserva'] += $ajuste->params[0]['adelanto'] * $item['monto'] * $item['cantidad'];;
 
                 $cotizacion['comision']['cmu'] += $ajuste->params[0]['comision'] * $item['monto'];
                 $cotizacion['comision']['comision'] += $ajuste->params[0]['comision'] * $item['monto'] * $item['cantidad'];
