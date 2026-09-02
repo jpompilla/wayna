@@ -21,6 +21,38 @@ class Reportes extends Controller
         $this->pageTitle = 'Reportes';
     }
 
+    public function cosechas()
+    {
+        $this->pageTitle = 'Cosechas de Reservas';
+        $user = BackendAuth::getUser();
+
+        $rpta = DB::select('CALL sp_cosechas()');
+        $data = [];
+
+        foreach ($rpta as $row) {
+            $data[$row->mes_ejecucion][$row->mes_reserva]['nro_paxs'] = 0; 
+            $data[$row->mes_ejecucion][$row->mes_reserva]['total'] = 0; 
+            $data[$row->mes_ejecucion][$row->mes_reserva]['nro_reservas'] = 0;
+        }
+        foreach ($rpta as $row) {
+            $data[$row->mes_ejecucion][$row->mes_reserva]['nro_paxs'] += $row->nro_paxs; 
+            $data[$row->mes_ejecucion][$row->mes_reserva]['total'] += $row->total; 
+            $data[$row->mes_ejecucion][$row->mes_reserva]['nro_reservas'] += 1;
+        }
+        
+        ksort($data);
+
+        $html = $this->makePartial('cosechas', ['data' => $data, 'negocio' => $user->negocio]);
+
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        
+        $dompdf->render();
+
+        return $dompdf->stream('Cosechas de reservas.pdf', array("Attachment" => false));
+    }
+
     public function proyectado()
     {
         $this->pageTitle = 'Flujo de caja proyectado';
