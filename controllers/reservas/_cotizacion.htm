@@ -220,7 +220,20 @@
 
     function enviarLinkPago() {
         var email = window.prompt("Ingrese el correo electrónico del cliente:", "");
+        
+        //Validaciones
+        if (email == null || email == "") {
+            $.wn.flashMsg({text: 'No se ingresó un correo electrónico.', 'class': 'error', 'interval': 4});
+            return;
+        }
 
+        email = email.trim();
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            $.wn.flashMsg({text: 'Ingrese un correo electrónico válido.', 'class': 'error', 'interval': 4});
+            return;
+        }
+        //Variables
         var concepto = $('#Form-field-Reserva-name').map(function() {
             var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
             var texto = $(this).val().trim();
