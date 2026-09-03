@@ -29,20 +29,29 @@ class Reportes extends Controller
         $rpta = DB::select('CALL sp_cosechas()');
         $data = [];
 
+        //Inicializar el array de datos con valores predeterminados
+        foreach ($rpta as $row)
+            foreach ($rpta as $col) {
+                $data[$col->mes_reserva][$row->mes_ejecucion] = ['nro_paxs' => 0,'total' => 0,'nro_reservas' => 0]; 
+            }
+        //Distribuir los valores de la consulta en el array de datos
+        $total_max = 0;        
         foreach ($rpta as $row) {
-            $data[$row->mes_ejecucion][$row->mes_reserva]['nro_paxs'] = 0; 
-            $data[$row->mes_ejecucion][$row->mes_reserva]['total'] = 0; 
-            $data[$row->mes_ejecucion][$row->mes_reserva]['nro_reservas'] = 0;
+            $data[$row->mes_reserva][$row->mes_ejecucion]['nro_paxs'] += $row->nro_paxs; 
+            $data[$row->mes_reserva][$row->mes_ejecucion]['total'] += $row->total; 
+            $data[$row->mes_reserva][$row->mes_ejecucion]['nro_reservas'] += 1;
+            if ($data[$row->mes_reserva][$row->mes_ejecucion]['total'] > $total_max) {
+                $total_max = $data[$row->mes_reserva][$row->mes_ejecucion]['total'];
+            }
         }
-        foreach ($rpta as $row) {
-            $data[$row->mes_ejecucion][$row->mes_reserva]['nro_paxs'] += $row->nro_paxs; 
-            $data[$row->mes_ejecucion][$row->mes_reserva]['total'] += $row->total; 
-            $data[$row->mes_ejecucion][$row->mes_reserva]['nro_reservas'] += 1;
-        }
-        
-        ksort($data);
+                
+        krsort($data);
+        foreach ($data as $k=>$row)
+            ksort($data[$k]);
 
-        $html = $this->makePartial('cosechas', ['data' => $data, 'negocio' => $user->negocio]);
+        //dd($data);
+
+        $html = $this->makePartial('cosechas', ['data' => $data, 'negocio' => $user->negocio, 'total_max' => $total_max]);
 
         $dompdf = new Dompdf(array('enable_remote' => true));
         $dompdf->loadHtml($html);

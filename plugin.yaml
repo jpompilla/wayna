@@ -141,3 +141,10 @@ navigation:
                 attributes: {  }
                 permissions:
                     - view_reportes_estrategicos
+            menu-cosechas:
+                label: 'Analisis de Cosechas'
+                url: soroche/wayna/reportes/cosechas
+                icon: icon-leaf
+                attributes: {  }
+                permissions:
+                    - view_reportes_estrategicos

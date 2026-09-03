@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Flujo de Caja Proyectado</title>
+    <title>Cosechas de Reservas</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
         body {
@@ -88,6 +88,25 @@
         p.nota{
             font-size: 7pt;
         }
+        td.barra{
+            position: relative;
+            overflow: hidden;
+        }
+        td.barra div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;       /* Ocupa todo el alto de la celda */            
+            z-index: 1;         /* Se coloca detrás del texto */
+        }
+        td.barra span{
+            position: relative;
+            z-index: 2;         /* Se coloca encima de la barra */
+        }
+        td.barra span sup{
+            font-size: 9px;
+        }
+        
     </style>
 </head>
 <body>
@@ -99,17 +118,40 @@
     <!--?= dd($data) ?-->
 
     <table>
-        <caption>Cosechas de Reservas</caption>
+        <caption>Cosechas de Reservas  (En dolares americanos)</caption>
+        <!-- Cabecera-->
         <tr>
-            <th width="250px">Concepto</th>
-            <?php foreach($data as $m=>$mes): ?>
-            <th><?= $m ?></th>
+            <th width="250px">Mes reserva \ Mes Ejecucion</th>
+            <?php foreach(array_first($data) as $e=>$mes): ?>
+            <th><?= $e ?></th>
             <?php endforeach ?>
         </tr>
         
+        <!-- Cuerpo-->
+        <?php foreach($data as $r=>$mes): ?>
+        <tr>
+            <th><?= $r ?></th>
+            <?php foreach($mes as $e=>$valor): ?>
+            <td class="right barra">
+                <?php if($valor['total'] > 0): ?>
+                <div style="
+                    width: <?= number_format($valor['total']*100/$total_max,2) ?>%;
+                    <?php if($valor['total'] >= $total_max*0.6): ?>
+                        background-color: #93ca6691;
+                    <?php elseif($valor['total'] >= $total_max*0.3): ?>
+                        background-color: #f177058c;
+                    <?php else: ?>
+                        background-color: #ff5252a6;
+                    <?php endif ?>
+                    "></div>
+                <span>$<?= number_format($valor['total'],0) ?><sup><?= $valor['nro_paxs'] ?></sup></span>
+                <?php endif ?>
+            </td>
+            <?php endforeach ?>
+        </tr>
+        <?php endforeach ?>
+
     </table>
-    <table>
-        
-    </table>
+    <!--?= dd($data) ?-->
 </body>
 </html>
