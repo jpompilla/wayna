@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Cosechas de Reservas</title>
+    <title>Analisis de Cosechas</title>
     <meta charset="UTF-8">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
@@ -115,14 +115,14 @@
         <img src="<?= $negocio->logo->path ?>" alt="">
     </p>
     
-    <h1>COSECHAS DE RESERVAS</h1>
+    <h1>ANALISIS DE COSECHAS</h1>
     <!--?= dd($data) ?-->
 
     <table>
-        <caption>Cosechas de Reservas  (En dolares americanos)</caption>
+        <caption>Analisis de Cosechas (En dólares americanos)</caption>
         <!-- Cabecera-->
         <tr>
-            <th width="250px">Mes reserva \ Mes Ejecucion</th>
+            <th width="250px">Mes reserva \ Mes Ejecución</th>
             <?php foreach(array_first($data) as $e=>$mes): ?>
             <th><?= $e ?></th>
             <?php endforeach ?>
