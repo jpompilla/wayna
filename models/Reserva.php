@@ -1065,7 +1065,8 @@ class Reserva extends Model
     public function scopePorRangoFechas($query, $inicio, $fin){
         $query->where('fecha_inicio', '<=', $fin)
               ->where('fecha_fin', '>=', $inicio)
-              ->whereIn('estado', ['Abierto','Confirmado']);
+              ->whereIn('estado', ['Abierto','Confirmado'])
+              ->orderBy('fecha_inicio', 'asc');
 
         return $query;
     }
