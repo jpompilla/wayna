@@ -132,7 +132,7 @@ class Servicio extends Model
         $rpta = false;
         foreach($this->items as $item){
             foreach($item['incluye'] as $incluye){
-                if($incluye['tipo'] == 'Almuerzo')
+                if(array_key_exists('tipo', $incluye) && $incluye['tipo'] == 'Almuerzo')
                     return true;
             }
         }
