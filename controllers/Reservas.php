@@ -33,7 +33,7 @@ class Reservas extends Controller
     public function listExtendQuery($query)
     {
         $user = BackendAuth::getUser();
-        if(!$user->hasAccess('manage_reservas'))
+        if(!$user->hasAccess('manage_reservas') && !$user->hasAccess('view_all_reservas'))
             $query->where('user_id', $user->id);
     }
     

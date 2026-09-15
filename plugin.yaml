@@ -38,6 +38,9 @@ permissions:
     enter_reservas:
         tab: 'soroche.wayna::lang.plugin.name'
         label: 'Ingresar Reservas'
+    view_all_reservas:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Ver todas las Reservas'
     manage_reservas:
         tab: 'soroche.wayna::lang.plugin.name'
         label: 'Administrar Reservas'

@@ -6,6 +6,7 @@ scopes:
         nameFrom: full_name
         permissions: 
             - manage_reservas
+            - view_all_reservas
     estado:
         label: Estado
         type: group
