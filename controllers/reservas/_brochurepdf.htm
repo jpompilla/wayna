@@ -204,6 +204,29 @@
             font-weight: 900;
             color: #fff;
         }
+        .dia .fecha{
+            position: absolute;
+            top: 4%;
+            right: 5.5%;
+            width: 70px;
+            padding: 5px 0 7px;
+            border-radius: 10px;
+            background-color: #dd4220;
+            color: #fff;
+            text-align: center;
+            line-height: 0.9;
+        }
+            .dia .fecha .numero{
+                display: block;
+                font-size: 30px;
+                font-weight: 900;
+            }
+            .dia .fecha .mes,
+            .dia .fecha .anio{
+                display: block;
+                font-size: 16px;
+                font-weight: 900;
+            }
     </style>
 </head>
 <body>
@@ -299,6 +322,7 @@
     <?php if($formato == 'brochure'): ?>
     <?php 
         $mostrado = [];
+        $meses = [1 => 'ENE', 2 => 'FEB', 3 => 'MAR', 4 => 'ABR', 5 => 'MAY', 6 => 'JUN', 7 => 'JUL', 8 => 'AGO', 9 => 'SEP', 10 => 'OCT', 11 => 'NOV', 12 => 'DIC'];
     ?>
     <?php foreach($reserva->brochure as $i => $item): ?>
         <?php 
@@ -308,6 +332,14 @@
         ?>
         <div class="pagina dia" style="background-image: url('<?= $url ?>')">
             <p><?= str_pad($item['dia'],2,'0', STR_PAD_LEFT) ?></p>
+            <?php if(!empty($item['fecha']) && strtotime($item['fecha']) !== false): ?>
+                <?php $fecha = strtotime($item['fecha']); ?>
+                <div class="fecha">
+                    <span class="numero"><?= date('d', $fecha) ?></span>
+                    <span class="mes"><?= $meses[(int) date('n', $fecha)] ?></span>
+                    <span class="anio"><?= date('Y', $fecha) ?></span>
+                </div>
+            <?php endif ?>
             <?php if($publico == 'cliente'): ?>
             <div class="www">
                 <img src="<?= url('/storage/app/media/logo-www.png') ?>" alt="" width="240px">
