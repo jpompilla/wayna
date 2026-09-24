@@ -130,6 +130,21 @@ class Reservas extends Controller
 
     }
 
+    public function briefing($recordId)
+    {
+        $reserva = Reserva::find($recordId);
+
+        $html = $this->makePartial('briefingpdf', ['reserva' => $reserva]);
+
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+
+        $dompdf->render();
+
+        return $dompdf->stream($reserva->name.' (briefing).pdf', array("Attachment" => false));
+    }
+
     public function brochurecuenta($recordId)
     {
         $reserva = Reserva::find($recordId);

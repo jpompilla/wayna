@@ -295,3 +295,32 @@ tabs:
                             imageWidth: 600 
                             imageHeight: 400
                             tab: PDF
+                        atractivos:
+                            label: Atractivos
+                            type: textarea
+                            size: small
+                            tab: Briefing
+                        clima_icono:
+                            label: Icono del clima
+                            type: mediafinder
+                            mode: image
+                            span: left
+                            tab: Briefing
+                        clima_descripcion:
+                            label: Descripcion del clima
+                            type: textarea
+                            size: small
+                            span: right
+                            tab: Briefing
+                        ropa_icono:
+                            label: Icono de prendas
+                            type: mediafinder
+                            mode: image
+                            span: left
+                            tab: Briefing
+                        ropa_descripcion:
+                            label: Prendas recomendadas
+                            type: textarea
+                            size: small
+                            span: right
+                            tab: Briefing

@@ -178,6 +178,53 @@ class Reserva extends Model
 
         return $rpta;
     }
+
+    public function getBriefingAttribute(){
+        $rpta = [];
+
+        foreach($this->items as $i => $item){
+            if($item['_group'] != 'paquete')
+                continue;
+
+            $tour = Servicio::find($item['tour']);
+            $pageContent = $tour?->page_content ?? [];
+            $hotelNombre = null;
+            $hotelDireccion = null;
+            $hotelMapsUrl = null;
+
+            if(isset($item['hotel']) && !empty($item['hotel'])){
+                $itemHotel = Servicio::find($item['hotel']);
+                $hotel = Servicio::find($itemHotel?->items[0]['servicio']);
+                $hotelNombre = $itemHotel?->nombre;
+                $hotelDireccion = $hotel?->negocio?->direccion;
+
+                if($hotelNombre || $hotelDireccion){
+                    $hotelMapsUrl = 'https://www.google.com/maps/search/?api=1&query='.rawurlencode(trim($hotelNombre.' '.$hotelDireccion));
+                }
+            }
+
+            $rpta[] = [
+                'dia' => $item['dia'],
+                'fecha' => $item['fecha'] ?? null,
+                'tour' => $tour,
+                'imagen' => $pageContent['resumen_image'] ?? null,
+                'descripcion' => $pageContent['resumen'] ?? '',
+                'horario' => $pageContent['horario'] ?? null,
+                'incluye_almuerzo' => $tour?->incluyeAlmuerzo ?? false,
+                'bono' => $pageContent['bono'] ?? false,
+                'atractivos' => $pageContent['atractivos'] ?? '',
+                'clima_icono' => $pageContent['clima_icono'] ?? null,
+                'clima_descripcion' => $pageContent['clima_descripcion'] ?? '',
+                'ropa_icono' => $pageContent['ropa_icono'] ?? null,
+                'ropa_descripcion' => $pageContent['ropa_descripcion'] ?? '',
+                'hotel_nombre' => $hotelNombre,
+                'hotel_direccion' => $hotelDireccion,
+                'hotel_maps_url' => $hotelMapsUrl,
+            ];
+        }
+
+        return $rpta;
+    }
     public function getNroDiasAttribute(){
         $rpta = 0;
         foreach($this->items as $item)
