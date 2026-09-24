@@ -141,7 +141,7 @@
             <td class="center"><?= $item['dia'] ?></td>
             <td class="center"><?= isset($item['fecha'])? date('d/m/Y', strtotime($item['fecha'])) : 'Abierta' ?></td>
             <td><?= $item['tour'] ?><?= $reserva->entradaPorFecha($item['fecha']) ?></td>
-            <td class="center"><?= isset($item['vuelo']) ? $item['vuelo'] : '' ?> <em><?= $reserva->trenPorFecha($item['fecha']) ?></em></td>
+            <td class="center"><?= isset($item['vuelo']) ? $item['vuelo'] : '' ?> <em><?= implode('<br/>', $reserva->trenPorFecha($item['fecha'])) ?></em></td>
             <td><?= $reserva->hotelPorFecha($item['fecha'], $item['hotel']) ?></td>
         </tr>
         <?php endif ?>

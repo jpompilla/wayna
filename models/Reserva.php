@@ -588,7 +588,7 @@ class Reserva extends Model
     }
     
     public function trenPorFecha($fecha){
-        $rpta = '';
+        $rpta = [];
 
         if(isset($this->plan))
         foreach ($this->plan as $t => $tipoItem)        
@@ -596,7 +596,7 @@ class Reserva extends Model
                 if(mb_substr($proveedorItem['nombre'], 5) == 'Peru Rail')
                     foreach ($proveedorItem['servicios'] as $s => $servicioItem)
                         if(date('d/m/Y', strtotime($fecha)) == $servicioItem['fecha'])
-                            $rpta = (array_key_exists('salida', $servicioItem) && !empty($servicioItem['salida']) ? $servicioItem['salida'] : 'ND').'->'.(array_key_exists('llegada', $servicioItem) && !empty($servicioItem['llegada']) ? $servicioItem['llegada'] : 'ND');
+                            $rpta[] = (array_key_exists('salida', $servicioItem) && !empty($servicioItem['salida']) ? $servicioItem['salida'] : 'ND').'->'.(array_key_exists('llegada', $servicioItem) && !empty($servicioItem['llegada']) ? $servicioItem['llegada'] : 'ND');
         
         return $rpta;
     }
