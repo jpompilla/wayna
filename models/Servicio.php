@@ -127,6 +127,17 @@ class Servicio extends Model
     public function getDurationAttribute(){
         return count($this->items);
     }
+
+    public function getIncluyeAlmuerzoAttribute(){
+        $rpta = false;
+        foreach($this->items as $item){
+            foreach($item['incluye'] as $incluye){
+                if(array_key_exists('tipo', $incluye) && $incluye['tipo'] == 'Almuerzo')
+                    return true;
+            }
+        }
+        return $rpta;
+    }
     
     public function beforeSave(){        
         if($this->exists){ //UPDATE
@@ -136,7 +147,7 @@ class Servicio extends Model
                 $this->calcularCostosPaquete();
                 $this->calcularMargen();
             }
-            elseif($this->tipo == 'Tour'){
+            elseif($this->tipo == 'Tour' || $this->tipo == 'Hotel' || $this->tipo == 'Bono' || $this->tipo == 'Otro' || $this->tipo == 'Descuento' || $this->tipo == 'Incremento'){
                 $this->formatearName();
                 $this->calcularCostosTour();
                 $this->calcularMargen();
@@ -170,7 +181,7 @@ class Servicio extends Model
             $this->calcularPrecios();            
             $this->calcularMargen();
         }
-        elseif($this->tipo == 'Tour'){
+        elseif($this->tipo == 'Tour' || $this->tipo == 'Hotel' || $this->tipo == 'Bono' || $this->tipo == 'Otro' || $this->tipo == 'Descuento' || $this->tipo == 'Incremento'){
             if(!$this->negocio_id)
                 $this->negocio_id = $user->negocio_id;
             
@@ -182,7 +193,9 @@ class Servicio extends Model
         }
         else{
             //-------Name
-            $name = sprintf(
+            if(!$this->negocio_id)
+                $this->negocio_id = $user->negocio_id;
+            $name = sprintf(            
                 //'%s %s - %s x%d: USD %.2f',
                 '%s %s - %s x%d',
                 $this->negocio->nombre,
@@ -219,7 +232,10 @@ class Servicio extends Model
         $costos = [];
         $costos[0][0] = $this->nombre;
         for($i=1; $i<=10; $i++){
-            $costos[0][strval($i)] = (intdiv($i-1, $this->capacidad)+1)*$this->costo;
+            if($this->capacidad > 0)
+                $costos[0][strval($i)] = (intdiv($i-1, $this->capacidad)+1)*$this->costo;
+            else
+                $costos[0][strval($i)] = 0;
         } 
         $this->costos = $costos;
     }
@@ -281,7 +297,7 @@ class Servicio extends Model
             $costos['total'][$i] = 0;
             $costos['operativo'][$i] = 0;            
             $costos['pasarela'][$i] = $this->params[0]['adelanto']*$this->params[0]['pasarela'];
-            $costos['igv'][$i] = round($this->params[0]['adelanto']-$this->params[0]['adelanto']/(1+$this->params[0]['igv']));
+            $costos['igv'][$i] = round($this->params[0]['adelanto'] - ($this->params[0]['adelanto']/(1+$this->params[0]['igv'])));
             $costos['ir'][$i] = ($this->params[0]['adelanto']-$this->params[0]['facturable'])*$this->params[0]['ir'];
             $costos['comision'][$i] = $this->params[0]['comision'];
         }

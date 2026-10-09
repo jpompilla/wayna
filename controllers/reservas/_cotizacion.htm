@@ -1,64 +1,169 @@
-<div id="preciosList">    
+<?php if(isset($model->cotizacion)): ?>
+<div id="preciosList">
+    <div id="copys">
+        <div class="layout control-toolbar editor-toolbar">
+            <div class="layout-cell toolbar-item">
+                <div data-control="toolbar">
+                    <button 
+                        type="button" 
+                        class="btn"
+                        title="Copiar itinerario"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body"
+                        onclick="javascript:copiarItinerario()">
+                        <i class="icon-list-ol"></i>
+                    </button>
+                    <button 
+                        type="button" 
+                        class="btn"
+                        title="Copiar precios"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body"
+                        onclick="javascript:copiarPrecio()">
+                        <i class="icon-dollar-sign"></i>
+                    </button>
+                    <a
+                        class="btn"
+                        target="_blank"
+                        href="<?= Backend::url('soroche/wayna/reservas/brochure/'.$this->params[0]) ?>"
+                        title="Brochure para cliente en PDF"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body">
+                        <i class="icon-file-lines"></i>
+                    </a>
+                    <a
+                        class="btn"
+                        target="_blank"
+                        href="<?= Backend::url('soroche/wayna/reservas/itinerario/'.$this->params[0]) ?>"
+                        title="Itinerario para cliente en PDF"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body">
+                        <i class="icon-file-invoice"></i>
+                    </a>
+                    <a
+                        class="btn"
+                        target="_blank"
+                        href="<?= Backend::url('soroche/wayna/reservas/brochurecuenta/'.$this->params[0]) ?>"
+                        title="Brochure para cuenta en PDF"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body">
+                        <i class="icon-file-lines"></i>
+                    </a>
+                    <a
+                        class="btn"
+                        target="_blank"
+                        href="<?= Backend::url('soroche/wayna/reservas/itinerariocuenta/'.$this->params[0]) ?>"
+                        title="Itinerario para cuenta en PDF"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body">
+                        <i class="icon-file-invoice"></i>
+                    </a>
+                    <button 
+                        type="button" 
+                        class="btn"
+                        title="Copiar link de pago"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body"
+                        onclick="javascript:copiarLinkPago()">
+                        <i class="icon-link"></i>
+                    </button>
+                    <button 
+                        type="button" 
+                        class="btn"
+                        title="Enviar email con link de pago"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body"
+                        onclick="javascript:enviarLinkPago()">
+                        <i class="icon-envelope"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--?php if (isset($model->margen)): ?-->
+    <!--?= dd($model->cotizacion) ?-->
+    
         <div class="list-preview list-flush">
             <div class="control-list">
                 <table class="table data" data-control="rowlink">
                     <thead>
                         <tr>
                             <th class="center"><span>Precios x paxs (USD)</span></th>
-                            <th class="center"><span>1P</span></th>
-                            <th class="center"><span>2P</span></th>
-                            <th class="center"><span>3P</span></th>
-                            <th class="center"><span>4P+</span></th>
+                            <th class="center"><span>Unidad</span></th>
+                            <th class="center"><span>Cantidad</span></th>
+                            <th class="center"><span>Unitario</span></th>
+                            <th class="center"><span>Total</span></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $limite = 4; $precios = $model->precios[0]; ?>
                         <tr>
-                            <td><span><?= $model->servicio? $model->servicio->nombre : 'Paquete personalizado '.count($model->itinerario).'D' ?></span></td>
-                            <?php for($i=1; $i <= $limite; $i++): ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($precios[$i], 0) ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
-                            <?php endfor ?>
+                            <td><span><?= $model->cotizacion['paquete']['nombre'] ?></span></td>
+                            <td class="center">Por persona</td>
+                            <td id="nro" class="center"><?= number_format($model->cotizacion['paquete']['nro_paxs'],0) ?></td>
+                            <td class="right"><?= number_format($model->cotizacion['paquete']['pu'],2) ?></td>
+                            <td class="right"><?= number_format($model->cotizacion['paquete']['precio'],2) ?></td>
                         </tr>
                         
-                        <?php if(isset($model->adicionales)): ?>
-                        <?php foreach($model->adicionales as $adicional): ?>
+                        <?php if(isset($model->cotizacion['ajustes'])): ?>
+                        <?php foreach($model->cotizacion['ajustes'] as $a => $ajuste): ?>
                         <tr>
-                            <td><span><?= $adicional['nombre'] ?></span></td>
-                            <?php for($i=1; $i <= $limite; $i++): ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($adicional[$i], 0) ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
-                            <?php endfor ?>
+                            <td><span>*** <?= $ajuste['nombre'] ?></span></td>
+                            <td class="center">Por persona</td>
+                            <td class="center"><?= number_format($ajuste['nro_paxs'],0) ?></td>
+                            <td class="right"><?= number_format($ajuste['pu'],2) ?></td>
+                            <td class="right"><?= number_format($ajuste['precio'],2) ?></td>
+                        </tr>
+                        <?php endforeach ?>
+
+                        <tr>
+                            <th><span><?= $model->cotizacion['paquete']['nombre'] ?>***</span></th>
+                            <th class="center">Por persona</th>
+                            <th id="nro" class="center"><?= number_format($model->cotizacion['paquete']['nro_paxs'],0) ?>*</th>
+                            <th class="right"><?= number_format(($model->cotizacion['paquete']['precio'] + $model->cotizacion['ajuste']['precio']) / $model->cotizacion['paquete']['nro_paxs'],2) ?></th>
+                            <th class="right"><?= number_format($model->cotizacion['paquete']['precio'] + $model->cotizacion['ajuste']['precio'],2) ?></th>
+                        </tr>
+                        <?php endif ?>
+
+                        <?php if(isset($model->cotizacion['adicionales'])): ?>
+                        <?php foreach($model->cotizacion['adicionales'] as $a => $adicional): ?>
+                        <tr>
+                            <td><span>↳ <?= $adicional['nombre'] ?></span></td>
+                            <td class="center">Por persona</td>
+                            <td class="center"><?= number_format($adicional['nro_paxs'],0) ?></td>
+                            <td class="right"><?= number_format($adicional['pu'],2) ?></td>
+                            <td class="right"><?= number_format($adicional['precio'],2) ?></td>
                         </tr>
                         <?php endforeach ?>
                         <?php endif ?>
-                        
+
                         <tr>
-                            <th><span>PRECIO TOTAL (por pax)</span></th>
-                            <?php for($i=1; $i <= $limite; $i++): ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($model->precioTotal($i), 0) ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
-                            <?php endfor ?>
+                            <th><span>PRECIO TOTAL</span></th>
+                            <th class="center">Por persona</th>
+                            <th class="center"><?= $model->nro_paxs ?>*</th>
+                            <th id="pu" class="right"><?= number_format($model->total / $model->nro_paxs,2) ?>*</th>
+                            <th id="precio" class="right"><?= number_format($model->total,2) ?></th>
                         </tr>
                         <tr>
-                            <th><span>ADELANTO (por pax)</span></th>
-                            <?php for($i=1; $i <= $limite; $i++): ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($model->params[0]['adelanto'], 0) ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
-                            <?php endfor ?>
+                            <th><span>RESERVA</span></th>
+                            <th class="center">Por persona</th>
+                            <th class="center"><?= number_format($model->cotizacion['adelanto']['nro_paxs'],0) ?>*</th>
+                            <th id="ru" class="right"><?= number_format($model->cotizacion['adelanto']['reserva'] / $model->nro_paxs,2) ?>*</th>
+                            <th id="reserva" class="right"><?= number_format($model->cotizacion['adelanto']['reserva'],2) ?></th>
                         </tr>
                         <tr>
-                            <th><span>COMISION (por pax)</span></th>
-                            <?php for($i=1; $i <= $limite; $i++): ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
-                                <?= number_format($model->params[0]['comision'], 0) ?>
-                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
-                            <?php endfor ?>
+                            <th><span>COMISION</span></th>
+                            <th class="center">Por persona</th>
+                            <th class="center"><?= number_format($model->cotizacion['comision']['nro_paxs'],0) ?>*</th>
+                            <th class="right"><?= number_format($model->cotizacion['comision']['comision'] / $model->nro_paxs,2) ?>*</th>
+                            <th class="right"><?= number_format($model->cotizacion['comision']['comision'],2) ?></th>
                         </tr>
                     </tbody>
                 </table>
@@ -75,3 +180,206 @@
         text-align: center;
     }
 </style>
+<script>
+    function copyToClipboard(text) {
+        if (window.clipboardData && window.clipboardData.setData) {
+            // Internet Explorer-specific code path to prevent textarea being shown while dialog is visible.
+            return clipboardData.setData("Text", text);
+
+        } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+            var textarea = document.createElement("textarea");
+            textarea.textContent = text;
+            textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+            } catch (ex) {
+                console.warn("Copy to clipboard failed.", ex);
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+    }
+
+    function copiarItinerario() {
+        copyToClipboard(itinearioToWA());
+        $.wn.flashMsg({text: 'Itinerario copiado.', 'class': 'success', 'interval': 2});
+    }
+
+    function copiarPrecio() {
+        copyToClipboard(precioToWA());
+        $.wn.flashMsg({text: 'Precios copiados.', 'class': 'success', 'interval': 2});
+    }
+
+    function copiarLinkPago() {
+        copyToClipboard(linkPagoToWA());
+        $.wn.flashMsg({text: 'Link de pago copiado.', 'class': 'success', 'interval': 2});
+    }
+
+    function enviarLinkPago() {
+        var email = window.prompt("Ingrese el correo electrónico del cliente:", "");
+        
+        //Validaciones
+        if (email == null || email == "") {
+            $.wn.flashMsg({text: 'No se ingresó un correo electrónico.', 'class': 'error', 'interval': 4});
+            return;
+        }
+
+        email = email.trim();
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            $.wn.flashMsg({text: 'Ingrese un correo electrónico válido.', 'class': 'error', 'interval': 4});
+            return;
+        }
+        //Variables
+        var concepto = $('#Form-field-Reserva-name').map(function() {
+            var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
+            var texto = $(this).val().trim();
+            return texto.replace(regex, "$2 | $1 persona(s) | Hotel $3 estrellas ($4)");
+        }).get().join('\n');
+
+        var referencia = $('#Form-field-Reserva-name').map(function() {
+            var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
+            var texto = $(this).val().trim();
+            return texto.replace(regex, "$2 x $1 personas - $4");
+        }).get().join(' - ').replaceAll(" ", "%20").replaceAll(",", "");
+
+        var reserva = $('#reserva').text();
+        var monto = reserva.replaceAll(",", "");
+
+        $.request('onEnviarLinkPago', {
+            data: { 
+                email: email,
+                concepto: concepto,
+                referencia: referencia,
+                reserva: reserva,
+                monto: monto
+            },
+            success: function(data) {
+                $.wn.flashMsg({text: 'Link de pago enviado a: ' + data.rpta, 'class': 'success', 'interval': 4});                
+            },
+            error: function(data) {
+                $.wn.flashMsg({text: 'Error al enviar el link de pago.', 'class': 'error', 'interval': 4});
+            }
+        });
+    }
+
+    function itinearioToWA() {
+        var filtro = '#Repeater-formItems-items-items li[data-collapse-title="Dia de itinerario"] .repeater-item-collapsed-title, ' +
+                     '#Repeater-formItems-items-items li[data-collapse-title="Servicio Adicional"] .repeater-item-collapsed-title';
+        var rpta = '';
+        var itinerario = '';
+        
+        //Titulo
+        rpta += $('#Form-field-Reserva-name').map(function() {
+            var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
+            var texto = $(this).val().trim();
+            return texto.replace(regex, "*$2 | $1 persona(s) | Hotel $3 estrellas ($4)*");
+        }).get().join('\n') + '\n';
+
+        rpta += '----------\n\n';
+        
+        //Itinerario
+        rpta += '📆 *ITINERARIO*\n\n';
+        itinerario = $(filtro).map(function() {
+            var texto = $(this).text().trim();
+            return texto
+                .replace(/(Dia \d+\.)/, '*$1*')
+                .replace(/↳/g, '> -->');
+        }).get().join('\n') + '\n\n';
+        rpta += itinerario;
+        
+        //Incluye, No incluye
+        rpta += incluyeNoIncluyeToWA(itinerario);
+
+        //Precio
+        rpta += precioToWA();
+
+        return rpta;
+    }
+
+    function incluyeNoIncluyeToWA(itinerario){
+        var rpta = '';
+        var hoteles = itinerario.match(/(?<=\+.*)hotel/gi);
+        var noches = hoteles ? hoteles.length : 0;
+        var hotel = $('#Form-field-Reserva-name').map(function() {
+            var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
+            var texto = $(this).val().trim();
+            return texto.replace(regex, " hotel $3 estrellas");
+        }).get().join('\n');
+        
+        rpta += '✅ *INCLUYE*\n\n';
+        rpta += `- ${noches} noches en`+ `${hotel}\n`;
+        rpta += '- Habitaciones dobles o triples, según disponibilidad y numero final de viajeros\n';
+        rpta += `- ${noches} desayunos buffet en los hoteles\n`;
+        rpta += '- *X* almuerzos buffet los días *X* y *X*\n';
+        rpta += '- Todas las entradas a parques arqueológicos y sitios turisticos\n';
+        rpta += '- Traslados aeropuerto hotel aeropuerto\n';
+        rpta += '- Entradas a Machupicchu en circuito 3\n';
+        rpta += '- Tren turístico panorámico de ida\n';
+        rpta += '- Tren turístico panorámico superior con show en vivo para el retorno.\n';
+        rpta += '- Guías profesionales\n';
+        rpta += '- Asistencia 24/7\n\n';        
+        rpta += '❌ *NO INCLUYE*\n\n';
+        rpta += '- Vuelos Internacionales\n';
+        rpta += '- Vuelos Nacionales\n';
+        rpta += '- Propinas\n';
+        rpta += '- No indicados en el paquete.\n\n';
+
+        return rpta;
+    }
+
+    function precioToWA(){
+        var pu = $('#pu').text().slice(0, -1);
+        var precio = $('#precio').text();
+        var ru = $('#ru').text().slice(0, -1);
+        var reserva = $('#reserva').text();
+        var nro = $('#nro').text();
+        var normal =  (parseFloat(pu.replace(',',''))/0.8).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        var rpta = '';
+
+        rpta += '💰 *PRECIOS POR PERSONA*\n';
+        rpta += '_Promoción valida hasta cierre de quincena_\n\n';
+        rpta += `- *Precio normal:* ~US\$${normal} dolares por persona~\n`;
+        rpta += `- *Precio Promocional:* US\$${pu} dolares por persona\n`;
+        rpta += `- *Monto de reserva:* US\$${ru} dolares por persona. (el saldo total lo pagan en efectivo en dolares al llegar a Perú)\n\n`;        
+        
+        rpta += '💰 *PRECIO TOTAL*\n\n';
+        rpta += `- *Total:* US\$${pu} x ${nro} persona(s) = US\$${precio} dolares\n`;
+        rpta += `- *Monto de reserva:* USD\$${ru} x ${nro} persona(s) = US\$${reserva} dolares \n`;
+        rpta += `_(el saldo pendiente se liquida el día 1 a su llegada a Cusco en EFECTIVO en dólares, en caso se liquide con liga de pago, se añadirá +8%)._\n\n`;
+
+        return rpta;
+    }
+
+    function linkPagoToWA(){
+        var rpta = '';
+        rpta += '🔗 *LINK DE PAGO*\n';
+        rpta += '----------\n';
+        //Titulo
+        rpta += $('#Form-field-Reserva-name').map(function() {
+            var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
+            var texto = $(this).val().trim();
+            return texto.replace(regex, "$2 | $1 persona(s) | Hotel $3 estrellas ($4)");
+        }).get().join('\n') + '\n';
+        //Precio y link
+        var reserva = $('#reserva').text();        
+        rpta += `*US\$${reserva}*\n`;
+        rpta += '👇👇👇\n';
+        
+        var referencia = $('#Form-field-Reserva-name').map(function() {
+            var regex = /^.*?x(\d+)\s*-\s*(.*?)\s*\((\d+)\s*estrellas\)\s*-\s*([\w-]+)/;
+            var texto = $(this).val().trim();
+            return texto.replace(regex, "$2 x $1 personas - $4");
+        }).get().join(' - ').replaceAll(" ", "%20").replaceAll(",", "");
+
+        reserva = reserva.replaceAll(",", "");
+        rpta += `https://secure.micuentaweb.pe/vads-site/IZI_MACHUPICCHU_PLUS?lck_vads_order_id=${referencia}&lck_vads_amount=${reserva}`;
+
+        return rpta;
+    }
+</script>
+<?php endif ?>

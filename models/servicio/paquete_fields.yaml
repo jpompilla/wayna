@@ -1,12 +1,14 @@
 fields:
     nombre:
         label: Nombre
-        span: auto
+        span: storm
+        cssClass: col-md-6
         required: 1
         type: text
     tipo:
         label: 'Tipo de Servicio'
-        span: auto
+        span: storm
+        cssClass: col-md-3
         type: dropdown
         required: 1
         default: Paquete
@@ -19,6 +21,18 @@ fields:
             Entradas: Entradas
             Tour: 'Tour o Actividad'
             Paquete: Paquete
+    estado:
+        label: Estado
+        span: storm
+        cssClass: col-md-3
+        type: dropdown
+        default: Borrador
+        options:
+            Borrador: Borrador
+            Privado: Privado
+            Interno: Interno
+            Publicado: Publicado
+            Deshabilitado: Deshabilitado
 tabs:
     fields:
         items:
@@ -142,18 +156,6 @@ tabs:
             descriptionFrom: description
             span: right
             type: relation
-            tab: Informacion
-        estado:
-            label: Estado
-            span: left
-            type: dropdown
-            default: Borrador
-            options:
-                Borrador: Borrador
-                Privado: Privado
-                Interno: Interno
-                Publicado: Publicado
-                Deshabilitado: Deshabilitado
             tab: Informacion
         page_title:
             label: Page Title

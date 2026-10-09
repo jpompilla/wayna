@@ -47,7 +47,7 @@ class PlanReservas
     /* -------------Metodos Publicos ------------- */
     public function agregar($servicio_id, $fecha)
     {
-        $servicio = Servicio::find($servicio_id);
+        $servicio = Servicio::find($servicio_id); //Servicio de proveedor
         $tipo = $servicio->tipo;
         $negocio_id = $servicio->negocio->id;
         $negocio = $servicio->negocio->nombre;
@@ -91,19 +91,19 @@ class PlanReservas
         };
     }
     private function toFila($fecha, $servicio_id, $nro_paxs, $capacidad, $costos){
-        if($fecha === null)
+        if($fecha === null) //Hotel
             return [
                 'cantidad' => ceil($nro_paxs / $capacidad),
                 'concepto' => $servicio_id,
-		'cu' => $costos[1],
+                'cu' => $costos[1],
                 'costo' => $costos[1] * ceil($nro_paxs / $capacidad),
             ];
-        else
+        else //Otros servicios
             return [
                 'fecha' => date('d/m/Y', strtotime($fecha)),
                 'cantidad' => ceil($nro_paxs / $capacidad),
                 'concepto' => $servicio_id,
-		'cu' => $costos[1],
+                'cu' => $costos[1],
                 'costo' => $costos[1] * ceil($nro_paxs / $capacidad),
             ];
     }
@@ -124,17 +124,15 @@ class PlanReservas
                 'nombre' => 0,],
         ];
     }
-
     private function formatearEstados(){
         foreach($this->plan as $t => $tipo){
             $nombre = mb_substr($tipo['nombre'], 5);
-            list($estado, $checks) = $this->checksProveedores($t, $tipo['proveedores']);
+            list($estado, $checks) = $this->checksProveedores($t, $tipo['proveedores'] ?? []);
             $this->plan[$t]['nombre'] = $estado.' '.$nombre;
         }
 
         $this->reserva->avance = $this->avanceReserva();
     }
-
     private function avanceReserva(){
         $rpta = '';
         $mapi = '';
@@ -151,6 +149,7 @@ class PlanReservas
                     $tours = mb_substr($tipo['nombre'], 1, 1);
                     break;
                 default:
+                    if(isset($tipo['proveedores']))
                     foreach($tipo['proveedores'] as $p => $proveedor){
                         if(mb_substr($proveedor['nombre'], 5) == 'TuBoleto Cultura')
                             $mapi = mb_substr($proveedor['nombre'], 2, 1);
@@ -201,6 +200,7 @@ class PlanReservas
 
     private function actualizarCostosYContactos(){
         foreach($this->plan as $t => $tipo){
+            if(isset($tipo['proveedores']))
             foreach($tipo['proveedores'] as $p => $proveedor){
                 $prov = null;
                 foreach($proveedor['servicios'] as $s => $servicio){
@@ -213,9 +213,8 @@ class PlanReservas
                     $cantidad = $servicio['cantidad'];
                     $pu = empty($servicio['pu']) ? 0 : $servicio['pu'];
                     
-		    $this->plan[$t]['proveedores'][$p]['servicios'][$s]['cu'] = $costos[1];
+                    $this->plan[$t]['proveedores'][$p]['servicios'][$s]['cu'] = $costos[1];
                     $this->plan[$t]['proveedores'][$p]['servicios'][$s]['costo'] = $costos[1] * $cantidad;
-
                     if(!empty($servicio['pu']))
                         if(array_key_exists('tc', $servicio) && !empty($servicio['tc']) && is_numeric($servicio['tc']) && $servicio['tc'] > 0)
                             $this->plan[$t]['proveedores'][$p]['servicios'][$s]['pago'] = round($pu * $cantidad / $servicio['tc'],2);
@@ -244,6 +243,7 @@ class PlanReservas
 
     private function generarPlantillas(){
         foreach($this->plan as $t => $tipo){
+            if(isset($tipo['proveedores']))
             foreach($tipo['proveedores'] as $p => $proveedor){
                 if(mb_substr($tipo['nombre'], 5) == 'Alojamiento'){
                     $data = [
@@ -331,6 +331,7 @@ class PlanReservas
     private function renderTrenes($servicios){
         if($servicios == null)
             foreach ($this->plan as $t => $tipo) {
+                if(isset($tipo['proveedores']))
                 foreach ($tipo['proveedores'] as $p => $proveedor) {
                     if(mb_substr($proveedor['nombre'], 5) == 'Peru Rail'){
                         $servicios = $proveedor['servicios'];
@@ -351,7 +352,7 @@ class PlanReservas
         $hoteles = [];
         foreach ($this->plan as $t => $tipo) {
             if(mb_substr($tipo['nombre'], 5) == 'Alojamiento'){
-                $hoteles = $tipo['proveedores'];
+                $hoteles = $tipo['proveedores'] ?? [];
                 break;
             }
         }
@@ -380,6 +381,7 @@ class PlanReservas
     private function renderEntradas(){
         $servicios = [];
         foreach ($this->plan as $t => $tipo) {
+            if(isset($tipo['proveedores']))
             foreach ($tipo['proveedores'] as $p => $proveedor) {
                 if(mb_substr($proveedor['nombre'], 5) == 'TuBoleto Cultura'){
                     $servicios = $proveedor['servicios'];

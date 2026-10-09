@@ -1,4 +1,15 @@
 scopes:
+    tipo:
+        label: Tipo
+        type: group
+        conditions: tipo in (:filtered)
+        options:
+            Tour: 'Tour (Actividad)'
+            Hotel: Hotel
+            Bono: Bono
+            Otro: Otro
+            Incremento: Incremento
+            Descuento: Descuento
     estado:
         label: Estado
         type: group

@@ -13,18 +13,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php if(isset($model->costos['total'])): ?>
                         <tr>
                             <td><strong><?= $model->costos['total'][0] ?></strong></td>
                             <?php for ($i = 1; $i <= 10; $i++): ?>
                             <td class="right"><strong><?= number_format($model->costos['total'][$i],2) ?></strong></td>
                             <?php endfor ?>
                         </tr>
+                        <?php endif ?>
+                        <?php if(isset($model->costos['operativo'])): ?>
                         <tr>
                             <td><span><?= $model->costos['operativo'][0] ?></span></td>
                             <?php for ($i = 1; $i <= 10; $i++): ?>
                             <td class="right"><span><?= number_format($model->costos['operativo'][$i],2) ?></span></td>
                             <?php endfor ?>
                         </tr>
+                        <?php endif ?>
                         
                         <?php if (isset($model->costos['operativo']['servicios'])): ?>
                         <?php foreach ($model->costos['operativo']['servicios'] as $costos): ?>
@@ -37,30 +41,38 @@
                         <?php endforeach ?>
                         <?php endif ?>
                         
+                        <?php if(isset($model->costos['pasarela'])): ?>
                         <tr>
                             <td><span><?= $model->costos['pasarela'][0] ?></span></td>
                             <?php for ($i = 1; $i <= 10; $i++): ?>
                             <td class="right"><span><?= number_format($model->costos['pasarela'][$i],2) ?></span></td>
                             <?php endfor ?>
                         </tr>
+                        <?php endif ?>
+                        <?php if(isset($model->costos['igv'])): ?>
                         <tr>
                             <td><span><?= $model->costos['igv'][0] ?></span></td>
                             <?php for ($i = 1; $i <= 10; $i++): ?>
                             <td class="right"><span><?= number_format($model->costos['igv'][$i],2) ?></span></td>
                             <?php endfor ?>
                         </tr>
+                        <?php endif ?>
+                        <?php if(isset($model->costos['ir'])): ?>
                         <tr>
                             <td><span><?= $model->costos['ir'][0] ?></span></td>
                             <?php for ($i = 1; $i <= 10; $i++): ?>
                             <td class="right"><span><?= number_format($model->costos['ir'][$i],2) ?></span></td>
                             <?php endfor ?>
                         </tr>
+                        <?php endif ?>
+                        <?php if(isset($model->costos['comision'])): ?>
                         <tr>
                             <td><span><?= $model->costos['comision'][0] ?></span></td>
                             <?php for ($i = 1; $i <= 10; $i++): ?>
                             <td class="right"><span><?= number_format($model->costos['comision'][$i],2) ?></span></td>
                             <?php endfor ?>
                         </tr>
+                        <?php endif ?>
                     </tbody>
                 </table>
             </div>

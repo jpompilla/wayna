@@ -1,6 +1,7 @@
 <html>
 <head>
     <title><?= $reserva->name ?></title>
+    <meta charset="UTF-8">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
         body {
@@ -97,7 +98,7 @@
         <caption>A. Datos de Reserva</caption>
         <tr class="form">
             <th>Paquete</th>
-            <td colspan="3"><?= $reserva->servicio->nombre ?></td>
+            <td colspan="3"><?= $reserva->TieneCotizacion ? $reserva->paquete : $reserva->servicio->nombre ?></td>
             <th>Codigo</th>
             <td><?= $reserva->codigo ?></td>
         </tr>
@@ -140,7 +141,7 @@
             <td class="center"><?= $item['dia'] ?></td>
             <td class="center"><?= isset($item['fecha'])? date('d/m/Y', strtotime($item['fecha'])) : 'Abierta' ?></td>
             <td><?= $item['tour'] ?><?= $reserva->entradaPorFecha($item['fecha']) ?></td>
-            <td class="center"><?= isset($item['vuelo']) ? $item['vuelo'] : '' ?> <em><?= $reserva->trenPorFecha($item['fecha']) ?></em></td>
+            <td class="center"><?= isset($item['vuelo']) ? $item['vuelo'] : '' ?> <em><?= implode('<br/>', $reserva->trenPorFecha($item['fecha'])) ?></em></td>
             <td><?= $reserva->hotelPorFecha($item['fecha'], $item['hotel']) ?></td>
         </tr>
         <?php endif ?>
@@ -169,6 +170,7 @@
     <table>
         <caption>D. Datos de los Pasajeros</caption>
         <tr>
+            <th>#</th>
             <th>Nombre</th>
             <th>Apellidos</th>
             <th>Nacionalidad</th>
@@ -177,18 +179,19 @@
             <th>Acomodacion</th>
         </tr>
         <?php if(count($reserva->paxs)): ?>
-        <?php foreach($reserva->paxs as $pax): ?>
+        <?php foreach($reserva->paxs as $p=>$pax): ?>
         <tr>
+            <td class="center"><?= $p + 1 ?></td>
             <td><?= $pax->nombres ?></td>
             <td><?= $pax->apellidos ?></td>
             <td class="center"><?= $pax->nacionalidad ?></td>
             <td class="center"><?= $pax->pasaporte_nro ?></td>
-            <td class="center"><?= date('d/m/Y', strtotime($pax->fecha_nacimiento)) ?></td>
+            <td class="center"><?= date('d/m/Y', strtotime($pax->fecha_nacimiento)) ?> (<?= $pax->edad ?>)</td>
             <td class="center"><?= $pax->acomodacion ?></td>
         </tr>
         <?php endforeach ?>
         <?php else: ?>
-        <tr><td colspan="6" class="pendiente">Pendiente</td></tr>
+        <tr><td colspan="7" class="pendiente">Pendiente</td></tr>
         <?php endif ?>
     </table>
     
@@ -269,9 +272,11 @@
             <th>Costo</th>
             <th>Pagos</th>
         </tr>
+        
+        <?php if(!$reserva->tieneCotizacion): ?>
         <?php $paquete = $reserva->precios[0] ?>
         <tr>
-            <td><?= $reserva->servicio? $reserva->servicio->nombre : 'Paquete personalizado '.count($reserva->itinerario).'D' ?></td>
+            <td><?= $reserva->servicio->nombre ?></td>
             <td class="center"><?= isset($reserva->fecha_inicio)? date('d/m/Y', strtotime($reserva->fecha_inicio)) : 'Abierta' ?></td>
             <td>Por persona</td>
             <td class="center"><?= $reserva->nro_paxs ?></td>
@@ -279,7 +284,34 @@
             <td class="right">$ <?= number_format($paquete[$reserva->nro_paxs > 10 ? 10 : $reserva->nro_paxs] * $reserva->nro_paxs, 2) ?></td>
             <td></td>
         </tr>
-        <?php if(isset($reserva->adicionales)): ?>
+        <?php endif ?>
+        <?php if($reserva->tieneCotizacion): ?>
+        <tr>
+            <td><?= $reserva->paquete ?></td>
+            <td class="center"><?= isset($reserva->fecha_inicio)? date('d/m/Y', strtotime($reserva->fecha_inicio)) : 'Abierta' ?></td>
+            <td>Por persona</td>
+            <td class="center"><?= $reserva->cotizacion['paquete']['nro_paxs'] ?></td>
+            <td class="right">$ <?= number_format(($reserva->cotizacion['paquete']['precio'] + $reserva->cotizacion['ajuste']['precio']) / $reserva->cotizacion['paquete']['nro_paxs'], 2) ?></td>
+            <td class="right">$ <?= number_format($reserva->cotizacion['paquete']['precio'] + $reserva->cotizacion['ajuste']['precio'], 2) ?></td>
+            <td></td>
+        </tr>
+        <?php endif ?>
+
+        <?php if($reserva->tieneCotizacion && isset($reserva->cotizacion['adicionales'])): ?>
+        <?php foreach($reserva->cotizacion['adicionales'] as $adicional): ?>
+        <tr>
+            <td><?= $adicional['nombre'] ?></td>
+            <td class="center"><?= isset($adicional['fecha'])? date('d/m/Y', strtotime($adicional['fecha'])) : 'Abierta' ?></td>
+            <td>Por persona</td>
+            <td class="center"><?= $adicional['nro_paxs'] ?></td>
+            <td class="right">$ <?= number_format($adicional['pu'], 2) ?></td>
+            <td class="right">$ <?= number_format($adicional['pu'] * $adicional['nro_paxs'], 2) ?></td>
+            <td></td>
+        </tr>
+        <?php endforeach ?>
+        <?php endif ?>
+
+        <?php if(!$reserva->tieneCotizacion && isset($reserva->adicionales)): ?>
         <?php foreach($reserva->adicionales as $adicional): ?>
         <tr>
             <td><?= $adicional['nombre'] ?></td>

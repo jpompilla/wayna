@@ -4,6 +4,9 @@ use Backend\Classes\Controller;
 use BackendMenu;
 use Soroche\Wayna\Models\Reserva;
 use Dompdf\Dompdf;
+use BackendAuth;
+use System\Classes\MediaManager;
+use Mail;
 
 class Reservas extends Controller
 {
@@ -18,13 +21,20 @@ class Reservas extends Controller
     public $relationConfig = 'config_relation.yaml';
 
     public $requiredPermissions = [
-        'enter_reservas' 
+        'enter_reservas', 'manage_reservas'
     ];
 
     public function __construct()
     {
         parent::__construct();
         BackendMenu::setContext('Soroche.Wayna', 'menu-reservas');
+    }
+
+    public function listExtendQuery($query)
+    {
+        $user = BackendAuth::getUser();
+        if(!$user->hasAccess('manage_reservas') && !$user->hasAccess('view_all_reservas'))
+            $query->where('user_id', $user->id);
     }
     
     public function update($recordId, $context = null)
@@ -88,6 +98,70 @@ class Reservas extends Controller
 
     }
 
+    public function brochure($recordId)
+    {
+        $reserva = Reserva::find($recordId);
+        
+        $html = $this->makePartial('brochurepdf', ['reserva' => $reserva, 'formato' => 'brochure', 'publico' => 'cliente']);
+
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        
+        $dompdf->render();
+
+        return $dompdf->stream($reserva->name.' (brochure).pdf', array("Attachment" => false));
+
+    }
+
+    public function itinerario($recordId)
+    {
+        $reserva = Reserva::find($recordId);
+        
+        $html = $this->makePartial('brochurepdf', ['reserva' => $reserva, 'formato' => 'itinerario', 'publico' => 'cliente']);
+
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        
+        $dompdf->render();
+
+        return $dompdf->stream($reserva->name.' (itinerario).pdf', array("Attachment" => false));
+
+    }
+
+    public function brochurecuenta($recordId)
+    {
+        $reserva = Reserva::find($recordId);
+        
+        $html = $this->makePartial('brochurepdf', ['reserva' => $reserva, 'formato' => 'brochure', 'publico' => 'cuenta']);
+
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        
+        $dompdf->render();
+
+        return $dompdf->stream($reserva->name.' (brochure).pdf', array("Attachment" => false));
+
+    }
+
+    public function itinerariocuenta($recordId)
+    {
+        $reserva = Reserva::find($recordId);
+        
+        $html = $this->makePartial('brochurepdf', ['reserva' => $reserva, 'formato' => 'itinerario', 'publico' => 'cuenta']);
+
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        
+        $dompdf->render();
+
+        return $dompdf->stream($reserva->name.' (itinerario).pdf', array("Attachment" => false));
+
+    }
+
     public function comprobante($recordId)
     {
         $reserva = Reserva::find($recordId);
@@ -126,5 +200,25 @@ class Reservas extends Controller
         BackendMenu::setContext('Soroche.Wayna', 'menu-seguimiento');
 
         return $this->makePartial('biblia', ['fechas' => $fechas, 'reservas' => $reservas, 'hoy' => $hoy, 'mañana' => $mañana]);
+    }
+
+    public function onEnviarLinkPago()
+    {
+        $email = post('email');
+        $concepto = post('concepto');
+        $referencia = post('referencia');
+        $reserva = post('reserva');
+        $monto = post('monto');
+        
+        Mail::sendTo($email, 'link_pago', [
+            'concepto'=> $concepto,
+            'referencia'=> $referencia,
+            'reserva'=> $reserva,
+            'monto'=> $monto
+        ]);
+        
+        return [
+            'rpta' => $email
+        ];
     }
 }

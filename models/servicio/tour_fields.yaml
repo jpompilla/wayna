@@ -1,25 +1,37 @@
 fields:
     nombre:
         label: Nombre
-        span: auto
-        required: 1
+        span: storm
+        cssClass: col-md-6
+        required: true
         type: text
     tipo:
         label: 'Tipo de Servicio'
-        span: auto
+        span: storm
+        cssClass: col-md-3
         type: dropdown
-        required: 1
+        required: true
         default: Tour
-        readOnly: true
+        readOnly: false
         options:
-            Alojamiento: Alojamiento
-            Alimentacion: Alimentación
-            Traslado: Traslado
-            Guiado: Guiado
-            Entradas: Entradas
-            Tour: 'Tour o Actividad'
-            Paquete: Paquete
-        tab: Informacion
+            Tour: 'Tour (Actividad)'
+            Hotel: Hotel
+            Bono: Bono
+            Otro: Otro
+            Incremento: Incremento
+            Descuento: Descuento
+    estado:
+        label: 'Estado'
+        span: storm
+        cssClass: col-md-3
+        type: dropdown
+        default: Borrador
+        options:
+            Borrador: Borrador
+            Privado: Privado
+            Interno: Interno
+            Publicado: Publicado
+            Deshabilitado: Deshabilitado
 tabs:
     fields:
         items:
@@ -204,18 +216,6 @@ tabs:
             span: right
             type: relation
             tab: Informacion
-        estado:
-            label: 'Estado'
-            span: left
-            type: dropdown
-            default: Borrador
-            options:
-                Borrador: Borrador
-                Privado: Privado
-                Interno: Interno
-                Publicado: Publicado
-                Deshabilitado: Deshabilitado
-            tab: Informacion
         page_title:
             label: Page Title
             span: auto
@@ -262,3 +262,36 @@ tabs:
                                         mode: image
                                         imageWidth: 100 
                                         imageHeight: 100
+                        resumen:
+                            label: Resumen
+                            size: small
+                            span: left
+                            type: textarea
+                            tab: PDF
+                        horario:
+                            label: Horario
+                            size: small
+                            span: right
+                            type: text
+                            tab: PDF
+                        bono:
+                            label: Incluye bono regalo
+                            span: right
+                            type: checkbox
+                            tab: PDF
+                        brochure:
+                            label: Brochure PDF
+                            type: mediafinder
+                            span: auto
+                            mode: image
+                            imageWidth: 400 
+                            imageHeight: 600
+                            tab: PDF
+                        resumen_image:
+                            label: Imagen resumen PDF
+                            type: mediafinder
+                            span: auto
+                            mode: image
+                            imageWidth: 600 
+                            imageHeight: 400
+                            tab: PDF

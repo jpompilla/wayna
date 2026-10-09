@@ -31,7 +31,8 @@ class Negocio extends Model
     public $jsonable = [
         'contactos',
         'params',
-        'evaluaciones'
+        'evaluaciones',
+        'content',
     ];
     
     public $attachOne = [

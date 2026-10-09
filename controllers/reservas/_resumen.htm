@@ -1,65 +1,63 @@
-<div id="margenList">    
+<div id="preciosList">    
     <!--?php if (isset($model->margen)): ?-->
         <div class="list-preview list-flush">
             <div class="control-list">
                 <table class="table data" data-control="rowlink">
                     <thead>
                         <tr>
-                            <th class="center" width="250"><span><strong>RESUMEN (USD)</strong></span></th>
-                            <?php for ($i = 1; $i <= 6; $i++): ?>
-                            <th class="center"><span>P<?= $i ?></span></th>
-                            <?php endfor ?>
+                            <th class="center"><span>Precios x paxs (USD)</span></th>
+                            <th class="center"><span>1P</span></th>
+                            <th class="center"><span>2P</span></th>
+                            <th class="center"><span>3P</span></th>
+                            <th class="center"><span>4P+</span></th>
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($model->precios as $precio): ?>
+                        <?php $limite = 4; $precios = $model->precios[0]; ?>
                         <tr>
-                            <td><span><strong>A. INGRESOS</strong></span></td>
-                            <?php for ($i = 1; $i <= 6; $i++): ?>
-                            <td class="right"><span><strong><?= number_format($precio[$i],2) ?></strong></span></td>
+                            <td><span><?= $model->servicio? $model->servicio->nombre : 'Paquete personalizado '.count($model->itinerario).'D' ?></span></td>
+                            <?php for($i=1; $i <= $limite; $i++): ?>
+                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
+                                <?= number_format($precios[$i], 0) ?>
+                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
                             <?php endfor ?>
                         </tr>
-                    <?php endforeach ?>
+                        
+                        <?php if(isset($model->adicionales)): ?>
+                        <?php foreach($model->adicionales as $adicional): ?>
                         <tr>
-                            <td><strong>B. COSTOS</strong></td>
-                            <?php for ($i = 1; $i <= 6; $i++): ?>
-                            <td class="right"><strong><?= number_format($model->costoTotal($i),2) ?></strong></td>
+                            <td><span><?= $adicional['nombre'] ?></span></td>
+                            <?php for($i=1; $i <= $limite; $i++): ?>
+                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
+                                <?= number_format($adicional[$i], 0) ?>
+                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
                             <?php endfor ?>
                         </tr>
+                        <?php endforeach ?>
+                        <?php endif ?>
+                        
                         <tr>
-                            <td><span><?= $model->costos[0] ?></span></td>
-                            <?php for ($i = 1; $i <= 6; $i++): ?>
-                            <td class="right"><span><?= number_format($model->costos[$i],2) ?></span></td>
-                            <?php endfor ?>
-                        </tr>
-                        <tr>
-                            <td><span>PASARELA (<?= number_format($model->params[0]['pasarela'] * 100,0) ?>%)</span></td>
-                            <?php for ($i = 1; $i <= 6; $i++): ?>
-                            <td class="right"><span><?= number_format($model->params[0]['pasarela'] * $model->params[0]['adelanto'],2) ?></span></td>
-                            <?php endfor ?>
-                        </tr>
-                        <tr>
-                            <td><span>IGV (<?= number_format($model->params[0]['igv'] * 100,0) ?>%)</span></td>
-                            <?php for ($i = 1; $i <= 6; $i++): ?>
-                            <td class="right"><span><?= number_format($model->params[0]['igv'] * $model->params[0]['adelanto'],2) ?></span></td>
-                            <?php endfor ?>
-                        </tr>
-                        <tr>
-                            <td><span>IR (<?= number_format($model->params[0]['ir'] * 100,0) ?>%)</span></td>
-                            <?php for ($i = 1; $i <= 6; $i++): ?>
-                            <td class="right"><span><?= number_format($model->params[0]['ir'] * $model->params[0]['adelanto'],2) ?></span></td>
+                            <th><span>PRECIO TOTAL (por pax)</span></th>
+                            <?php for($i=1; $i <= $limite; $i++): ?>
+                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
+                                <?= number_format($model->precioTotal($i), 0) ?>
+                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
                             <?php endfor ?>
                         </tr>
                         <tr>
-                            <td><span>COMISION</span></td>
-                            <?php for ($i = 1; $i <= 6; $i++): ?>
-                            <td class="right"><span><?= number_format($model->params[0]['comision'],2) ?></span></td>
+                            <th><span>ADELANTO (por pax)</span></th>
+                            <?php for($i=1; $i <= $limite; $i++): ?>
+                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
+                                <?= number_format($model->params[0]['adelanto'], 0) ?>
+                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
                             <?php endfor ?>
                         </tr>
                         <tr>
-                            <td><span><strong>C. MARGEN</strong></span></td>
-                            <?php for ($i = 1; $i <= 6; $i++): ?>
-                            <td class="right"><span><strong><?= number_format($precio[$i] - $model->costoTotal($i), 2) ?></strong></span></td>
+                            <th><span>COMISION (por pax)</span></th>
+                            <?php for($i=1; $i <= $limite; $i++): ?>
+                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? "<th  class='right'>":"<td  class='right'>" ?>
+                                <?= number_format($model->params[0]['comision'], 0) ?>
+                            <?= $model->nro_paxs == $i || ($model->nro_paxs > $limite && $i == $limite)  ? '</th>':'</td>' ?>
                             <?php endfor ?>
                         </tr>
                     </tbody>
@@ -75,5 +73,11 @@
     
     td.center, th.center{
         text-align: center;
+    }
+    #Repeater-formItems-items-items li[data-collapse-title="Dia de itinerario"] .repeater-item-remove{
+        display:none;
+    }
+    #Repeater-formItems-items-items li[data-collapse-title="Dia de itinerario"] .field-repeater-add-item{
+        display:none;
     }
 </style>

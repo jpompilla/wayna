@@ -1,0 +1,158 @@
+<html>
+<head>
+    <title>Analisis de Cosechas</title>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+        body {
+            font-family: 'Roboto', Arial;
+            font-size: 9pt;
+        }
+        .logo{
+            text-align: center;
+            margin-bottom: 0px;
+        }
+        .logo img{
+            height: 40px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 15pt;
+            font-weight: bold;
+            margin-top: 0px;
+        }
+        
+        table {
+            width: 100%;
+            /*border: 1px solid #ccc;*/
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        caption{
+            font-size: 10pt;
+            text-align: left;
+            padding: 2px 8px;
+            background-color: #ddd;
+            font-weight: bold;
+            /*border-left: 10px solid #dc573b;*/
+        }
+        th{
+            font-size: 10pt;
+            background-color: #eee;
+            font-weight: bold;
+            border: 1px solid #ccc;
+        }
+        td{
+            border: 1px solid #ccc;
+        }
+        td, tr.form th{
+            padding-left: 5px;
+            padding-right: 5px;
+            text-align: left;
+        }
+        td.pendiente{
+            background-color: yellow;
+        }
+        td.center{
+            text-align: center;
+        }
+        td.right{
+            text-align: right;
+        }
+        td.vacio{
+            border:0px;
+        }
+        tr.list{
+            vertical-align: top;
+        }
+        tr.sumatorio{
+             background-color: #f5f5f5;
+            font-weight: bold;
+        }
+        tr.terms{
+            font-size: 8pt;
+        }
+        tr.terms ol { 
+            counter-reset: item;
+            padding-left: 0px;
+        }
+        tr.terms ol>li{
+            display: block;
+            padding-left: 0;
+            margin-left: 10px;
+        }
+        tr.terms ol>li:before {
+            content: counters(item, ".") ". ";
+            counter-increment: item;
+        }
+        p.nota{
+            font-size: 7pt;
+        }
+        td.barra{
+            position: relative;
+            overflow: hidden;
+        }
+        td.barra div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;       /* Ocupa todo el alto de la celda */            
+            z-index: 1;         /* Se coloca detrás del texto */
+        }
+        td.barra span{
+            position: relative;
+            z-index: 2;         /* Se coloca encima de la barra */
+        }
+        td.barra span sup{
+            font-size: 9px;
+        }
+        
+    </style>
+</head>
+<body>
+    <p class="logo">
+        <img src="<?= $negocio->logo->path ?>" alt="">
+    </p>
+    
+    <h1>ANALISIS DE COSECHAS</h1>
+    <!--?= dd($data) ?-->
+
+    <table>
+        <caption>Analisis de Cosechas (En dólares americanos)</caption>
+        <!-- Cabecera-->
+        <tr>
+            <th width="250px">Mes reserva \ Mes Ejecución</th>
+            <?php foreach(array_first($data) as $e=>$mes): ?>
+            <th><?= $e ?></th>
+            <?php endforeach ?>
+        </tr>
+        
+        <!-- Cuerpo-->
+        <?php foreach($data as $r=>$mes): ?>
+        <tr>
+            <th><?= $r ?></th>
+            <?php foreach($mes as $e=>$valor): ?>
+            <td class="right barra">
+                <?php if($valor['total'] > 0): ?>
+                <div style="
+                    width: <?= number_format($valor['total']*100/$total_max,2) ?>%;
+                    <?php if($valor['total'] >= $total_max*0.6): ?>
+                        background-color: #93ca6691;
+                    <?php elseif($valor['total'] >= $total_max*0.3): ?>
+                        background-color: #f177058c;
+                    <?php else: ?>
+                        background-color: #ff5252a6;
+                    <?php endif ?>
+                    "></div>
+                <span>$<?= number_format($valor['total'],0) ?><sup><?= $valor['nro_paxs'] ?></sup></span>
+                <?php endif ?>
+            </td>
+            <?php endforeach ?>
+        </tr>
+        <?php endforeach ?>
+
+    </table>
+    <!--?= dd($data) ?-->
+</body>
+</html>

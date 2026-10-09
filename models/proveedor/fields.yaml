@@ -47,7 +47,7 @@ tabs:
             span: auto
             type: relation
             default: 2
-            readOnly: 1
+            readOnly: true
             tab: General
         contactos:
             label: Contactos
@@ -270,3 +270,17 @@ tabs:
             dynamicHeight: true
             height: false
             tab: Evaluaciones
+        content:
+            span: full
+            type: nestedform
+            usePanelStyles: false
+            tab: Contenido
+            form:
+                fields:
+                    brochure:
+                        label: Brochure PDF
+                        type: mediafinder
+                        span: auto
+                        mode: image
+                        imageWidth: 400 
+                        imageHeight: 400

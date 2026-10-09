@@ -38,6 +38,18 @@ permissions:
     enter_reservas:
         tab: 'soroche.wayna::lang.plugin.name'
         label: 'Ingresar Reservas'
+    view_all_reservas:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Ver todas las Reservas'
+    manage_reservas:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Administrar Reservas'
+    view_biblia:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Ver seguimientode de Reservas (Biblia)'
+    view_reportes_estrategicos:
+        tab: 'soroche.wayna::lang.plugin.name'
+        label: 'Ver Reportes Estratégicos'
 navigation:
     menu-wayna:
         label: Wayna
@@ -123,3 +135,26 @@ navigation:
         label: Seguimiento
         url: soroche/wayna/reservas/biblia
         icon: icon-calendar
+        permissions:
+            - view_biblia
+    menu-reportes:
+        label: Reportes
+        url: soroche/wayna/reportes
+        icon: icon-files-o
+        permissions:
+            - view_reportes_estrategicos
+        sideMenu:
+            menu-flujo-proyectado:
+                label: 'Flujo Proyectado'
+                url: soroche/wayna/reportes/proyectado
+                icon: icon-area-chart
+                attributes: {  }
+                permissions:
+                    - view_reportes_estrategicos
+            menu-cosechas:
+                label: 'Analisis de Cosechas'
+                url: soroche/wayna/reportes/cosechas
+                icon: icon-leaf
+                attributes: {  }
+                permissions:
+                    - view_reportes_estrategicos

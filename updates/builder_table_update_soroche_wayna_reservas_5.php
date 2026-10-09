@@ -9,7 +9,7 @@ class BuilderTableUpdateSorocheWaynaReservas5 extends Migration
     {
         Schema::table('soroche_wayna_reservas', function($table)
         {
-            $table->date('fecha_fin')->nullable();
+            $table->text('cotizacion')->nullable();
         });
     }
     
@@ -17,7 +17,7 @@ class BuilderTableUpdateSorocheWaynaReservas5 extends Migration
     {
         Schema::table('soroche_wayna_reservas', function($table)
         {
-            $table->dropColumn('fecha_fin');
+            $table->dropColumn('cotizacion');
         });
     }
 }

@@ -3,15 +3,17 @@ scopes:
         label: Agente
         modelClass: Backend\Models\User
         conditions: user_id in (:filtered)
-        nameFrom: first_name
+        nameFrom: full_name
+        permissions: 
+            - manage_reservas
+            - view_all_reservas
     estado:
         label: Estado
         type: group
         conditions: estado in (:filtered)
         options:
+            Cotizacion: Cotizacion
             Abierto: Abierto
             Confirmado: Confirmado
-            Cotizacion: Cotizacion
-            Cotizado: Cotizado
             Liquidado: Liquidado
             Anulado: Anulado
