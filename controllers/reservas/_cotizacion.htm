@@ -467,7 +467,7 @@
                 }
             });
             if (esteHotel) {
-                hotel = $(this).val().trim().slice(9);
+                hotel = $(this).val().trim().replace(/^\S+\s*/, "");
             }
         });
         titulo += `${hotel}`;
