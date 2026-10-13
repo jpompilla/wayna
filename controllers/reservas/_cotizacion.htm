@@ -84,6 +84,28 @@
                         onclick="javascript:enviarLinkPago()">
                         <i class="icon-envelope"></i>
                     </button>
+                    <a
+                        id="agendar-bienvenida"
+                        class="btn"
+                        target="_blank"
+                        href="#"
+                        title="Agendar Bienvenida en Google Calendar"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body">
+                        <i class="icon-plane-arrival"></i>
+                    </a>
+                    <!--a
+                        id="agendar-despedida"
+                        class="btn"
+                        target="_blank"
+                        href="#"
+                        title="Agendar Despedida en Google Calendar"
+                        data-control="tooltip"
+                        data-placement="bottom"
+                        data-container="body">
+                        <i class="icon-plane-departure"></i>
+                    </a-->
                 </div>
             </div>
         </div>
@@ -381,5 +403,94 @@
 
         return rpta;
     }
+
+    function eventoCalendar(titulo, fechaInicio, fechaFin, descripcion, ubicacion) {
+        var baseUrl = "https://calendar.google.com/calendar/render?action=TEMPLATE";
+        var params = new URLSearchParams({
+            text: titulo,
+            dates: `${fechaInicio}/${fechaFin}`,
+            details: descripcion,
+            location: ubicacion
+        });
+        return `${baseUrl}&${params.toString()}`;
+    }
+
+    function tituloEvento(){
+        
+    }
+
+    function crearEventoBienvenida() {
+        var titulo = '';
+        var fechaInicio = "";
+        var fechaFin = "";
+        var descripcion = 'PASAJEROS:\n-----\n';
+        var ubicacion = 'Aeropuerto Internacional Alejandro Velasco Astete, Cusco, Perú';
+        
+        //Lider, cantidad y procedencia
+        var cantidad = 0;
+        $('#Reservas-update-RelationController-paxs-view table tbody tr').each(function() {
+            var esLider = $(this).find('td').eq(8).text().trim();
+            cantidad++;
+            if (esLider == 'Lider') {
+                var lider = $(this).find('td').eq(2).text().trim() + " " + $(this).find('td').eq(3).text().trim();                
+                var procedencia = $(this).find('td').eq(4).text().trim();
+                titulo += `Recoger ${lider} x${cantidad} | ${procedencia} | `;
+            }
+            descripcion += $(this).find('td').eq(2).text().trim() + " " + $(this).find('td').eq(3).text().trim() + " | " + $(this).find('td').eq(4).text().trim() + "\n";
+        });
+
+        //Aerolinea, vuelo y horario
+        var fecha = '';
+        var salida = '';
+        var llegada = '';
+        $('#Table-ReservaVuelosdatatable table.data tbody tr').each(function() {
+            var ruta = $(this).find('td').eq(1).text().trim();
+            if (ruta.toLowerCase().endsWith("cusco")) {
+                var aerolinea = $(this).find('td').eq(2).text().trim();            
+                var vuelo = $(this).find('td').eq(3).text().trim();
+                fecha = $(this).find('td').eq(0).text().trim();
+                salida = $(this).find('td').eq(4).text().trim();
+                llegada = $(this).find('td').eq(5).text().trim();
+                titulo += `${aerolinea} ${vuelo} | ${salida} - ${llegada} | `;
+            }
+        });
+        fechaInicio = fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3$2$1T") + llegada.replace(':','') + "00";
+        fechaFin = fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3$2$1T") + llegada.replace(':','') + "00";
+
+        //Hotel
+        var hotel = 'Sin hotel';
+        $('#Form-formPlanForm1-field-Reserva-plan-1-proveedores-group div[data-field-name="nombre"] input[type="text"]').each(function() {
+            var esteHotel = false;
+            $(this).parent().parent().find('input[type="checkbox"]:checked').each(function() {
+                if(this.value == '2026-08-20') {                    
+                    esteHotel = true;
+                }
+            });
+            if (esteHotel) {
+                hotel = $(this).val().trim().slice(9);
+            }
+        });
+        titulo += `${hotel}`;
+
+
+        var url = eventoCalendar(titulo, fechaInicio, fechaFin, descripcion, ubicacion);
+        $('#agendar-bienvenida').attr('href', url);
+    }
+
+    function crearEventoDespedida() {
+        var titulo = tituloEvento();
+        var fechaInicio = "20240601T090000-05:00";
+        var fechaFin = "20240601T100000-05:00";
+        var descripcion = 'Despedida de Cusco';
+        var ubicacion = '';
+
+        var url = eventoCalendar(titulo, fechaInicio, fechaFin, descripcion, ubicacion);
+        $('#agendar-despedida').attr('href', url);
+    }
+
+    $(document).ready(function() {
+        crearEventoBienvenida();
+        crearEventoDespedida();
+    });
 </script>
 <?php endif ?>

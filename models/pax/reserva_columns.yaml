@@ -22,9 +22,9 @@ columns:
     acomodacion:
         label: acomodacion
         type: text
-    updated_at:
-        label: updated_at
-        type: datetime
+    lider:
+        label: Lider?
+        type: partial
     id:
         label: id
         type: number

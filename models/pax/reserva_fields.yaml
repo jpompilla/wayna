@@ -52,6 +52,7 @@ tabs:
                 Venezuela: Venezuela
                 Nicaragua: Nicaragua
                 Brasil: Brasil
+                España: España
             type: dropdown
             span: right
             tab: Datos Personales
