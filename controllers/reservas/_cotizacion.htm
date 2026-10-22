@@ -95,7 +95,7 @@
                         data-container="body">
                         <i class="icon-plane-arrival"></i>
                     </a>
-                    <!--a
+                    <a
                         id="agendar-despedida"
                         class="btn"
                         target="_blank"
@@ -105,7 +105,7 @@
                         data-placement="bottom"
                         data-container="body">
                         <i class="icon-plane-departure"></i>
-                    </a-->
+                    </a>
                 </div>
             </div>
         </div>
@@ -426,7 +426,7 @@
         var descripcion = 'PASAJEROS:\n-----\n';
         var ubicacion = 'Aeropuerto Internacional Alejandro Velasco Astete, Cusco, Perú';
         
-        //Lider, cantidad y procedencia
+        //Lider, cantidad, procedencia y descripcion de los pasajeros
         var cantidad = 0;
         $('#Reservas-update-RelationController-paxs-view table tbody tr').each(function() {
             var esLider = $(this).find('td').eq(8).text().trim();
@@ -459,30 +459,131 @@
 
         //Hotel
         var hotel = 'Sin hotel';
+        var hoteles = [];
+        
         $('#Form-formPlanForm1-field-Reserva-plan-1-proveedores-group div[data-field-name="nombre"] input[type="text"]').each(function() {
             var esteHotel = false;
-            $(this).parent().parent().find('input[type="checkbox"]:checked').each(function() {
+            var elHotel = $(this).val().trim().replace(/^\S+\s*/, "");
+            $(this).parent().parent().find('input[type="checkbox"]:checked').each(function() {                
                 if(this.value == fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3-$2-$1")) {                    
                     esteHotel = true;
                 }
+                hoteles[this.value.slice(5)] = elHotel;
             });
             if (esteHotel) {
-                hotel = $(this).val().trim().replace(/^\S+\s*/, "");
+                hotel = elHotel;
             }
         });
         titulo += `${hotel}`;
 
+        //Itinerario (Estado de Reserva)
+        var filtro = '#Repeater-formItems-items-items li[data-collapse-title="Dia de itinerario"] .repeater-item-collapsed-title, ' +
+                     '#Repeater-formItems-items-items li[data-collapse-title="Servicio Adicional"] .repeater-item-collapsed-title';
+        descripcion += '\nITINERARIO\n-----\n';
+        itinerario = $(filtro).map(function() {
+            var texto = $(this).text().trim();
+            
+            const regex = /\((\d{2})\/(\d{2})\)/;
+            const coincidencia = texto.match(regex);
+            if (coincidencia) {
+                const dia = coincidencia[1];
+                const mes = coincidencia[2];
+                const clave = `${mes}-${dia}`; // Formato 'MM-DD'
+                texto = texto.split(' + ')[0]; 
+                const hotel = (clave in hoteles ? ' + ' + hoteles[clave] : '');
+                
+                return texto + hotel;
+            }
+            return texto
+                .replace(/(Dia \d+\.)/, '*$1*')
+                .replace(/↳/g, '-->');
+        }).get().join('\n') + '\n\n';
+        descripcion += itinerario;
 
         var url = eventoCalendar(titulo, fechaInicio, fechaFin, descripcion, ubicacion);
         $('#agendar-bienvenida').attr('href', url);
     }
 
     function crearEventoDespedida() {
-        var titulo = tituloEvento();
-        var fechaInicio = "20240601T090000-05:00";
-        var fechaFin = "20240601T100000-05:00";
-        var descripcion = 'Despedida de Cusco';
+        var titulo = '';
+        var fechaInicio = "";
+        var fechaFin = "";
+        var descripcion = 'PASAJEROS:\n-----\n';
         var ubicacion = '';
+        
+        //Lider, cantidad, procedencia y descripcion de los pasajeros
+        var cantidad = 0;
+        $('#Reservas-update-RelationController-paxs-view table tbody tr').each(function() {
+            var esLider = $(this).find('td').eq(8).text().trim();
+            cantidad++;
+            if (esLider == 'Lider') {
+                var lider = $(this).find('td').eq(2).text().trim() + " " + $(this).find('td').eq(3).text().trim();                
+                var procedencia = $(this).find('td').eq(4).text().trim();
+                titulo += `Grabar testimonio ${lider} x${cantidad} | ${procedencia} | `;
+            }
+            descripcion += $(this).find('td').eq(2).text().trim() + " " + $(this).find('td').eq(3).text().trim() + " | " + $(this).find('td').eq(4).text().trim() + "\n";
+        });
+
+        //Aerolinea, vuelo y horario
+        var fecha = '';
+        var salida = '';
+        var llegada = '';
+        $('#Table-ReservaVuelosdatatable table.data tbody tr').each(function() {
+            var ruta = $(this).find('td').eq(1).text().trim();
+            if (ruta.toLowerCase().startsWith("cusco")) {
+                var aerolinea = $(this).find('td').eq(2).text().trim();            
+                var vuelo = $(this).find('td').eq(3).text().trim();
+                fecha = $(this).find('td').eq(0).text().trim();
+                salida = $(this).find('td').eq(4).text().trim();
+                llegada = $(this).find('td').eq(5).text().trim();
+                titulo += `${aerolinea} ${vuelo} | ${salida} - ${llegada} | `;
+            }
+        });
+        fechaInicio = fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3$2$1T") + salida.replace(':','') + "00";
+        fechaFin = fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3$2$1T") + salida.replace(':','') + "00";
+
+        //Hotel
+        var hotel = 'Sin hotel';
+        var hoteles = [];
+        
+        $('#Form-formPlanForm1-field-Reserva-plan-1-proveedores-group div[data-field-name="nombre"] input[type="text"]').each(function() {
+            var esteHotel = false;
+            var elHotel = $(this).val().trim().replace(/^\S+\s*/, "");
+            $(this).parent().parent().find('input[type="checkbox"]:checked').each(function() {                
+                if(this.value == fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3-$2-$1")) {                    
+                    esteHotel = true;
+                }
+                hoteles[this.value.slice(5)] = elHotel;
+            });
+            if (esteHotel) {
+                hotel = elHotel;
+            }
+        });
+        titulo += `${hotel}`;
+
+        //Itinerario (Estado de Reserva)
+        var filtro = '#Repeater-formItems-items-items li[data-collapse-title="Dia de itinerario"] .repeater-item-collapsed-title, ' +
+                     '#Repeater-formItems-items-items li[data-collapse-title="Servicio Adicional"] .repeater-item-collapsed-title';
+        descripcion += '\nITINERARIO\n-----\n';
+        itinerario = $(filtro).map(function() {
+            var texto = $(this).text().trim();
+            
+            const regex = /\((\d{2})\/(\d{2})\)/;
+            const coincidencia = texto.match(regex);
+            if (coincidencia) {
+                const dia = coincidencia[1];
+                const mes = coincidencia[2];
+                const clave = `${mes}-${dia}`; // Formato 'MM-DD'
+                texto = texto.split(' + ')[0]; 
+                const hotel = (clave in hoteles ? ' + ' + hoteles[clave] : '');
+                
+                return texto + hotel;
+            }
+            return texto
+                .replace(/(Dia \d+\.)/, '*$1*')
+                .replace(/↳/g, '-->');
+        }).get().join('\n') + '\n\n';
+        descripcion += itinerario;
 
         var url = eventoCalendar(titulo, fechaInicio, fechaFin, descripcion, ubicacion);
         $('#agendar-despedida').attr('href', url);
