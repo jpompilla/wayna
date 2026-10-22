@@ -32,6 +32,7 @@ columns:
         label: Avance
         type: text
         width: 100px
+        sortable: false
         permissions: 
             - manage_reservas
     facturacion:
@@ -41,6 +42,12 @@ columns:
         sortable: false
         permissions: 
             - manage_reservas
-    updated_at:
-        label: updated_at
-        type: datetime
+    actions:
+        label: Acciones
+        type: partial
+        sortable: false
+        permissions: 
+            - manage_reservas
+    #updated_at:
+    #    label: updated_at
+    #    type: datetime
