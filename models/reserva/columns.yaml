@@ -22,9 +22,9 @@ columns:
     nro_paxs:
         label: nro_paxs
         type: number
-    comision:
-        label: Comision
-        type: number
+    #comision:
+    #    label: Comision
+    #    type: number
     total:
         label: Total
         type: number
@@ -48,6 +48,7 @@ columns:
         sortable: false
         permissions: 
             - manage_reservas
-    #updated_at:
-    #    label: updated_at
-    #    type: datetime
+    created_at:
+        label: Creado
+        type: date
+        format: d/m/Y
