@@ -75,6 +75,9 @@ class Pax extends Model
         if (!$reserva || !$reserva->fecha_inicio) {
             return false;
         }
+        if (!isset($this->pasaporte_vigencia)) {
+            return false;
+        }
 
         $fechaLimite = date('Y-m-d', strtotime('+6 months', strtotime($reserva->fecha_inicio)));
 

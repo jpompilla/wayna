@@ -65,7 +65,7 @@ tabs:
             format: d/m/yy
             ignoreTimezone: true
         pasaporte_vigencia:
-            label: 'Vigencia pasaporte'
+            label: 'Fecha de caducidad del pasaporte'
             mode: date
             type: datepicker
             span: right
