@@ -63,3 +63,6 @@
 1.0.22:
     - 'Create store procedure sp_flujo_proyectado()'
     - migration1022.php
+1.0.23:
+    - 'Add redidencia y vigencia to table soroche_wayna_paxs'
+    - builder_table_update_soroche_wayna_paxs.php

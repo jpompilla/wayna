@@ -69,4 +69,15 @@ class Pax extends Model
     public function getEdadAttribute(){
         return floor((time()-strtotime($this->fecha_nacimiento))/(60*60*24*365.25));
     }
+
+    public function getRenovarAttribute(){
+        $reserva = $this->reservas()->first();
+        if (!$reserva || !$reserva->fecha_inicio) {
+            return false;
+        }
+
+        $fechaLimite = date('Y-m-d', strtotime('+6 months', strtotime($reserva->fecha_inicio)));
+
+        return $fechaLimite > $this->pasaporte_vigencia;
+    }
 }

@@ -64,6 +64,19 @@ tabs:
             tab: Datos Personales
             format: d/m/yy
             ignoreTimezone: true
+        pasaporte_vigencia:
+            label: 'Vigencia pasaporte'
+            mode: date
+            type: datepicker
+            span: right
+            tab: Datos Personales
+            format: d/m/yy
+            ignoreTimezone: true
+        residencia:
+            label: Lugar de residencia
+            type: text
+            span: right
+            tab: Datos Personales
         acomodacion:
             label: Acomodacion
             span: right

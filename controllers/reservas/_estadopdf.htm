@@ -184,8 +184,8 @@
             <td class="center"><?= $p + 1 ?></td>
             <td><?= $pax->nombres ?></td>
             <td><?= $pax->apellidos ?></td>
-            <td class="center"><?= $pax->nacionalidad ?></td>
-            <td class="center"><?= $pax->pasaporte_nro ?></td>
+            <td class="center"><?= $pax->nacionalidad ?><?= isset($pax->residencia) && !empty($pax->residencia) ? ' / '.$pax->residencia : '' ?></td>
+            <td class="center"><?= $pax->pasaporte_nro ?><?= $pax->renovar ? ' (renovar)':'' ?></td>
             <td class="center"><?= date('d/m/Y', strtotime($pax->fecha_nacimiento)) ?> (<?= $pax->edad ?>)</td>
             <td class="center"><?= $pax->acomodacion ?></td>
         </tr>
