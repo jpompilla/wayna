@@ -206,24 +206,38 @@
             <th>Llegada</th>
             <th>Pasajeros</th>
         </tr>
-        <?php if(isset($reserva->vuelos) && isset($reserva->vuelos[0]['fecha'])): ?>
-        <?php foreach($reserva->vuelos as $vuelo): ?>
-            <?php if(isset($vuelo['fecha'])): ?>
-            <tr>
-                <td class="center"><?=$vuelo['fecha'] ?></td>
-                <td class="center"><?=$vuelo['ruta'] ?></td>
-                <td class="center"><?=$vuelo['aerolinea'] ?></td>
-                <td class="center"><?=$vuelo['vuelo'] ?></td>
-                <td class="center"><?=$vuelo['salida'] ?></td>
-                <td class="center"><?=$vuelo['llegada'] ?></td>
-                <td class="center"><?=$vuelo['pasajeros'] ?></td>
-            </tr>
-            <?php else: ?>
-            <tr><td colspan="7" class="pendiente">Pendiente</td></tr>
-            <?php endif ?>
-        <?php endforeach ?>
+        <?php if($reserva->tieneVuelos): ?>
+            <?php foreach($reserva->vuelos as $vuelo): ?>
+                <?php if(isset($vuelo['fecha'])): ?>
+                <tr>
+                    <td class="center"><?=$vuelo['fecha'] ?></td>
+                    <td class="center"><?=$vuelo['ruta'] ?></td>
+                    <td class="center"><?=$vuelo['aerolinea'] ?></td>
+                    <td class="center"><?=$vuelo['vuelo'] ?></td>
+                    <td class="center"><?=$vuelo['salida'] ?></td>
+                    <td class="center"><?=$vuelo['llegada'] ?></td>
+                    <td class="center"><?=$vuelo['pasajeros'] ?></td>
+                </tr>
+                <?php else: ?>
+                <tr><td colspan="7" class="pendiente">Pendiente</td></tr>
+                <?php endif ?>
+            <?php endforeach ?>
         <?php else: ?>
-        <tr><td colspan="7" class="pendiente">Pendiente</td></tr>
+            <?php if(count($reserva->vuelos2)): ?>
+            <?php foreach($reserva->vuelos2 as $vuelo2): ?>
+                <tr>
+                    <td class="center"><?= date('d/m/Y', strtotime($vuelo2->salida)) ?></td>
+                    <td class="center"><?= $vuelo2->aerolinea ?></td>
+                    <td class="center"><?= $vuelo2->ruta ?></td>
+                    <td class="center"><?= $vuelo2->vuelo ?></td>
+                    <td class="center"><?= date('H:i', strtotime($vuelo2->salida)) ?></td>
+                    <td class="center"><?= date('H:i', strtotime($vuelo2->llegada)) ?><sup style="font-size: 0.8em;"><?= $vuelo2->diasDiferencia ? '+'.$vuelo2->diasDiferencia: ''?></sup> </td>
+                    <td class="center"><?= $vuelo2->pasajeros ?></td>
+                </tr>
+            <?php endforeach ?>
+            <?php else: ?>
+                <tr><td colspan="7" class="pendiente">Pendiente</td></tr>
+            <?php endif ?>
         <?php endif ?>
     </table>
     

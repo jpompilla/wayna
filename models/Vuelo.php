@@ -44,11 +44,21 @@ class Vuelo extends Model
         $rpta = [];
         $rpta['Todos'] = 'Todos';
 
-        foreach ($this->reserva->paxs()->get(['nombres', 'apellidos']) as $pax) {
-            $nombreCompleto = trim(($pax->nombres ?? '') . ' ' . ($pax->apellidos ?? ''));
-            $rpta[$nombreCompleto] = $nombreCompleto;
-        }
+        if(!isset($this->reserva))
+            return $rpta;
+        if(!isset($this->reserva->paxs))
+            return $rpta;
+        if(count($this->reserva->paxs) == 0)
+            return $rpta;            
+                
+        foreach ($this->reserva->paxs as $pax)
+            $rpta[$pax->fullname] = $pax->fullname;
         
         return $rpta;
+    }
+    public function getDiasDiferenciaAttribute(){        
+        return (new \DateTime(date('Y-m-d', strtotime($this->salida))))
+            ->diff(new \DateTime(date('Y-m-d', strtotime($this->llegada))))
+            ->days;
     }
 }

@@ -279,7 +279,7 @@ class Reserva extends Model
         return isset($this->cotizacion);
     }
 
-    public function getTieneVuelosAttribute(){
+    public function getTieneVuelosAttribute() : bool {
         if(!isset($this->vuelos))
             return false;
         if(count($this->vuelos) == 0)
@@ -794,10 +794,18 @@ class Reserva extends Model
                 $hotel = Servicio::find($item['hotel']);
                 $itinerario[$item['dia']]['hotel'] = isset($hotel) ? $hotel->nombre : null;
                 
-                if(isset($this->vuelos) && isset($this->vuelos[0]['fecha']))
+                //Vuelos
+                if($this->tieneVuelos){
                     foreach($this->vuelos as $vuelo)
                         if(date('d/m/Y', strtotime($item['fecha'])) == $vuelo['fecha'])
                             $itinerario[$item['dia']]['vuelo'] = $vuelo['salida'].'->'.$vuelo['llegada'];
+                }
+                else{
+                    foreach($this->vuelos2 as $vuelo2){
+                        if(date('d/m/Y', strtotime($item['fecha'])) == date('d/m/Y', strtotime($vuelo2->salida)) || date('d/m/Y', strtotime($item['fecha'])) == date('d/m/Y', strtotime($vuelo2->llegada)))
+                            $itinerario[$item['dia']]['vuelo'] = date('H:i', strtotime($vuelo2->salida)).($vuelo2->diasDiferencia?'+>':'->').date('H:i', strtotime($vuelo2->llegada));
+                    }
+                }
                 
                 foreach($tour->items as $servicioItem)
                     foreach($servicioItem['incluye'] as $in)

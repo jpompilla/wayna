@@ -443,6 +443,8 @@
         var fecha = '';
         var salida = '';
         var llegada = '';
+        var fechaInicio = '';
+        var fechaFin = '';
         $('#Table-ReservaVuelosdatatable table.data tbody tr').each(function() {
             var ruta = $(this).find('td').eq(1).text().trim();
             if (ruta.toLowerCase().endsWith("cusco")) {
@@ -452,10 +454,25 @@
                 salida = $(this).find('td').eq(4).text().trim();
                 llegada = $(this).find('td').eq(5).text().trim();
                 titulo += `${aerolinea} ${vuelo} | ${salida} - ${llegada} | `;
+
+                fechaInicio = fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3$2$1T") + llegada.replace(':','') + "00";
+                fechaFin = fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3$2$1T") + llegada.replace(':','') + "00";
             }
         });
-        fechaInicio = fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3$2$1T") + llegada.replace(':','') + "00";
-        fechaFin = fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3$2$1T") + llegada.replace(':','') + "00";
+        
+        $('#Reservas-update-RelationController-vuelos2-view table.data tbody tr').each(function() {
+            var ruta = $(this).find('td').eq(1).text().trim();
+            if (ruta.toLowerCase().endsWith("cusco")) {
+                var aerolinea = $(this).find('td').eq(2).text().trim();            
+                var vuelo = $(this).find('td').eq(3).text().trim();
+                salida = $(this).find('td').eq(4).text().trim();
+                llegada = $(this).find('td').eq(5).text().trim();
+                titulo += `${aerolinea} ${vuelo} | ${salida.slice(-5)} - ${llegada.slice(-5)} | `;
+
+                fechaInicio = llegada.replace(/^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$/,"$3$2$1T$4$500");
+                fechaFin = llegada.replace(/^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$/,"$3$2$1T$4$500");
+            }
+        });
 
         //Hotel
         var hotel = 'Sin hotel';
@@ -537,10 +554,26 @@
                 salida = $(this).find('td').eq(4).text().trim();
                 llegada = $(this).find('td').eq(5).text().trim();
                 titulo += `${aerolinea} ${vuelo} | ${salida} - ${llegada} | `;
+
+                fechaInicio = fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3$2$1T") + salida.replace(':','') + "00";
+                fechaFin = fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3$2$1T") + salida.replace(':','') + "00";
             }
         });
-        fechaInicio = fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3$2$1T") + salida.replace(':','') + "00";
-        fechaFin = fecha.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/,"$3$2$1T") + salida.replace(':','') + "00";
+
+        $('#Reservas-update-RelationController-vuelos2-view table.data tbody tr').each(function() {
+            var ruta = $(this).find('td').eq(1).text().trim();
+            if (ruta.toLowerCase().startsWith("cusco")) {
+                var aerolinea = $(this).find('td').eq(2).text().trim();            
+                var vuelo = $(this).find('td').eq(3).text().trim();
+                salida = $(this).find('td').eq(4).text().trim();
+                llegada = $(this).find('td').eq(5).text().trim();
+                titulo += `${aerolinea} ${vuelo} | ${salida.slice(-5)} - ${llegada.slice(-5)} | `;
+
+                fechaInicio = salida.replace(/^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$/,"$3$2$1T$4$500");
+                fechaFin = salida.replace(/^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$/,"$3$2$1T$4$500");
+            }
+        });
+        
 
         //Hotel
         var hotel = 'Sin hotel';
