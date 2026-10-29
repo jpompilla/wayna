@@ -398,6 +398,13 @@ tabs:
                 - update
             type: partial
             tab: Paxs y Vuelos
+        vuelos2:
+            label: Vuelos
+            span: full
+            context:
+                - update
+            type: partial
+            tab: Paxs y Vuelos
         vuelos:
             label: Vuelos
             type: datatable

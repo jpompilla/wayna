@@ -66,3 +66,6 @@
 1.0.23:
     - 'Add redidencia y vigencia to table soroche_wayna_paxs'
     - builder_table_update_soroche_wayna_paxs.php
+1.0.24:
+    - 'Created table soroche_wayna_vuelos'
+    - builder_table_create_soroche_wayna_vuelos.php

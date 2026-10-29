@@ -58,6 +58,14 @@ class Reserva extends Model
         ],
     ];
     
+    public $hasMany = [
+        'vuelos2' => [
+            'soroche\Wayna\Models\Vuelo',
+            'key' => "reserva_id",
+            'order' => 'salida asc'
+        ],
+    ];
+
     public $belongsToMany = [
         'paxs' => [
             'soroche\Wayna\Models\Pax',
@@ -269,6 +277,19 @@ class Reserva extends Model
 
     public function getTieneCotizacionAttribute(){
         return isset($this->cotizacion);
+    }
+
+    public function getTieneVuelosAttribute(){
+        if(!isset($this->vuelos))
+            return false;
+        if(count($this->vuelos) == 0)
+            return false;
+        if(!array_key_exists('fecha', $this->vuelos[0]))
+            return false;
+        if(empty($this->vuelos[0]['fecha']))
+            return false;
+
+        return true;
     }
     
     /*---------- Combos -------------*/
@@ -490,6 +511,9 @@ class Reserva extends Model
             if (isset($fields->calculos))
                 $fields->calculos->hidden = !isset($this->cotizacion);
             $fields->resumen->hidden = isset($this->cotizacion);
+
+            $fields->vuelos->hidden = !$this->tieneVuelos;
+            $fields->vuelos2->hidden = $this->tieneVuelos;
         }
     }
     

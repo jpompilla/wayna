@@ -1,0 +1,23 @@
+columns:
+    ruta:
+        label: ruta
+        type: text
+    aerolinea:
+        label: aerolinea
+        type: text
+    vuelo:
+        label: vuelo
+        type: text
+    salida:
+        label: salida
+        type: datetime
+        format: d/m/yy H:i
+        ignoreTimezone: true
+    llegada:
+        label: llegada
+        type: datetime
+        format: d/m/yy H:i
+        ignoreTimezone: true
+    pasajeros:
+        label: pasajeros
+        type: text
