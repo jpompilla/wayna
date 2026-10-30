@@ -139,8 +139,15 @@
         <?php if(array_key_exists('dia', $item)): ?>
         <tr>
             <td class="center"><?= $item['dia'] ?></td>
-            <td class="center"><?= isset($item['fecha'])? date('d/m/Y', strtotime($item['fecha'])) : 'Abierta' ?></td>
-            <td><?= $item['tour'] ?><?= $reserva->entradaPorFecha($item['fecha']) ?></td>
+            <td class="center">
+                <?= isset($item['fecha'])? date('d/m/Y', strtotime($item['fecha'])) : 'Abierta' ?>                
+            </td>
+            <td>
+                <?php if(isset($item['cumple'])):?>
+                    <img src="<?= url('/storage/app/media/torta.png') ?>" alt="" style="width: 10px; height: 10px; margin-right: 5px;" title="Cumpleaños">
+                <?php endif?>    
+                <?= $item['tour'] ?><?= $reserva->entradaPorFecha($item['fecha']) ?>
+            </td>
             <td class="center"><?= isset($item['vuelo']) ? $item['vuelo'] : '' ?> <em><?= implode('<br/>', $reserva->trenPorFecha($item['fecha'])) ?></em></td>
             <td><?= $reserva->hotelPorFecha($item['fecha'], $item['hotel']) ?></td>
         </tr>
@@ -186,7 +193,12 @@
             <td><?= $pax->apellidos ?></td>
             <td class="center"><?= $pax->nacionalidad ?><?= isset($pax->residencia) && !empty($pax->residencia) ? ' / '.$pax->residencia : '' ?></td>
             <td class="center"><?= $pax->pasaporte_nro ?><?= $pax->renovar ? ' (renovar)':'' ?></td>
-            <td class="center"><?= date('d/m/Y', strtotime($pax->fecha_nacimiento)) ?> (<?= $pax->edad ?>)</td>
+            <td class="center">
+                <?php if($pax->cumpleanios):?>
+                    <img src="<?= url('/storage/app/media/torta.png') ?>" alt="" style="width: 10px; height: 10px; margin-right: 5px;" title="Cumpleaños">
+                <?php endif?>
+                <?= date('d/m/Y', strtotime($pax->fecha_nacimiento)) ?> (<?= $pax->edad ?>)
+            </td>
             <td class="center"><?= $pax->acomodacion ?></td>
         </tr>
         <?php endforeach ?>

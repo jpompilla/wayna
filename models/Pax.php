@@ -83,4 +83,29 @@ class Pax extends Model
 
         return $fechaLimite > $this->pasaporte_vigencia;
     }
+
+    public function getCumpleaniosAttribute(){
+        $reserva = $this->reservas()->first();
+        
+        if (!$reserva || !$reserva->fecha_inicio || !$reserva->fecha_fin) {
+            return false;
+        }
+
+        $fechaNacimiento = new \DateTime($this->fecha_nacimiento);
+        $fechaInicio = new \DateTime($reserva->fecha_inicio);
+        $fechaFin = new \DateTime($reserva->fecha_fin); 
+
+        $fechaCumpleanios = new \DateTime($fechaInicio->format('Y') . '-' . $fechaNacimiento->format('m-d'));
+
+        if ($fechaCumpleanios < $fechaInicio) {
+            $fechaCumpleanios->modify('+1 year');
+        }
+
+        if ($fechaCumpleanios >= $fechaInicio && $fechaCumpleanios <= $fechaFin) {
+            return $fechaCumpleanios->format('Y-m-d');
+        } else {
+            return '';
+        }
+    }
+        
 }

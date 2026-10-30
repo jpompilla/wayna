@@ -793,6 +793,11 @@ class Reserva extends Model
                 $itinerario[$item['dia']]['tour'] = $tour->nombre;
                 $hotel = Servicio::find($item['hotel']);
                 $itinerario[$item['dia']]['hotel'] = isset($hotel) ? $hotel->nombre : null;
+
+                //Cumpleaños
+                foreach($this->paxs as $pax)
+                    if(date('d/m', strtotime($item['fecha'])) == date('d/m', strtotime($pax->fecha_nacimiento)))
+                        $itinerario[$item['dia']]['cumple'] = $item['fecha'];
                 
                 //Vuelos
                 if($this->tieneVuelos){
