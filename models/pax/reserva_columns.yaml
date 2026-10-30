@@ -25,6 +25,3 @@ columns:
     lider:
         label: Lider?
         type: partial
-    id:
-        label: id
-        type: number

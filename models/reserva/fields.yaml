@@ -479,15 +479,23 @@ tabs:
             tab: Paxs y Vuelos
             form:
                 fields:
+                    notas:
+                        label: Notas importantes
+                        span: storm
+                        cssClass: col-xs-6
+                        size: large
+                        type: textarea
                     salud:
-                        label: Restricciones alimentarias o de salud
-                        span: left
-                        size: small
+                        label: Restricciones alimentación / salud
+                        span: storm
+                        cssClass: col-xs-3
+                        size: large
                         type: textarea
                     particulares:
-                        label: Necesidades particulares o aconteciimentos importantes
-                        span: right
-                        size: small
+                        label: Necesidades o acontecimientos
+                        span: storm
+                        cssClass: col-xs-3
+                        size: large
                         type: textarea
         pagos:
             label: Pagos
