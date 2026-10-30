@@ -1004,7 +1004,7 @@ class Reserva extends Model
     }
    
     private function formatearName(){
-        $name = 'Nueva Reserva';
+        $name = empty($this->name)? 'Nueva Reserva' : $this->name;
         
         if($this->exists){
             $name = isset($this->fecha_inicio) ? date('Y-m-d', strtotime($this->fecha_inicio)) : 'Abierto';

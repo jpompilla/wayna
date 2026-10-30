@@ -221,4 +221,13 @@ class Reservas extends Controller
             'rpta' => $email
         ];
     }
+
+    public function duplicate($id = null){
+        $original = Reserva::find($id);
+        $duplicado = $original->replicate();
+        $duplicado->name = 'Copia de '.$original->name;
+        $duplicado->estado = 'Cotizacion';
+        $duplicado->save();
+        return \Backend::redirect('soroche/wayna/reservas/update/' . $duplicado->id)->with('message', 'Reserva duplicada');
+    }
 }
