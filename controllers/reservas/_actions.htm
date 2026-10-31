@@ -1,0 +1,28 @@
+<div class="actions">
+<a 
+    data-toggle="tooltip"
+    data-placement="top"
+    data-delay="500"
+    title="Invoice"
+    class="wn-icon-copy"
+    href="<?= Backend::url('soroche/wayna/reservas/invoice/'.$record->id) ?>" style="z-index:10;">
+</a>
+<a 
+    data-toggle="tooltip"
+    data-placement="top"
+    data-delay="500"
+    title="Estado de reserva"
+    class="wn-icon-file-circle-check"
+    href="<?= Backend::url('soroche/wayna/reservas/estado/'.$record->id) ?>" style="z-index:10;">
+</a>
+<?php if ($this->user->hasAccess('manage_reservas')): ?>
+<a 
+    data-toggle="tooltip"
+    data-placement="top"
+    data-delay="500"
+    title="Liquidación de reserva"
+    class="wn-icon-dollar"
+    href="<?= Backend::url('soroche/wayna/reservas/liquidacion/'.$record->id) ?>" style="z-index:10;">
+</a>
+<?php endif ?>
+</div>

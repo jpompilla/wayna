@@ -30,12 +30,13 @@ class Entrenamientos extends Controller
     public function preview($recordId, $codigo = null)
     {
         $model = $this->formFindModelObject($recordId);
+        $this->pageTitle = $model->curso->nombre;
     
         if (empty($model->contenido)) {
             $model->contenido = $model->curso->contenido;
         }
-        $unidad = null;
-        $actividad = null;
+        $unidad = 0;
+        $actividad = 0;
         if($codigo){
             $unidad = intval(explode('.',$codigo)[0])-1;
             $actividad = intval(explode('.',$codigo)[1])-1;            

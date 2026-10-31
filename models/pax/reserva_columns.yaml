@@ -1,7 +1,7 @@
 columns:    
     pasaporte_nro:
         label: Nro Pasaporte
-        type: text
+        type: partial
     nombres:
         label: nombres
         type: text
@@ -10,7 +10,7 @@ columns:
         type: text
     nacionalidad:
         label: nacionalidad
-        type: text
+        type: partial
     fecha_nacimiento:
         label: fecha_nacimiento
         type: date
@@ -22,9 +22,6 @@ columns:
     acomodacion:
         label: acomodacion
         type: text
-    updated_at:
-        label: updated_at
-        type: datetime
-    id:
-        label: id
-        type: number
+    lider:
+        label: Lider?
+        type: partial

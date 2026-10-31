@@ -104,10 +104,10 @@ class Reportes extends Controller
             $data[$row->mes]['margen.operativo'] += $row->ingresos - ($row->costo_operativo + $row->comision + $row->izipay + $row->impuestos);
 
             $data[$row->mes]['fijo.administrativo'] = 560;
-            $data[$row->mes]['fijo.personal'] = 420;
+            $data[$row->mes]['fijo.personal'] = ($row->mes > '2026-08' ? 980 : 420);
             $data[$row->mes]['fijo.cuentas'] = 300;
             $data[$row->mes]['fijo.clientes'] = 300;
-            $data[$row->mes]['fijo'] = 1580;
+            $data[$row->mes]['fijo'] = 560+ ($row->mes > '2026-08' ? 980 : 420) + 300 + 300;
 
             $data[$row->mes]['utilidades'] += $row->ingresos - ($row->costo_operativo + $row->comision + $row->izipay + $row->impuestos);
         }

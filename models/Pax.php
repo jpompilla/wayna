@@ -69,4 +69,43 @@ class Pax extends Model
     public function getEdadAttribute(){
         return floor((time()-strtotime($this->fecha_nacimiento))/(60*60*24*365.25));
     }
+
+    public function getRenovarAttribute(){
+        $reserva = $this->reservas()->first();
+        if (!$reserva || !$reserva->fecha_inicio) {
+            return false;
+        }
+        if (!isset($this->pasaporte_vigencia)) {
+            return false;
+        }
+
+        $fechaLimite = date('Y-m-d', strtotime('+6 months', strtotime($reserva->fecha_inicio)));
+
+        return $fechaLimite > $this->pasaporte_vigencia;
+    }
+
+    public function getCumpleaniosAttribute(){
+        $reserva = $this->reservas()->first();
+        
+        if (!$reserva || !$reserva->fecha_inicio || !$reserva->fecha_fin) {
+            return false;
+        }
+
+        $fechaNacimiento = new \DateTime($this->fecha_nacimiento);
+        $fechaInicio = new \DateTime($reserva->fecha_inicio);
+        $fechaFin = new \DateTime($reserva->fecha_fin); 
+
+        $fechaCumpleanios = new \DateTime($fechaInicio->format('Y') . '-' . $fechaNacimiento->format('m-d'));
+
+        if ($fechaCumpleanios < $fechaInicio) {
+            $fechaCumpleanios->modify('+1 year');
+        }
+
+        if ($fechaCumpleanios >= $fechaInicio && $fechaCumpleanios <= $fechaFin) {
+            return $fechaCumpleanios->format('Y-m-d');
+        } else {
+            return '';
+        }
+    }
+        
 }

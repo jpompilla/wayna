@@ -13,3 +13,11 @@ pagos:
     view:
         list: $/soroche/wayna/models/pago/reserva_columns.yaml
         toolbarButtons: create|remove
+
+vuelos2:
+    label: Vuelos
+    manage:
+        form: $/soroche/wayna/models/vuelo/reserva_fields.yaml
+    view:
+        list: $/soroche/wayna/models/vuelo/reserva_columns.yaml
+        toolbarButtons: create|remove

@@ -52,6 +52,7 @@ tabs:
                 Venezuela: Venezuela
                 Nicaragua: Nicaragua
                 Brasil: Brasil
+                España: España
             type: dropdown
             span: right
             tab: Datos Personales
@@ -63,6 +64,19 @@ tabs:
             tab: Datos Personales
             format: d/m/yy
             ignoreTimezone: true
+        pasaporte_vigencia:
+            label: 'Fecha de caducidad del pasaporte'
+            mode: date
+            type: datepicker
+            span: right
+            tab: Datos Personales
+            format: d/m/yy
+            ignoreTimezone: true
+        residencia:
+            label: Lugar de residencia
+            type: text
+            span: right
+            tab: Datos Personales
         acomodacion:
             label: Acomodacion
             span: right

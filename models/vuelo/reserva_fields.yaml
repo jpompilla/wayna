@@ -1,0 +1,56 @@
+fields:
+tabs:
+    fields:
+        imagen:
+            label: 'Captura del vuelo'
+            mode: image
+            useCaption: true
+            span: left
+            thumbOptions:
+                mode: crop
+                extension: auto
+            type: fileupload
+            tab: Datos del Vuelo
+        ruta:
+            label: Ruta
+            span: right
+            type: text
+            tab: Datos del Vuelo
+        aerolinea:
+            label: Aerolinea
+            span: right
+            type: dropdown
+            options:
+                Aeromexico: Aeromexico
+                Volaris: Volaris
+                Copa Airlines: Copa Airlines 
+                LATAM: LATAM
+                Avianca: Avianca
+                Sky Airlines: Sky Airlines 
+                Jetsmart: Jetsmart
+                Arajet Airline: Arajet Airline 
+            allowCustom: true
+            tab: Datos del Vuelo
+        vuelo:
+            label: Vuelo
+            span: right
+            type: text
+            tab: Datos del Vuelo
+        salida:
+            label: Salida
+            span: right
+            type: datepicker
+            ignoreTimezone: true
+            tab: Datos del Vuelo
+        llegada:
+            label: Llegada
+            span: right
+            type: datepicker
+            ignoreTimezone: true
+            tab: Datos del Vuelo
+        pasajeros:
+            label: Pasajeros
+            span: right
+            type: taglist
+            options: true
+            tab: Datos del Vuelo

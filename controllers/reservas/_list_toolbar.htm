@@ -1,5 +1,25 @@
 <div data-control="toolbar">
     <a href="<?= Backend::url('soroche/wayna/reservas/create') ?>" class="btn btn-primary wn-icon-plus"><?= e(trans('backend::lang.form.create')) ?></a>
+
+    <button
+        class="btn btn-primary wn-icon-clone"
+        disabled="disabled"
+        onclick="goDuplicate()"
+        data-trigger-action="enable"
+        data-trigger=".control-list input[type=checkbox]"
+        data-trigger-condition="checked"
+        data-request-success="$(this).prop('disabled', true)"
+        >
+        Duplicar
+    </button>
+    <script>
+        function goDuplicate(){
+            let ids = $('.control-list').listWidget('getChecked')+'';
+            let url = '<?= Backend::url('soroche/wayna/reservas/duplicate') ?>/'+ids.split(',',1);
+            window.location.href = url;
+        }
+    </script>
+
     <?php if ($this->user->hasAccess('soroche.wayna.manage_reservas')): ?>
     <button
         class="btn btn-default wn-icon-trash-o"

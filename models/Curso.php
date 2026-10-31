@@ -41,7 +41,7 @@ class Curso extends Model
       'users' => [
           'Backend\Models\User',
           'table' => 'soroche_wayna_aulas',
-          'conditions' => "negocio_id = 1" //Aqui mejorar el codigo
+          //'conditions' => "negocio_id = 1" //Aqui mejorar el codigo
       ]
     ];
     

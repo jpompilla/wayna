@@ -58,6 +58,14 @@ class Reserva extends Model
         ],
     ];
     
+    public $hasMany = [
+        'vuelos2' => [
+            'soroche\Wayna\Models\Vuelo',
+            'key' => "reserva_id",
+            'order' => 'salida asc'
+        ],
+    ];
+
     public $belongsToMany = [
         'paxs' => [
             'soroche\Wayna\Models\Pax',
@@ -317,6 +325,19 @@ class Reserva extends Model
     public function getTieneCotizacionAttribute(){
         return isset($this->cotizacion);
     }
+
+    public function getTieneVuelosAttribute() : bool {
+        if(!isset($this->vuelos))
+            return false;
+        if(count($this->vuelos) == 0)
+            return false;
+        if(!array_key_exists('fecha', $this->vuelos[0]))
+            return false;
+        if(empty($this->vuelos[0]['fecha']))
+            return false;
+
+        return true;
+    }
     
     /*---------- Combos -------------*/
     public function getServicioOptions(){    
@@ -537,6 +558,9 @@ class Reserva extends Model
             if (isset($fields->calculos))
                 $fields->calculos->hidden = !isset($this->cotizacion);
             $fields->resumen->hidden = isset($this->cotizacion);
+
+            $fields->vuelos->hidden = !$this->tieneVuelos;
+            $fields->vuelos2->hidden = $this->tieneVuelos;
         }
     }
     
@@ -635,7 +659,7 @@ class Reserva extends Model
     }
     
     public function trenPorFecha($fecha){
-        $rpta = '';
+        $rpta = [];
 
         if(isset($this->plan))
         foreach ($this->plan as $t => $tipoItem)        
@@ -643,7 +667,7 @@ class Reserva extends Model
                 if(mb_substr($proveedorItem['nombre'], 5) == 'Peru Rail')
                     foreach ($proveedorItem['servicios'] as $s => $servicioItem)
                         if(date('d/m/Y', strtotime($fecha)) == $servicioItem['fecha'])
-                            $rpta = (array_key_exists('salida', $servicioItem) && !empty($servicioItem['salida']) ? $servicioItem['salida'] : 'ND').'->'.(array_key_exists('llegada', $servicioItem) && !empty($servicioItem['llegada']) ? $servicioItem['llegada'] : 'ND');
+                            $rpta[] = (array_key_exists('salida', $servicioItem) && !empty($servicioItem['salida']) ? $servicioItem['salida'] : 'ND').'->'.(array_key_exists('llegada', $servicioItem) && !empty($servicioItem['llegada']) ? $servicioItem['llegada'] : 'ND');
         
         return $rpta;
     }
@@ -816,11 +840,24 @@ class Reserva extends Model
                 $itinerario[$item['dia']]['tour'] = $tour->nombre;
                 $hotel = Servicio::find($item['hotel']);
                 $itinerario[$item['dia']]['hotel'] = isset($hotel) ? $hotel->nombre : null;
+
+                //Cumpleaños
+                foreach($this->paxs as $pax)
+                    if(date('d/m', strtotime($item['fecha'])) == date('d/m', strtotime($pax->fecha_nacimiento)))
+                        $itinerario[$item['dia']]['cumple'] = $item['fecha'];
                 
-                if(isset($this->vuelos) && isset($this->vuelos[0]['fecha']))
+                //Vuelos
+                if($this->tieneVuelos){
                     foreach($this->vuelos as $vuelo)
                         if(date('d/m/Y', strtotime($item['fecha'])) == $vuelo['fecha'])
                             $itinerario[$item['dia']]['vuelo'] = $vuelo['salida'].'->'.$vuelo['llegada'];
+                }
+                else{
+                    foreach($this->vuelos2 as $vuelo2){
+                        if(date('d/m/Y', strtotime($item['fecha'])) == date('d/m/Y', strtotime($vuelo2->salida)) || date('d/m/Y', strtotime($item['fecha'])) == date('d/m/Y', strtotime($vuelo2->llegada)))
+                            $itinerario[$item['dia']]['vuelo'] = date('H:i', strtotime($vuelo2->salida)).($vuelo2->diasDiferencia?'+>':'->').date('H:i', strtotime($vuelo2->llegada));
+                    }
+                }
                 
                 foreach($tour->items as $servicioItem)
                     foreach($servicioItem['incluye'] as $in)
@@ -1014,7 +1051,7 @@ class Reserva extends Model
     }
    
     private function formatearName(){
-        $name = 'Nueva Reserva';
+        $name = empty($this->name)? 'Nueva Reserva' : $this->name;
         
         if($this->exists){
             $name = isset($this->fecha_inicio) ? date('Y-m-d', strtotime($this->fecha_inicio)) : 'Abierto';
