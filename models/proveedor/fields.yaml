@@ -280,7 +280,22 @@ tabs:
                     brochure:
                         label: Brochure PDF
                         type: mediafinder
-                        span: auto
+                        span: left
                         mode: image
                         imageWidth: 400 
                         imageHeight: 400
+                    briefing:                    
+                        label: Briefing (PPTs)
+                        type: repeater
+                        span: right
+                        mode: grid
+                        columns: 2
+                        prompt: Agregrar Imagen
+                        form:
+                            fields:
+                                image:
+                                    type: mediafinder
+                                    span: auto
+                                    mode: image
+                                    imageWidth: 160 
+                                    imageHeight: 90

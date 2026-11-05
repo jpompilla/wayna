@@ -138,7 +138,9 @@ class Reservas extends Controller
 
         $dompdf = new Dompdf(array('enable_remote' => true));
         $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'landscape');
+        
+        $customPaper = [0, 0, 1080, 607.5];
+        $dompdf->setPaper($customPaper);
 
         $dompdf->render();
 

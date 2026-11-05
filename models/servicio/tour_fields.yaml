@@ -220,17 +220,17 @@ tabs:
             label: Page Title
             span: auto
             type: text
-            tab: Pagina Web
+            tab: Contenido
         page_slug:
             label: Slug
             span: auto
             preset: page_title
-            tab: Pagina Web
+            tab: Contenido
         page_content:
             span: full
             type: nestedform
             usePanelStyles: false
-            tab: Pagina Web
+            tab: Contenido
             form:
                 tabs:
                     fields:
@@ -238,7 +238,7 @@ tabs:
                             label: Descripcion
                             size: small
                             type: richeditor
-                            tab: Contenido
+                            tab: Web
                         image:
                             label: Imagen
                             type: mediafinder
@@ -246,11 +246,11 @@ tabs:
                             mode: image
                             imageWidth: 400 
                             imageHeight: 400
-                            tab: Contenido
+                            tab: Web
                         gallery:
                             label: Galeria
                             type: repeater
-                            tab: Contenido
+                            tab: Web
                             span: auto
                             mode: grid
                             prompt: Agregrar Imagen
@@ -267,18 +267,18 @@ tabs:
                             size: small
                             span: left
                             type: textarea
-                            tab: PDF
+                            tab: Brochure / Itinerario
                         horario:
                             label: Horario
                             size: small
                             span: right
                             type: text
-                            tab: PDF
+                            tab: Brochure / Itinerario
                         bono:
                             label: Incluye bono regalo
                             span: right
                             type: checkbox
-                            tab: PDF
+                            tab: Brochure / Itinerario
                         brochure:
                             label: Brochure PDF
                             type: mediafinder
@@ -286,7 +286,7 @@ tabs:
                             mode: image
                             imageWidth: 400 
                             imageHeight: 600
-                            tab: PDF
+                            tab: Brochure / Itinerario
                         resumen_image:
                             label: Imagen resumen PDF
                             type: mediafinder
@@ -294,33 +294,19 @@ tabs:
                             mode: image
                             imageWidth: 600 
                             imageHeight: 400
-                            tab: PDF
-                        atractivos:
-                            label: Atractivos
-                            type: textarea
-                            size: small
-                            tab: Briefing
-                        clima_icono:
-                            label: Icono del clima
-                            type: mediafinder
-                            mode: image
-                            span: left
-                            tab: Briefing
-                        clima_descripcion:
-                            label: Descripcion del clima
-                            type: textarea
-                            size: small
-                            span: right
-                            tab: Briefing
-                        ropa_icono:
-                            label: Icono de prendas
-                            type: mediafinder
-                            mode: image
-                            span: left
-                            tab: Briefing
-                        ropa_descripcion:
-                            label: Prendas recomendadas
-                            type: textarea
-                            size: small
-                            span: right
-                            tab: Briefing
+                            tab: Brochure / Itinerario
+                        diapos:
+                            label: Galeria
+                            type: repeater
+                            tab: Briefing (PPTs)
+                            span: full
+                            mode: grid
+                            prompt: Agregrar Imagen
+                            form:
+                                fields:
+                                    image:
+                                        type: mediafinder
+                                        span: auto
+                                        mode: image
+                                        imageWidth: 160 
+                                        imageHeight: 90
